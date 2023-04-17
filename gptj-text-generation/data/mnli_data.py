@@ -78,9 +78,9 @@ class PadCollate:
         return batch
 
 
-def tokenizes_text(tokenizer):
+def tokenizes_text(tokenizer: AutoTokenizer):
     def func(dataset):
-        tokenized = tokenizer(dataset["text"], return_attention_mask=False, return_tensors="np")
+        tokenized = tokenizer(dataset["text"], return_attention_mask=False)
         return tokenized
 
     return func
