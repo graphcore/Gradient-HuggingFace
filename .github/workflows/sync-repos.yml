@@ -1,28 +1,28 @@
-# name: Sync to public repo
+name: Sync to public repo
 
-# on:
-#   workflow_dispatch:
-#   push:
-#     branches:
-#       - main
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
 
-# jobs:
+jobs:
 
-#   sync-repos:
-#     name: Sync to public repo
-#     runs-on: 'ubuntu-latest'
-#     steps:
-#     - uses: actions/checkout@v3
-#       with:
-#         fetch-depth: 0
-#         token: ${{ secrets.GH_TOKEN_SYNC_REPOS }}
-#     - name: Sync repos
-#       env:
-#         DEST_REPO_URL: https://michaln-gc:${{ secrets.GH_TOKEN_SYNC_REPOS }}@github.com/graphcore/Gradient-HuggingFace
-#       run: |
-#         git remote add target "${DEST_REPO_URL}"
+  sync-repos:
+    name: Sync to public repo
+    runs-on: 'ubuntu-latest'
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
+        token: ${{ secrets.GH_TOKEN_SYNC_REPOS }}
+    - name: Sync repos
+      env:
+        DEST_REPO_URL: https://marcins-gc:${{ secrets.GH_TOKEN_SYNC_REPOS }}@github.com/graphcore/Gradient-HuggingFace
+      run: |
+        git remote add target "${DEST_REPO_URL}"
 
-#         # remove pull refs that are for Pull Requests, GitHub does not accept them
-#         git for-each-ref --format 'delete %(refname)' refs/pull | git update-ref --stdin
+        # remove pull refs that are for Pull Requests, GitHub does not accept them
+        git for-each-ref --format 'delete %(refname)' refs/pull | git update-ref --stdin
 
-#         git push --mirror target
+        git push --mirror target
