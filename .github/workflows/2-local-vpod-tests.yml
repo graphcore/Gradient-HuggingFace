@@ -21,7 +21,7 @@ on:
         description: "List of notebooks to test in JSON format"
         required: false
         default: '["Graphcore-HuggingFace-README_first"]'
-  push:
+  pull_request:
   schedule:
     # run at 11:00 PM GMT every night
     - cron:  '0 23 * * *'
