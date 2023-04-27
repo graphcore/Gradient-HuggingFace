@@ -38,6 +38,6 @@ jobs:
     secrets:
       gh_token:  ${{ secrets.GH_TOKEN_SYNC_REPOS }}
 #      paperspace_api_key: ${{ secrets.paperspace_api_key }}
-#      hugging_face_hub_token: ${{ secrets.hugging_face_hub_token }}
+      hugging_face_hub_token: ${{ secrets.HUGGING_FACE_HUB_TOKEN }}
       slack_bot_token: ${{ secrets.SLACK_BOT_TOKEN }}
       ci_slack_channel_id: ${{ secrets.CI_SLACK_CHANNEL_ID }}
