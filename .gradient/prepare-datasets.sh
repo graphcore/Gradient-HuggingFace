@@ -8,6 +8,7 @@ then
     apt install -o DPkg::Lock::Timeout=120 -y psmisc libfuse3-dev fuse-overlayfs
 fi
 
+mkdir -p ${PERSISTENT_CHECKPOINT_DIR}
 
 echo "Starting preparation of datasets"
 /notebooks/.gradient/symlink_datasets_and_caches.py
