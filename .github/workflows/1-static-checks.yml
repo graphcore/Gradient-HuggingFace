@@ -7,3 +7,5 @@ jobs:
     uses: graphcore/paperspace-automation/.github/workflows/1-static-checks.yml@static-check-input
     with:
       pre-commit-config: .github/workflows/configs/pre-commit-config.yaml
+      pylint-config: .github/workflows/configs/pylint.rc
+      ruff-config: .github/workflows/configs/ruff.toml
