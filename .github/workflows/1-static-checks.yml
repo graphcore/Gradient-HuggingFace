@@ -4,4 +4,6 @@ on: pull_request
 
 jobs:
   static-checks:
-    uses: graphcore/paperspace-automation/.github/workflows/1-static-checks.yml@main
+    uses: graphcore/paperspace-automation/.github/workflows/1-static-checks.yml@static-check-input
+    with:
+      pre-commit-config: .github/workflows/configs/pre-commit-config.yaml
