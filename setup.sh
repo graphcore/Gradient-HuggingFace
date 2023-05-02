@@ -47,6 +47,11 @@ export POPTORCH_CACHE_DIR="${POPLAR_EXECUTABLE_CACHE_DIR}"
 export POPTORCH_LOG_LEVEL=ERR
 export RDMAV_FORK_SAFE=1
 
+# Logger specific vars
+export TIER_TYPE=$(python .gradient/check_tier.py)
+export FIREHOSE_STREAM_NAME="paperspacenotebook_production"
+export GCLOGGER_CONFIG="${PUBLIC_DATASETS_DIR}/gcl"
+
 echo "Graphcore setup - Spawning dataset preparation process"
 nohup /notebooks/.gradient/prepare-datasets.sh ${@} & tail -f nohup.out &
 

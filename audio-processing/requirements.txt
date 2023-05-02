@@ -4,3 +4,4 @@ torchaudio == 0.13.1+cpu
 librosa
 jiwer
 soundfile
+examples-utils[common] @ git+https://github.com/graphcore/examples-utils@latest_stable
