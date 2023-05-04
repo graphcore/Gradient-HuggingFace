@@ -15,7 +15,7 @@ on:
         type: string
         description: "Docker image used in notebook testing"
         required: false
-        default: "graphcore/pytorch-jupyter:3.2.0-ubuntu-20.04-20230314"
+        default: "graphcore/pytorch-jupyter:3.2.0-ubuntu-20.04-20230331"
       notebooks:
         type: string
         description: "List of notebooks to test in JSON format"
@@ -31,7 +31,7 @@ jobs:
   tests:
     uses: graphcore/paperspace-automation/.github/workflows/subwf-vpod-tests-for-nb-repo.yml@main
     with:
-      docker_image: ${{ inputs.docker_image || 'graphcore/pytorch-jupyter:3.2.0-ubuntu-20.04-20230314' }}
+      docker_image: ${{ inputs.docker_image || 'graphcore/pytorch-jupyter:3.2.0-ubuntu-20.04-20230331' }}
       notebooks: ${{ inputs.notebooks }}
       machine_types: '["IPU-POD4"]'
       test_env: ${{ inputs.test_env || 'Local' }}
