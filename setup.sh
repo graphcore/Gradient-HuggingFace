@@ -51,6 +51,7 @@ export RDMAV_FORK_SAFE=1
 export TIER_TYPE=$(python .gradient/check_tier.py)
 export FIREHOSE_STREAM_NAME="paperspacenotebook_production"
 export GCLOGGER_CONFIG="${PUBLIC_DATASETS_DIR}/gcl"
+export REPO_FRAMEWORK="Hugging Face"
 
 echo "Graphcore setup - Spawning dataset preparation process"
 nohup /notebooks/.gradient/prepare-datasets.sh ${@} & tail -f nohup.out &
