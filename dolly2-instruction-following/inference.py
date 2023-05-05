@@ -132,6 +132,7 @@ def inference(config: DollyConfig) -> TaskSession:
 
         # Run `OpToIdentityPattern` among others part of `PreAliasPatterns`
         apply_pre_alias_patterns(ir, level="default")
+    logging.info("PopXL IR construction complete")
 
     ir.num_host_transfers = config.execution.device_iterations
 
@@ -143,6 +144,7 @@ def inference(config: DollyConfig) -> TaskSession:
         device_desc="ipu_hw",
         weights_to_host_on_exit=False,
     )
+    logging.info("PopXL compilation complete")
     return session
 
 

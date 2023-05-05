@@ -196,6 +196,14 @@ gptj-generative-inference:
     timeout: 3600
   requirements_file: requirements.txt
 
+# Dolly 2.0 - inference
+dolly2-inference:
+  location: ../dolly2-instruction-following
+  generated: true
+  notebook:
+    file: Dolly2-an-OSS-instruction-LLM.ipynb
+    timeout: 10000
+  requirements_file: requirements.txt
 
 packed-bert-multi-label-classification:
   location: ../packed-bert

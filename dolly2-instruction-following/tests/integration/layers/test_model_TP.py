@@ -42,8 +42,7 @@ def test_model_TP_cmp_huggingface(test_config: DollyConfig):
     output_HF = output_HF.detach().numpy()
 
     # TP
-    tp = 4
-    test_config.execution.tensor_parallel = tp
+    tp = test_config.execution.tensor_parallel
 
     # Offset inputs
     words_offsetted = DollyEmbeddingsTP.offset_inputs(test_config, to_numpy(input_t))

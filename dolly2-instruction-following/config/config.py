@@ -83,6 +83,9 @@ class Execution(Config):
     tensor_parallel: int = 1
     """Number of IPUs used for tensor model parallel axis"""
 
+    attention_tensor_parallel: Optional[int] = None
+    """Number of IPUs used for tensor model parallel axis in the attention layer. If `None`, will be set to be equal to `tensor_parallel"""
+
     code_load: bool = flag(False)
     """Store the code for each layer graph in remote memory"""
 

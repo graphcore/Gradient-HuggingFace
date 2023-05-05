@@ -10,7 +10,7 @@ from typing import Optional
 
 import popxl_addons as addons
 from popxl_addons import NamedTensors
-from popxl_addons.array_munging import shard
+from popxl_addons.array_munging import shard, repeat_axis
 from popxl_addons.layers import Linear
 
 from popxl_addons.ops.replicated_all_reduce_TP import replicated_all_reduce
@@ -98,8 +98,13 @@ class DollySelfAttentionTP(addons.Module):
         super().__init__()
 
         self.config = config
-        tp = config.execution.tensor_parallel
-        dp = config.execution.data_parallel
+        attn_tp = (
+            config.execution.tensor_parallel
+            if config.execution.attention_tensor_parallel is None
+            else config.execution.attention_tensor_parallel
+        )
+        tp = attn_tp
+        dp = config.execution.data_parallel * (config.execution.tensor_parallel // attn_tp)
         self.replica_grouping = popxl.gcg().ir.replica_grouping(stride=tp, group_size=dp)
 
         # Sharded across devices
@@ -130,7 +135,11 @@ class DollySelfAttentionTP(addons.Module):
     def hf_mapping(config, variables: NamedTensors, hf_model: HFModel) -> Dict[popxl.Tensor, np.ndarray]:
         dtype = config.model.dtype
         hidden_dim = config.model.hidden_size
-        n_shards = config.execution.tensor_parallel
+        attn_tp = (
+            config.execution.tensor_parallel
+            if config.execution.attention_tensor_parallel is None
+            else config.execution.attention_tensor_parallel
+        )
         heads = config.model.attention.heads
 
         qkv_w = hf_model.query_key_value.weight.data.T.reshape(hidden_dim, heads, 3, -1)
@@ -138,8 +147,9 @@ class DollySelfAttentionTP(addons.Module):
         hf_query_w, hf_key_w, hf_value_w = map(
             lambda p: to_numpy(p, dtype).reshape(hidden_dim, hidden_dim), (hf_query_w, hf_key_w, hf_value_w)
         )
-        query_w, key_w, value_w = map(lambda p: shard(p, n_shards, axis=-1), (hf_query_w, hf_key_w, hf_value_w))
+        query_w, key_w, value_w = map(lambda p: shard(p, attn_tp, axis=-1), (hf_query_w, hf_key_w, hf_value_w))
         qkv_weight = np.concatenate((query_w, key_w, value_w), axis=-1)
+        # qkv_weight = repeat_axis(qkv_weight, n=repeat_tp, axis=0)
 
         qkv_b = hf_model.query_key_value.bias.data.reshape(heads, 3, -1)
         hf_query_b, hf_key_b, hf_value_b = np.split(qkv_b, 3, axis=1)
@@ -147,14 +157,16 @@ class DollySelfAttentionTP(addons.Module):
         hf_query_b, hf_key_b, hf_value_b = map(
             lambda p: to_numpy(p, dtype).reshape(-1), (hf_query_b, hf_key_b, hf_value_b)
         )
-        query_b, key_b, value_b = map(lambda p: np.split(p, n_shards, axis=0), (hf_query_b, hf_key_b, hf_value_b))
+        query_b, key_b, value_b = map(lambda p: np.split(p, attn_tp, axis=0), (hf_query_b, hf_key_b, hf_value_b))
         qkv_bias = np.concatenate((query_b, key_b, value_b), axis=1)
+        # qkv_bias = repeat_axis(qkv_bias, n=repeat_tp, axis=0)
 
         out_proj_w = to_numpy(hf_model.dense.weight.data.T, dtype)
 
-        return {
+        weights = {
             variables.heads.qkv.weight: qkv_weight.squeeze(),
             variables.heads.qkv.bias: qkv_bias.squeeze(),
-            variables.output.weight: shard(out_proj_w, n_shards, axis=0).squeeze(),
+            variables.output.weight: shard(out_proj_w, attn_tp, axis=0).squeeze(),
             variables.output_bias: to_numpy(hf_model.dense.bias.data, dtype),
         }
+        return weights

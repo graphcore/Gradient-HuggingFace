@@ -22,14 +22,17 @@ from math import ceil
 
 def gather_logits_tp(config: DollyConfig, logits: popxl.Tensor, last_token_index: popxl.Tensor):
     tp = config.execution.tensor_parallel
-    next_token_logits = logits[last_token_index]  # (tp, mb_size, vocab_shard_size)
+    offset_last_token_index = last_token_index + popxl.constant(
+        np.asarray([i * config.model.sequence_length for i in range(config.execution.micro_batch_size)]),
+        dtype=popxl.int32,
+    )
+    next_token_logits = logits[offset_last_token_index]  # (tp, mb_size, vocab_shard_size)
 
     next_token_logits = ops.collectives.replicated_all_gather(
         next_token_logits, group=popxl.gcg().ir.replica_grouping(group_size=tp), output_shape="new_axis"
     )
-    next_token_logits = next_token_logits.transpose((1, 0, 2)).reshape_(
-        (config.execution.micro_batch_size, config.model.embedding.vocab_size)
-    )
+    next_token_logits = next_token_logits.transpose((1, 0, 2)).reshape_((config.execution.micro_batch_size, -1))
+    next_token_logits = next_token_logits[:, : config.model.embedding.vocab_size]
 
     return next_token_logits
 
@@ -61,8 +64,16 @@ class DollyLMHeadTP(addons.Module):
         dtype = config.model.dtype
         n_shards = config.execution.tensor_parallel
 
+        def pad(x, n_pad):
+            return np.pad(x, ((0, n_pad), (0, 0)))
+
+        shard_size = ceil(config.model.embedding.vocab_size / n_shards)
+        num_pad = shard_size * n_shards - config.model.embedding.vocab_size
+
         weights = {
-            variables.head.weight: shard(to_numpy(hf_model.embed_out.weight.data.T, dtype), n_shards, axis=-1),
+            variables.head.weight: shard(
+                pad(to_numpy(hf_model.embed_out.weight.data, dtype), num_pad).T, n_shards, axis=-1
+            ),
             variables.ln_f.weight: to_numpy(hf_model.gpt_neox.final_layer_norm.weight.data, dtype),
             variables.ln_f.bias: to_numpy(hf_model.gpt_neox.final_layer_norm.bias.data, dtype),
         }

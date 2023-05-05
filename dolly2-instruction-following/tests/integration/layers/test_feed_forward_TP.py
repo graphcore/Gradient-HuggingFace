@@ -40,8 +40,7 @@ def test_feed_forward_TP_cmp_huggingface(test_config: DollyConfig):
     output_HF = output_.detach().numpy()
 
     # TP
-    n_shards = 4
-    test_config.execution.tensor_parallel = n_shards
+    n_shards = test_config.execution.tensor_parallel
 
     # popxl
     ir = popxl.Ir()
