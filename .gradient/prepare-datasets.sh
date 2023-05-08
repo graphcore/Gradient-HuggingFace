@@ -1,5 +1,5 @@
 #! /usr/bin/env bash
-set -uxo pipefail
+set -euxo pipefail
 
 if [ ! "$(command -v fuse-overlayfs)" ]
 then
