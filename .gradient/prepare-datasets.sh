@@ -10,6 +10,8 @@ fi
 
 mkdir -p ${PERSISTENT_CHECKPOINT_DIR}
 
+ls -al ${PUBLIC_DATASETS_DIR}
+
 echo "Starting preparation of datasets"
 /notebooks/.gradient/symlink_datasets_and_caches.py
 

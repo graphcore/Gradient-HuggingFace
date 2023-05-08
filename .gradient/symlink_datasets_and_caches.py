@@ -8,12 +8,14 @@ import warnings
 from typing import List
 
 def check_dataset_is_mounted(source_dirs_list: List[str]) -> List[str]:
+    print(f"Dirs to check {source_dirs_list}")
     source_dirs_exist_paths = []
     for source_dir in source_dirs_list:
+        print(f"Checking dir {source_dir}")
         source_dir_path = Path(source_dir)
         COUNTER = 0
         # wait until the dataset exists and is populated/non-empty, with a 300s/5m timeout
-        while (COUNTER < 300) and (not source_dir_path.exists() or not any(source_dir_path.iterdir())):
+        while COUNTER < 300 and (not source_dir_path.exists() or len(list(source_dir_path.iterdir())) == 0):
             print(f"Waiting for dataset {source_dir_path.as_posix()} to be mounted...")
             time.sleep(1)
             COUNTER += 1
@@ -35,7 +37,7 @@ def create_overlays(source_dirs_exist_paths: List[str], target_dir: str) -> None
 
     workdir = Path("/fusedoverlay/workdirs" + source_dirs_exist_paths[0])
     workdir.mkdir(parents=True, exist_ok=True)
-    upperdir = Path("/fusedoverlay/upperdir" + source_dirs_exist_paths[0]) 
+    upperdir = Path("/fusedoverlay/upperdir" + source_dirs_exist_paths[0])
     upperdir.mkdir(parents=True, exist_ok=True)
 
     lowerdirs = ":".join(source_dirs_exist_paths)
@@ -58,11 +60,10 @@ def main():
     for target_dir, source_dirs_list in config.items():
         # need to wait until the dataset has been mounted (async on Paperspace's end)
         source_dirs_exist_paths = check_dataset_is_mounted(source_dirs_list)
-        
+
         # create overlays for source dataset dirs that are mounted and populated
         if len(source_dirs_exist_paths) > 0:
             create_overlays(source_dirs_exist_paths, target_dir)
 
 if __name__ == "__main__":
     main()
-
