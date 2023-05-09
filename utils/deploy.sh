@@ -1,15 +1,16 @@
-# /bin/bash
+#!/bin/bash 
 projectId=$1
 deploymentName=$2
 psToken=$3
 
 pip install -U gradient > /dev/null
+gradient apiKey $psToken
 gradient secrets set project \
   --id $projectId\
   --name MyApiToken \
   --value $psToken
-gradient models upload --name "Whisper" --modelType "custom" --projectId $projectId "./deployment"
-modelId=$(gradient models list|grep Whisper|awk '{print $4}'|head -n 1|tr -d '\n')
+gradient models upload --name $deploymentName --modelType "custom" --projectId $projectId "./deployment"
+modelId=$(gradient models list|grep $deploymentName|awk '{print $4}'|head -n 1|tr -d '\n')
 echo "Deploying model ID: $modelId"
 
 spec="enabled: true\n
@@ -28,19 +29,18 @@ resources:\n
 "
 echo "$spec" > spec.yml
 gradient deployments create --name $deploymentName --projectId $projectId --spec spec.yml --clusterId clehbtvty
-deploymentId=$(gradient deployments list|grep whisper|awk '{print $4}'|tr -d '\n')
+deploymentId=$(gradient deployments list|grep $deploymentName|awk '{print $4}'|tr -d '\n')
 project_url="https://console.paperspace.com/graphcorepaperspace/projects/$projectId/gradient-deployments/$deploymentId/overview"
 gradient deployments get --id $deploymentId > deployment_info.json
 endpoint=$(jq .deploymentSpecs[0].endpointUrl deployment_info.json | tr -d '"')
 echo "Deployment overview URL: $project_url"
 echo "Waiting server to be ready"
-export DEPLOYMENT_ID=$deploymentId
 while true; do
   STATUS=$(curl -L -s -o /dev/null -w "%{http_code}" https://$endpoint/docs)
   if [ "$STATUS" -eq 200 ]
   then
     echo " READY."
-    echo "SERVER : https://$endpoint/docs"
+    echo "API : https://$endpoint/docs"
     exit 0
   fi
   sleep 10
