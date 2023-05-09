@@ -1,7 +1,5 @@
-# some handy functions to use along widgets
 from IPython.display import display, Markdown, clear_output
-# widget packages
-import ipywidgets as widgets# defining some widgets
+import ipywidgets as widgets
 import subprocess
 import sys
 import os
@@ -17,10 +15,15 @@ projectId=None
 token=None
 deploymentId=None
 deploymentName="model"
+instance="IPU-POD4"
+instance_types={4:"IPU-POD4", 16: "IPU-POD16"}
 
-def initialize(name: str):
+def initialize(name: str, num_ipus=4):
     global deploymentName, projectIdBox, tokenBox, button, shutdownButton, out, out2
     deploymentName = name
+    if num_ipus not in [4, 16]:
+        raise ValueError("'num_ipus' must be either 4 or 16" )
+    instance = instance_types[num_ipus]
     projectIdBox = widgets.Text(value='Paperspace project Id', description='Project ID', )
     tokenBox = widgets.Password(description='Token:', placeholder='Paperspace token')
     button = widgets.Button(description='Deploy', disabled=False)
@@ -39,7 +42,7 @@ def on_button_clicked(_):
     global tokenBox
     projectId=projectIdBox.value
     token=tokenBox.value
-    process = subprocess.Popen(["sh", "utils/deploy.sh", projectId, deploymentName, token],
+    process = subprocess.Popen(["sh", "utils/deploy.sh", projectId, deploymentName, token, instance],
                     stdout=subprocess.PIPE,
                     stderr=subprocess.STDOUT)
     with out:

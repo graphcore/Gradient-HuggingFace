@@ -2,6 +2,7 @@
 projectId=$1
 deploymentName=$2
 psToken=$3
+instanceType=$4
 
 pip install -U gradient > /dev/null
 gradient apiKey $psToken
@@ -24,7 +25,7 @@ env:\n
       value: secret:MyApiToken\n
 resources:\n
   replicas: 1\n
-  instanceType: IPU-POD4\n
+  instanceType: $instanceType\n
 
 "
 echo "$spec" > spec.yml
