@@ -29,11 +29,10 @@ on:
 
 jobs:
   tests:
-    uses: graphcore/paperspace-automation/.github/workflows/subwf-vpod-tests-for-nb-repo.yml@main
+    uses: graphcore/paperspace-automation/.github/workflows/subwf-vpod-tests-for-nb-repo.yml@test-pr-on-pod16
     with:
       docker_image: ${{ inputs.docker_image || 'graphcore/pytorch-jupyter:3.2.0-ubuntu-20.04-20230331' }}
       notebooks: ${{ inputs.notebooks }}
-      machine_types: ${{ (github.event.pull_request && '["IPU-POD4","IPU-POD16"]') || '["IPU-POD4"]' }}
       test_env: ${{ inputs.test_env || 'Local' }}
     secrets:
       gh_token:  ${{ secrets.GH_TOKEN_SYNC_REPOS }}
