@@ -21,6 +21,11 @@ on:
         description: "List of notebooks to test in JSON format"
         required: false
         default: '["Graphcore-HuggingFace-README_first"]'
+      machine_types:
+        description: "Machine type can be IPU-POD4 or IPU-POD16 or both"
+        required: false
+        type: string
+        default: '["IPU-POD4"]'
   pull_request:
   schedule:
     # run at 11:00 PM GMT every night
