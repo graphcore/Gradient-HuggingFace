@@ -1,4 +1,4 @@
-optimum-graphcore @ git+https://github.com/huggingface/optimum-graphcore.git@master
+optimum-graphcore @ git+https://github.com/huggingface/optimum-graphcore.git@main
 --find-links https://download.pytorch.org/whl/torch_stable.html
 torchaudio == 0.13.1+cpu
 librosa
