@@ -1,0 +1,4 @@
+# Docker image type options: pytorch, pytorch_18_04, tensorflow1, tensorflow2, tensorflow2_18_04
+docker_image_type: pytorch
+# Required POD size options: pod4, pod8, pod16
+required_pod_size: pod4
