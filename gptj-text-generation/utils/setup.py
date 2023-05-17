@@ -107,7 +107,7 @@ def gptj_config_setup(
             )
             pretrained = GPTJForCausalLM(hf_config)
         else:
-            hf_model = "EleutherAI/gpt-j-6b"
+            hf_model = "EleutherAI/gpt-j-6B"
             with timer("Loading HF model to host"):
                 pretrained = GPTJForCausalLM.from_pretrained(hf_model)
             xl_hf_config_check(config, pretrained.config)

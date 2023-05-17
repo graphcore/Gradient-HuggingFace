@@ -87,7 +87,7 @@ def main():
         "config/inference.yml", "release", "gpt-j-mnli", hf_model_setup=False, wandb_setup=False
     )
     # --- Tokenizer ---
-    tokenizer = AutoTokenizer.from_pretrained("EleutherAI/gpt-j-6b")
+    tokenizer = AutoTokenizer.from_pretrained("EleutherAI/gpt-j-6B")
     tokenizer.add_special_tokens({"pad_token": "<|extratoken_1|>"})  # index 50257
 
     # --- Dataset ---

@@ -152,11 +152,8 @@ def main():
     from modelling.hf_mapping import hf_mapping_lm_tp
 
     """Run a benchmark configuration"""
-    config, _, hf_model = dolly_config_setup(CONFIG_DIR / "inference.yml", "release", "tiny", hf_model_setup=False)
+    config, _, _ = dolly_config_setup(CONFIG_DIR / "inference.yml", "release", "tiny", hf_model_setup=False)
     session = inference(config)
-    with timer("Loading HF pretrained model to IPU"):
-        weights = hf_mapping_lm_tp(config, session, hf_model)
-        session.write_variables_data(weights)
 
     inputs = {
         stream: np.ones(session._full_input_shape(stream.shape), stream.dtype.as_numpy())

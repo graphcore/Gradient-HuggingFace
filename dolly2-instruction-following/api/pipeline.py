@@ -177,7 +177,6 @@ class DollyPipeline:
                 topk_logits[i] = next_token_logits[i, topk_idx[i]]
             next_token_logits = topk_logits
 
-        assert temperature >= 0.0, "Temperature must be at least 0."
         if temperature > 0:
             next_token_prob = softmax(next_token_logits.astype(np.float32) / temperature, axis=-1)
             next_token_id = np.asarray(
@@ -228,7 +227,7 @@ class DollyPipeline:
         print_live: Optional[bool] = None,
         print_final: bool = True,
     ):
-        assert 0.0 <= temperature, "Temperature must be at least 0"
+        assert 0.0 <= temperature <= 1.0, "Temperature must be a float value in the range [0, 1]."
         assert (
             0 <= k <= self.config.model.embedding.vocab_size
         ), f"top k value must be in the range [0, vocab_size] (maximum = {self.config.model.embedding.vocab_size})"
