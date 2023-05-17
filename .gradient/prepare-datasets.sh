@@ -29,7 +29,7 @@ if [ ! "$(command -v fuse-overlayfs)" ]; then
 fi
 
 
-[ "${8}" == "unset" ] && EXAMPLES_UTILS_REV=latest_stable || EXAMPLES_UTILS_REV=${8}
+[ "${6}" == "unset" ] && EXAMPLES_UTILS_REV=latest_stable || EXAMPLES_UTILS_REV=${6}
 
 python -m pip install "examples-utils[jupyter] @ git+https://github.com/graphcore/examples-utils@${EXAMPLES_UTILS_REV}" --use-feature=fast-deps
 python -m pip install gradient
