@@ -1,0 +1,24 @@
+_optimum_graphcore_repository: &_optimum_graphcore_repository
+    origin: https://github.com/huggingface/optimum-graphcore.git
+    ref: main
+
+_current_repo_in_github_actions: &_current_repo_in_github_actions
+    origin: notebooks/
+    ref: null
+
+deberta-lukem:
+    source:
+      paths:
+      - expression: '*'
+        path: notebooks/deberta-blog-notebook.ipynb
+        recursive: true
+      repository:
+        origin: https://github.com/graphcore/optimum-graphcore-fork.git
+        prefix: notebooks/
+        ref: deberta-notebook
+    target:
+      renames: {}
+      repository:
+        <<: *_current_repo_in_github_actions
+        prefix: natural-language-processing/other-use-cases/
+
