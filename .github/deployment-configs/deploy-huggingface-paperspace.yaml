@@ -1,11 +1,16 @@
 
 _optimum_graphcore_repository: &_optimum_graphcore_repository
-  origin: git@github.com:huggingface/optimum-graphcore.git
+  origin: https://github.com/huggingface/optimum-graphcore.git
   ref: main
 
+_examples_internal_repository: &_examples_internal_repository
+  origin: https://github.com/graphcore/examples.git
+  ref: sdk-release-3.2
+
+
 _common_target_repository: &_common_target_repository
-  origin: git@github.com:graphcore/Graphcore-HuggingFace-fork.git
-  ref: prepare-sdk-3.2
+    origin: notebooks/
+    ref: null
 
 
 natural-language-processing-main:
@@ -132,7 +137,7 @@ gptj:
     - path: nlp/gpt_j/popxl/README.md
     - path: nlp/gpt_j/popxl/.gitignore
     repository:
-      origin: git@github.com:graphcore/examples.git
+      origin: https://github.com/graphcore/examples.git
       ref: sdk-release-3.2
       prefix: nlp/gpt_j/popxl
   target:
@@ -163,9 +168,8 @@ whisper:
       path: notebooks/whisper-example.ipynb
       recursive: true
     repository:
-      origin: git@github.com:graphcore/optimum-graphcore-fork.git
+      <<: *_optimum_graphcore_repository
       prefix: notebooks/
-      ref: whisper/poc
   target:
     renames: {}
     repository:
@@ -183,8 +187,7 @@ dolly2:
     - path: nlp/dolly/popxl/run-inference.py
     - path: nlp/dolly/popxl/.gitignore
     repository:
-      origin: git@github.com:graphcore/examples-internal.git
-      ref: dolly-inference
+      <<: *_examples_internal_repository
       prefix: nlp/dolly/popxl
   target:
     renames: {}
