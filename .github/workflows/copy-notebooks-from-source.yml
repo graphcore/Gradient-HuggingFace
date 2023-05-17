@@ -13,7 +13,7 @@ on:
 
 jobs:
   tests:
-    uses: graphcore/paperspace-automation/.github/workflows/copy-to-nb-repo.yml@main
+    uses: graphcore/paperspace-automation/.github/workflows/copy-to-nb-repo.yml@fix-copy-action #main
     with:
       # deployment_spec: ${{ inputs.deployment_spec }}
       deployment_spec: .github/deployment-configs/deploy-deberta.yaml
