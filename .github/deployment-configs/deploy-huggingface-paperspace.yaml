@@ -1,0 +1,193 @@
+
+_optimum_graphcore_repository: &_optimum_graphcore_repository
+  origin: git@github.com:huggingface/optimum-graphcore.git
+  ref: main
+
+_common_target_repository: &_common_target_repository
+  origin: git@github.com:graphcore/Graphcore-HuggingFace-fork.git
+  ref: prepare-sdk-3.2
+
+
+natural-language-processing-main:
+  source:
+    paths:
+    - path: notebooks/introduction_to_optimum_graphcore.ipynb
+    - path: notebooks/name-entity-extraction.ipynb
+    - path: notebooks/translation.ipynb
+    - path: notebooks/sentiment_analysis.ipynb
+    - path: notebooks/squad_preprocessing.py
+    repository:
+      <<: *_optimum_graphcore_repository
+      prefix: notebooks/
+  target:
+    renames: {}
+    repository:
+      <<: *_common_target_repository
+      prefix:  natural-language-processing/
+
+natural-language-processing-extra:
+  source:
+    paths:
+    - path: notebooks/external_model.ipynb
+    - path: notebooks/language_modelling_from_scratch.ipynb
+    - path: notebooks/multiple_choice.ipynb
+    - path: notebooks/question_answering.ipynb
+    - path: notebooks/summarization.ipynb
+    - path: notebooks/text_classification.ipynb
+    - path: notebooks/token_classification.ipynb
+    repository:
+      <<: *_optimum_graphcore_repository
+      prefix: notebooks/
+  target:
+    renames: {}
+    repository:
+      <<: *_common_target_repository
+      prefix:  natural-language-processing/other-use-cases/
+
+managing_ipu_resources:
+  source:
+    paths:
+    - path: notebooks/managing_ipu_resources.ipynb
+    repository:
+      <<: *_optimum_graphcore_repository
+      prefix: notebooks/
+  target:
+    renames: {}
+    repository:
+      <<: *_common_target_repository
+      prefix: useful-tips/
+
+stable-diffusion:
+  source:
+    paths:
+    - expression: '*'
+      path: notebooks/stable_diffusion
+      recursive: true
+    excludes:
+    - expression: '*'
+      path: notebooks/stable_diffusion/stable_diffusion_space
+      recursive: true
+    repository:
+      <<: *_optimum_graphcore_repository
+      prefix: notebooks/stable_diffusion
+  target:
+    renames: {}
+    repository:
+      <<: *_common_target_repository
+      prefix: stable-diffusion/
+
+image-classification:
+  source:
+    paths:
+    - path: notebooks/image_classification.ipynb
+    repository:
+      <<: *_optimum_graphcore_repository
+      prefix: notebooks
+  target:
+    renames: {}
+    repository:
+      <<: *_common_target_repository
+      prefix: image-classification/
+
+# Disable deploying this notebook as we are having trouble uploading the
+# dataset to Paperspace. We have removed this notebook from the HF runtime repo
+# until that is resolved.
+# The notebook is also silently failing non-deterministically, so the don't deploy
+# until that's resolved.
+# audio-classification:
+#   source:
+#     paths:
+#     - path: notebooks/audio_classification.ipynb
+#     repository:
+#       <<: *_optimum_graphcore_repository
+#       prefix: notebooks/
+#   target:
+#     renames: {}
+#     repository:
+#       <<: *_common_target_repository
+#       prefix: audio-processing/
+
+wav2vec2:
+  source:
+    paths:
+    - path: notebooks/wav2vec2/requirements.txt
+    - path: notebooks/wav2vec2/wav2vec2-fine-tuning-checkpoint.ipynb
+    - path: notebooks/wav2vec2/wav2vec2-inference-checkpoint.ipynb
+    repository:
+      <<: *_optimum_graphcore_repository
+      prefix: notebooks/wav2vec2/
+  target:
+    renames: {}
+    repository:
+      <<: *_common_target_repository
+      prefix: audio-processing/
+
+gptj:
+  source:
+    paths:
+    - expression: '*'
+      path: nlp/gpt_j/popxl
+      recursive: true
+    excludes:
+    - path: nlp/gpt_j/popxl/README.md
+    - path: nlp/gpt_j/popxl/.gitignore
+    repository:
+      origin: git@github.com:graphcore/examples.git
+      ref: sdk-release-3.2
+      prefix: nlp/gpt_j/popxl
+  target:
+    renames: {}
+    repository:
+      <<: *_common_target_repository
+      prefix: gptj-text-generation
+
+packed-bert:
+  source:
+    paths:
+    - expression: '*'
+      path: notebooks/packed_bert
+      recursive: true
+    repository:
+      <<: *_optimum_graphcore_repository
+      prefix: notebooks/packed_bert
+  target:
+    renames: {}
+    repository:
+      <<: *_common_target_repository
+      prefix: packed-bert/
+
+whisper:
+  source:
+    paths:
+    - expression: '*'
+      path: notebooks/whisper-example.ipynb
+      recursive: true
+    repository:
+      origin: git@github.com:graphcore/optimum-graphcore-fork.git
+      prefix: notebooks/
+      ref: whisper/poc
+  target:
+    renames: {}
+    repository:
+      <<: *_common_target_repository
+      prefix: whisper/
+
+dolly2:
+  source:
+    paths:
+    - expression: '*'
+      path: nlp/dolly/popxl
+      recursive: true
+    excludes:
+    - path: nlp/dolly/popxl/pytest.ini
+    - path: nlp/dolly/popxl/run-inference.py
+    - path: nlp/dolly/popxl/.gitignore
+    repository:
+      origin: git@github.com:graphcore/examples-internal.git
+      ref: dolly-inference
+      prefix: nlp/dolly/popxl
+  target:
+    renames: {}
+    repository:
+      <<: *_common_target_repository
+      prefix: dolly2-instruction-following/
