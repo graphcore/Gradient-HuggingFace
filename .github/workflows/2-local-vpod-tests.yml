@@ -21,6 +21,11 @@ on:
         description: "List of notebooks to test in JSON format"
         required: false
         default: '["Graphcore-HuggingFace-README_first"]'
+      machine_types:
+        type: string
+        description: "List of machines types"
+        required: false
+        default: '["IPU-POD4"]'
   pull_request:
   schedule:
     # run at 11:00 PM GMT every night
@@ -33,7 +38,7 @@ jobs:
     with:
       docker_image: ${{ inputs.docker_image || 'graphcore/pytorch-jupyter:3.2.0-ubuntu-20.04-20230331' }}
       notebooks: ${{ inputs.notebooks }}
-      machine_types: '["IPU-POD4"]'
+      machine_types: ${{ inputs.machine_types }}
       test_env: ${{ inputs.test_env || 'Local' }}
     secrets:
       gh_token:  ${{ secrets.GH_TOKEN_SYNC_REPOS }}

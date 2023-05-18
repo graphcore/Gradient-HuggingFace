@@ -5,6 +5,9 @@ on:
   push:
     branches:
       - main
+  schedule:
+    # run at 10:00 PM GMT every night
+    - cron:  '0 22 * * *'
 
 jobs:
 

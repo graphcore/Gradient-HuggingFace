@@ -1,0 +1,20 @@
+name: Copy notebooks from source repos
+
+on:
+  workflow_dispatch:
+    inputs:
+      deployment_spec:
+        required: false
+        type: string
+        description: "Spec file to be read for copying notebooks, must be valid input to deployment/deploy.py"
+        default: .github/deployment-configs/deploy-deberta.yaml
+  pull_request:
+
+
+jobs:
+  tests:
+    uses: graphcore/paperspace-automation/.github/workflows/copy-to-nb-repo.yml@main
+    with:
+      deployment_spec: ${{ inputs.deployment_spec }}
+    secrets:
+      gh_token:  ${{ secrets.GH_TOKEN_SYNC_REPOS }}
