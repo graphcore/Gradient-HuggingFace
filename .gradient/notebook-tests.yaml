@@ -205,6 +205,19 @@ dolly2-inference:
     timeout: 10000
   requirements_file: requirements.txt
 
+openassistant-chatbot-inference:
+  location: ../dolly2-instruction-following
+  generated: true
+  env:
+    EXAMPLE_PROMPTS: |
+      ["What is an IPU?",
+      "Who makes it?",
+      "Can I use them?",
+      "Where?"]
+  notebook:
+    file: OpenAssistant-Pythia-12B-Chatbot.ipynb
+    timeout: 10000
+
 packed-bert-multi-label-classification:
   location: ../packed-bert
   generated: true
