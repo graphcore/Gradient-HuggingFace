@@ -1,7 +1,7 @@
 #! /usr/bin/env bash
 set -euxo pipefail
 run-tests() {
-
+    echo "Start testing"
     # set variable matching the standard Paperspace entry point
     export PIP_DISABLE_PIP_VERSION_CHECK=1
 
@@ -36,10 +36,7 @@ if [[ "${1:-}" == 'test' ]]; then
 elif [[ "${2:-}" == 'test' ]]; then
     ARGS="${@:3}"
     [ "${10}" == "unset" ] && EXAMPLES_UTILS_REV=latest_stable || EXAMPLES_UTILS_REV=${10}
-
 fi
-
-EXAMPLES_UTILS_REV=48aa11235a2a8950f2de15064eee33e6d6c504b1
 
 python -m pip install "examples-utils[jupyter] @ git+https://github.com/graphcore/examples-utils@${EXAMPLES_UTILS_REV}" --use-feature=fast-deps
 python -m pip install gradient
@@ -48,15 +45,11 @@ python -m pip install gradient
 mkdir -p ${PERSISTENT_CHECKPOINT_DIR}
 echo "Starting preparation of datasets"
 python -m examples_utils paperspace symlinks --path "$( dirname -- "${BASH_SOURCE[0]}" )"/symlink_config.json
-# /notebooks/.gradient/symlink_datasets_and_caches.py
-
-# pre-install the correct version of optimum for this release
-python3 -m pip install "optimum-graphcore>=0.5, <0.6"
 
 echo "Finished running setup.sh."
 
 # Run automated test if specified
-[ -v $ARGS] && run-tests $ARGS
+[ -n "${ARGS+x}" ] && run-tests $ARGS
 
 echo "Test finished shutting down notebook"
 sleep 5
