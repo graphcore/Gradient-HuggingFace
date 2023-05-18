@@ -13,12 +13,11 @@ deberta-lukem:
         path: notebooks/deberta-blog-notebook.ipynb
         recursive: true
       repository:
-        origin: https://github.com/graphcore/optimum-graphcore-fork.git
+        origin: https://github.com/huggingface/optimum-graphcore.git
         prefix: notebooks/
-        ref: deberta-notebook
+        ref: main
     target:
       renames: {}
       repository:
         <<: *_current_repo_in_github_actions
         prefix: natural-language-processing/other-use-cases/
-
