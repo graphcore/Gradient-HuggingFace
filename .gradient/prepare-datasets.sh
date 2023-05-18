@@ -28,8 +28,18 @@ if [ ! "$(command -v fuse-overlayfs)" ]; then
     apt install -o DPkg::Lock::Timeout=120 -y psmisc libfuse3-dev fuse-overlayfs
 fi
 
+EXAMPLES_UTILS_REV=latest_stable
 
-[ "${6}" == "unset" ] && EXAMPLES_UTILS_REV=latest_stable || EXAMPLES_UTILS_REV=${6}
+if [[ "${1:-}" == 'test' ]]; then
+    ARGS="${@:2}"
+    [ "${9}" == "unset" ] && EXAMPLES_UTILS_REV=latest_stable || EXAMPLES_UTILS_REV=${9}
+elif [[ "${2:-}" == 'test' ]]; then
+    ARGS="${@:3}"
+    [ "${10}" == "unset" ] && EXAMPLES_UTILS_REV=latest_stable || EXAMPLES_UTILS_REV=${10}
+
+fi
+
+EXAMPLES_UTILS_REV=48aa11235a2a8950f2de15064eee33e6d6c504b1
 
 python -m pip install "examples-utils[jupyter] @ git+https://github.com/graphcore/examples-utils@${EXAMPLES_UTILS_REV}" --use-feature=fast-deps
 python -m pip install gradient
@@ -46,11 +56,7 @@ python3 -m pip install "optimum-graphcore>=0.5, <0.6"
 echo "Finished running setup.sh."
 
 # Run automated test if specified
-if [[ "${1:-}" == 'test' ]]; then
-    run-tests "${@:2}"
-elif [[ "${2:-}" == 'test' ]]; then
-    run-tests "${@:3}"
-fi
+[ -v $ARGS] && run-tests $ARGS
 
 echo "Test finished shutting down notebook"
 sleep 5
