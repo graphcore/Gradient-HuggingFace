@@ -2,6 +2,8 @@
 set -euxo pipefail
 run-tests() {
     echo "Start testing"
+    python -m pip install gradient
+
     # set variable matching the standard Paperspace entry point
     export PIP_DISABLE_PIP_VERSION_CHECK=1
 
@@ -45,8 +47,6 @@ elif [[ "${2:-}" == 'test' ]]; then
 fi
 
 python -m pip install "examples-utils[jupyter] @ git+https://github.com/graphcore/examples-utils@${EXAMPLES_UTILS_REV}" --use-feature=fast-deps
-python -m pip install gradient
-
 
 mkdir -p ${PERSISTENT_CHECKPOINT_DIR}
 echo "Starting preparation of datasets"
