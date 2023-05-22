@@ -95,13 +95,14 @@ class DollyPipeline:
         tokenizer: Optional[AutoTokenizer] = None,
         prompt_format: Optional[str] = None,
         end_key: Optional[str] = None,
+        task=None,
         **kwargs,
     ) -> None:
         if sequence_length is not None:
             config.model.sequence_length = sequence_length
         if micro_batch_size is not None:
             config.execution.micro_batch_size = micro_batch_size
-
+        self.task = "text-generation"
         logging.info(f"Creating session")
         session: popxl.Session = inference(config)
         if isinstance(hf_dolly_checkpoint, str):

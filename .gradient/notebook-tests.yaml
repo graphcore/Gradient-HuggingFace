@@ -247,3 +247,11 @@ packed-bert-single-label-classification:
   notebook:
     file: packedBERT_single_label_text_classification.ipynb
     timeout: 10000
+
+#MolFeat Transformer
+molfeat:
+  location: ../molfeat
+  generated: true
+  notebook:
+    file: transformers_molfeat_finetune.ipynb
+    timeout: 1000
