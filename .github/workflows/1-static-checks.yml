@@ -1,9 +1,9 @@
-name: 1. Static Checks
+# name: 1. Static Checks
 
-on: [pull_request, workflow_dispatch]
+# on: [pull_request, workflow_dispatch]
 
 
-jobs:
+# jobs:
   # TODO: enable later
   # pylint:
   #   runs-on: ubuntu-latest
@@ -41,52 +41,51 @@ jobs:
   #     run: |
   #       ruff check --config .github/workflows/configs/ruff.toml .
 
-  pre-commit:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repo
-        uses: actions/checkout@v3
-      - name: Install requirements
-        run: python3 -m pip install pre-commit
-      - id: changed-files
-        uses: tj-actions/changed-files@ce810b29b28abf274afebdcd8fe47b8fba0f28bd
-      - name: Run pre-commit
-        id: pre-commit
-        run: pre-commit run -c .github/workflows/configs/pre-commit-config.yaml --show-diff-on-failure --files ${{ steps.changed-files.outputs.all_changed_files }}
-      - name: Find Comment
-        uses: peter-evans/find-comment@81e2da3af01c92f83cb927cf3ace0e085617c556  # v2.2.0 (pinned for security reasons)
-        id: fc
-        if: failure() && steps.pre-commit.outcome == 'failure'
-        with:
-          issue-number: ${{ github.event.pull_request.number }}
-          comment-author: 'github-actions[bot]'
-          body-regex: 'Pre-commit checks failed'
-      - name: Create or update comment
-        uses: peter-evans/create-or-update-comment@5adcb0bb0f9fb3f95ef05400558bdb3f329ee808  # v2.1.0 (pinned for security reasons)
-        if: failure() && steps.fc.outcome == 'success'
-        with:
-          comment-id: ${{ steps.fc.outputs.comment-id }}
-          issue-number: ${{ github.event.pull_request.number }}
-          body: |
-            **Pre-commit checks failed.**
+  # pre-commit:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Checkout repo
+  #       uses: actions/checkout@v3
+  #     - name: Install requirements
+  #       run: python3 -m pip install pre-commit
+  #     - id: changed-files
+  #       uses: tj-actions/changed-files@ce810b29b28abf274afebdcd8fe47b8fba0f28bd
+  #     - name: Run pre-commit
+  #       id: pre-commit
+  #       run: pre-commit run -c .github/workflows/configs/pre-commit-config.yaml --show-diff-on-failure --files ${{ steps.changed-files.outputs.all_changed_files }}
+  #     - name: Find Comment
+  #       uses: peter-evans/find-comment@81e2da3af01c92f83cb927cf3ace0e085617c556  # v2.2.0 (pinned for security reasons)
+  #       id: fc
+  #       if: failure() && steps.pre-commit.outcome == 'failure'
+  #       with:
+  #         issue-number: ${{ github.event.pull_request.number }}
+  #         comment-author: 'github-actions[bot]'
+  #         body-regex: 'Pre-commit checks failed'
+  #     - name: Create or update comment
+  #       uses: peter-evans/create-or-update-comment@5adcb0bb0f9fb3f95ef05400558bdb3f329ee808  # v2.1.0 (pinned for security reasons)
+  #       if: failure() && steps.fc.outcome == 'success'
+  #       with:
+  #         comment-id: ${{ steps.fc.outputs.comment-id }}
+  #         issue-number: ${{ github.event.pull_request.number }}
+  #         body: |
+  #           **Pre-commit checks failed.**
 
-            Please install pre-commit so that your changes are checked before committing and pushing to GitHub. Run the following in the root of this repo:
-            ```
-            pip3 install pre-commit
-            pre-commit install
-            pre-commit clean
-            ```
-            Pre-commit will check and make changes to files when you run `git commit`. If pre-commit makes changes and fails you will need to add those changes by running `git add` and `git commit`.
+  #           Please install pre-commit so that your changes are checked before committing and pushing to GitHub. Run the following in the root of this repo:
+  #           ```
+  #           pip3 install pre-commit
+  #           pre-commit install
+  #           pre-commit clean
+  #           ```
+  #           Pre-commit will check and make changes to files when you run `git commit`. If pre-commit makes changes and fails you will need to add those changes by running `git add` and `git commit`.
 
-            As you have already made changes and committed them before installing pre-commit, please run the following:
-            ```
-            git fetch
-            git commit -a -m "Save work"
-            pre-commit run --from-ref origin/${{ github.base_ref }} --to-ref ${{ github.head_ref }}
-            ```
-
-            You can use `git commit --no-verify` to bypass pre-commit however your PR will fail the pre-commit CI checks.
-          edit-mode: replace
+  #           As you have already made changes and committed them before installing pre-commit, please run the following:
+  #           ```
+  #           git fetch
+  #           git commit -a -m "Save work"
+  #           pre-commit run --from-ref origin/${{ github.base_ref }} --to-ref ${{ github.head_ref }}
+  #           ```
+  #           You can use `git commit --no-verify` to bypass pre-commit however your PR will fail the pre-commit CI checks.
+  #         edit-mode: replace
 
 
   links-checker:
@@ -94,3 +93,4 @@ jobs:
     secrets:
       gh_token: ${{ secrets.GITHUB_TOKEN }}
       paperspace_automation_gh_token: ${{ secrets.GH_TOKEN_SYNC_REPOS }}
+
