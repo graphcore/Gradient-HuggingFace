@@ -28,8 +28,8 @@ on:
         default: '["IPU-POD4"]'
   pull_request:
   schedule:
-    # run at 11:00 PM GMT every night
-    - cron:  '0 23 * * *'
+    # run at 7:00 PM GMT every night
+    - cron:  '0 19 * * *'
 
 
 jobs:

@@ -87,3 +87,10 @@ jobs:
 
             You can use `git commit --no-verify` to bypass pre-commit however your PR will fail the pre-commit CI checks.
           edit-mode: replace
+
+
+  links-checker:
+    uses: graphcore/paperspace-automation/.github/workflows/subwf-links-checker.yml@main
+    secrets:
+      gh_token: ${{ secrets.GITHUB_TOKEN }}
+      paperspace_automation_gh_token: ${{ secrets.GH_TOKEN_SYNC_REPOS }}

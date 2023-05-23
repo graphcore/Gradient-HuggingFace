@@ -102,6 +102,13 @@ nlp-external_model:
     file: external_model.ipynb
     timeout: 10000
 
+nlp-deberta-blog:
+  location: ../natural-language-processing/other-use-cases
+  generated: true
+  notebook:
+    file: deberta-blog-notebook.ipynb
+    timeout: 1000
+
 # Stable diffusion
 stable-diffusion-image_to_image:
   location: ../stable-diffusion
@@ -240,3 +247,11 @@ packed-bert-single-label-classification:
   notebook:
     file: packedBERT_single_label_text_classification.ipynb
     timeout: 10000
+
+#MolFeat Transformer
+molfeat:
+  location: ../molfeat
+  generated: true
+  notebook:
+    file: transformers_molfeat_finetune.ipynb
+    timeout: 1000
