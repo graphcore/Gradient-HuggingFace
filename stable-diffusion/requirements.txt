@@ -1,3 +1,3 @@
-optimum-graphcore @ git+https://github.com/huggingface/optimum-graphcore.git@main
+optimum-graphcore @ git+https://github.com/huggingface/optimum-graphcore.git@v0.6.1-release
 matplotlib
 examples-utils[common] @ git+https://github.com/graphcore/examples-utils@latest_stable
