@@ -13,7 +13,7 @@ mkdir -p ${PERSISTENT_CHECKPOINT_DIR}
 echo "Starting preparation of datasets"
 /notebooks/.gradient/symlink_datasets_and_caches.py
 
-
+rm -r ${POPLAR_EXECUTABLE_CACHE_DIR}/stable*
 echo "Finished running setup.sh."
 # Run automated test if specified
 if [[ "${1:-}" == 'test' ]]; then
