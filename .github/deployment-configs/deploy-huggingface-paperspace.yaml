@@ -194,3 +194,24 @@ dolly2:
     repository:
       <<: *_common_target_repository
       prefix: dolly2-instruction-following/
+
+flan-t5:
+  source:
+    paths:
+    - expression: '*'
+      path: nlp/t5/popxl
+      recursive: true
+    excludes:
+    - path: nlp/t5/popxl/pytest.ini
+    - path: nlp/t5/popxl/README.md
+    - path: nlp/t5/popxl/.gitignore
+    - path: nlp/t5/popxl/run_finetuning.py
+    - path: nlp/t5/popxl/run_validation.py
+    repository:
+      <<: *_examples_internal_repository
+      prefix: nlp/t5/popxl
+  target:
+    renames: {}
+    repository:
+      <<: *_common_target_repository
+      prefix: flan-t5-text-generation/
