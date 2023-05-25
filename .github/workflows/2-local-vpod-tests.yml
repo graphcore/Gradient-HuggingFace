@@ -39,7 +39,7 @@ on:
 
 jobs:
   tests:
-    uses: graphcore/paperspace-automation/.github/workflows/subwf-vpod-tests-for-nb-repo.yml@${{ inputs.paperspace_automation_ref || 'main' }} # ci-fix-s3-dest  # main
+    uses: graphcore/paperspace-automation/.github/workflows/subwf-vpod-tests-for-nb-repo.yml@${{inputs.paperspace_automation_ref||'main'}} # ci-fix-s3-dest  # main
     with:
       docker_image: ${{ inputs.docker_image || 'graphcore/pytorch-jupyter:3.2.0-ubuntu-20.04-20230331' }}
       notebooks: ${{ inputs.notebooks }}
