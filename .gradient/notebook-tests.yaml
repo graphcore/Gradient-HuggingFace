@@ -36,6 +36,19 @@ nlp-sentiment-analysis:
     file: sentiment_analysis.ipynb
     timeout: 10000
 
+flan-t5-generative-inference:
+  location: ../natural-language-processing
+  generated: true
+  env:
+    EXAMPLE_PROMPTS: |
+      What is an IPU?
+      Who makes it?
+      Can I use them?
+      Where?
+  notebook:
+    file: Flan-T5-generative-inference.ipynb
+    timeout: 10000
+
 
 
 nlp-text_classification:
