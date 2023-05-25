@@ -26,6 +26,11 @@ on:
         description: "List of machines types"
         required: false
         default: '["IPU-POD4"]'
+      paperspace_automation_ref:
+        type: string
+        description: "Git reference for paperspace_automation repo checkout"
+        required: false
+        default: 'main'
   pull_request:
   schedule:
     # run at 7:00 PM GMT every night
@@ -34,12 +39,13 @@ on:
 
 jobs:
   tests:
-    uses: graphcore/paperspace-automation/.github/workflows/subwf-vpod-tests-for-nb-repo.yml@ci-fix-s3-dest  # main
+    uses: graphcore/paperspace-automation/.github/workflows/subwf-vpod-tests-for-nb-repo.yml@${{ inputs.paperspace_automation_ref || 'main' }} # ci-fix-s3-dest  # main
     with:
       docker_image: ${{ inputs.docker_image || 'graphcore/pytorch-jupyter:3.2.0-ubuntu-20.04-20230331' }}
       notebooks: ${{ inputs.notebooks }}
       machine_types: ${{ inputs.machine_types }}
       test_env: ${{ inputs.test_env || 'Local' }}
+      paperspace_automation_ref: ${{ inputs.paperspace_automation_ref || 'main' }}
     secrets:
       gh_token:  ${{ secrets.GH_TOKEN_SYNC_REPOS }}
 #      paperspace_api_key: ${{ secrets.paperspace_api_key }}
