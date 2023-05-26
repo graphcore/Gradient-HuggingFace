@@ -268,3 +268,17 @@ molfeat:
   notebook:
     file: transformers_molfeat_finetune.ipynb
     timeout: 1000
+
+mt5-translation:
+  location: ../natural-language-processing/other-use-cases
+  generated: true
+  notebook:
+    file: mt5_translation.ipynb
+    timeout: 10000
+
+mt5-xnli:
+   location: ../natural-language-processing/other-use-cases
+   generated: true
+   notebook:
+      file: mt5_xnli.ipynb
+      timeout: 10000
