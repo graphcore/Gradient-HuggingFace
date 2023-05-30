@@ -49,7 +49,7 @@ run_tests(){
     # HEALTH_CHECK_LOG_FILE=$(find ${HEALTH_CHECK_LOG_FOLDER} -type f | sort -n | tail -1)
     # cp ${HEALTH_CHECK_LOG_FILE} ${LOG_FOLDER}
     cd /notebooks/
-    python -m examples_utils platform_assessment --spec ${TEST_CONFIG_FILE} "${@:9}" \
+    stdbuf -oL -eL python -m examples_utils platform_assessment --spec ${TEST_CONFIG_FILE} "${@:9}" \
         --log-dir $LOG_FOLDER \
         --gc-monitor \
         --cloning-directory /tmp/clones \
