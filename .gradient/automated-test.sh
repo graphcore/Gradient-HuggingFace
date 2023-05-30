@@ -43,11 +43,11 @@ run_tests(){
     TEST_CONFIG_FILE="${6}"
     mkdir -p ${LOG_FOLDER}
     # Run the health check script
-    HEALTH_CHECK_LOG_FOLDER="/storage/graphcore_health_checks"
-    python -m examples_utils.paperspace_utils.health_check --log-folder ${HEALTH_CHECK_LOG_FOLDER}
-    # Copy the health check logs to local log folder
-    HEALTH_CHECK_LOG_FILE=$(find ${HEALTH_CHECK_LOG_FOLDER} -type f | sort -n | tail -1)
-    cp ${HEALTH_CHECK_LOG_FILE} ${LOG_FOLDER}
+    # HEALTH_CHECK_LOG_FOLDER="/storage/graphcore_health_checks"
+    # python -m examples_utils.paperspace_utils.health_check --log-folder ${HEALTH_CHECK_LOG_FOLDER}
+    # # Copy the health check logs to local log folder
+    # HEALTH_CHECK_LOG_FILE=$(find ${HEALTH_CHECK_LOG_FOLDER} -type f | sort -n | tail -1)
+    # cp ${HEALTH_CHECK_LOG_FILE} ${LOG_FOLDER}
     cd /notebooks/
     python -m examples_utils platform_assessment --spec ${TEST_CONFIG_FILE} "${@:9}" \
         --log-dir $LOG_FOLDER \
