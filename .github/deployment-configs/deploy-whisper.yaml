@@ -1,0 +1,28 @@
+
+_optimum_graphcore_repository: &_optimum_graphcore_repository
+  origin: https://github.com/huggingface/optimum-graphcore.git
+  ref: main
+
+_examples_internal_repository: &_examples_internal_repository
+  origin: examples-internal/
+  ref: null
+
+
+_common_target_repository: &_common_target_repository
+    origin: notebooks/
+    ref: null
+
+whisper:
+  source:
+    paths:
+    - expression: '*'
+      path: notebooks/whisper-example.ipynb
+      recursive: true
+    repository:
+      <<: *_optimum_graphcore_repository
+      prefix: notebooks/
+  target:
+    renames: {}
+    repository:
+      <<: *_common_target_repository
+      prefix: early-access/whisper/
