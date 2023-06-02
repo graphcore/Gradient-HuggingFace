@@ -32,10 +32,10 @@ stable-diffusion-text_to_image:
 
 stable-diffusion-text_to_image_rrr:
   location: ../stable-diffusion
-  generated: true
+  generated: true   
   notebook:
     file: text_to_image_rrr.ipynb
-    timeout: 600
+    timeout: 60
 
 stable-diffusion-text_to_image_sd2:
   location: ../stable-diffusion
