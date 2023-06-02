@@ -37,6 +37,13 @@ stable-diffusion-text_to_image_rrr:
     file: text_to_image_rrr.ipynb
     timeout: 60
 
+sleep:
+  location: ../stable-diffusion
+  generated: true   
+  notebook:
+    file: sleep.ipynb
+    timeout: 5
+
 stable-diffusion-text_to_image_sd2:
   location: ../stable-diffusion
   generated: true
