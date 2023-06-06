@@ -53,7 +53,7 @@ run_tests(){
         --log-dir $LOG_FOLDER \
         --gc-monitor \
         --cloning-directory /tmp/clones \
-        --additional-metrics
+        --additional-metrics \
         --timeout 5
 
     tar -czvf "${LOG_FOLDER}.tar.gz" ${LOG_FOLDER}
