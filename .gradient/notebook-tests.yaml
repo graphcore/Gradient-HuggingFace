@@ -47,7 +47,7 @@ sleep:
 sleep-py:
   location: ../stable-diffusion
   cmd: >-
-    python3 sleep.py
+    python3 sleep.py 
 
 stable-diffusion-text_to_image_sd2:
   location: ../stable-diffusion
