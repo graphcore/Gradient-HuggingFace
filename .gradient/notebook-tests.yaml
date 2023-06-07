@@ -40,6 +40,7 @@ stable-diffusion-text_to_image_rrr:
 sleep:
   location: ../stable-diffusion
   generated: true   
+  timeout: 5
   notebook:
     file: sleep.ipynb
     timeout: 5
