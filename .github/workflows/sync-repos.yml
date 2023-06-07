@@ -21,7 +21,7 @@ jobs:
         token: ${{ secrets.GH_TOKEN_SYNC_REPOS }}
     - name: Sync repos
       env:
-        DEST_REPO_URL: https://marcins-gc:${{ secrets.GH_TOKEN_SYNC_REPOS }}@github.com/graphcore/Gradient-HuggingFace
+        DEST_REPO_URL: https://${{ secrets.GH_TOKEN_USER }}:${{ secrets.GH_TOKEN_SYNC_REPOS }}@github.com/graphcore/Gradient-HuggingFace
       run: |
         git remote add target "${DEST_REPO_URL}"
 
