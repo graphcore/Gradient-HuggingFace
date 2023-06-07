@@ -47,11 +47,11 @@ sleep:
     file: sleep.ipynb
     timeout: 5
 
-sleep2:
+dummy:
   location: ../stable-diffusion
   generated: true   
   notebook:
-    file: sleep.ipynb
+    file: dummy.ipynb
 
 # sleep-py:
 #   location: ../stable-diffusion
