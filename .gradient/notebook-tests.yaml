@@ -26,6 +26,7 @@ stable-diffusion-inpainting:
 stable-diffusion-text_to_image:
   location: ../stable-diffusion
   generated: true
+  timeout: 1800
   notebook:
     file: text_to_image.ipynb
     timeout: 3000
