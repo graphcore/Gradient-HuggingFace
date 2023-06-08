@@ -1,0 +1,5 @@
+default: graphcore/pytorch-jupyter:3.2.0-ubuntu-20.04-20230331
+
+early-access-tests:
+  test_names: [whisper-EA]
+  docker_image: "graphcore/pytorch-paperspace-early-access:3.3.0-EA.1-ubuntu-20.04-20230504"
