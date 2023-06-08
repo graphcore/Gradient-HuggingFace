@@ -36,7 +36,7 @@ jobs:
   tests:
     uses: graphcore/paperspace-automation/.github/workflows/subwf-vpod-tests-for-nb-repo.yml@ci-test-image
     with:
-      docker_image: ${{ inputs.docker_image || .github/test_configs/test-images.yaml}}
+      docker_image: ${{ inputs.docker_image || .github/test_configs/test-images.yaml }}
       notebooks: ${{ inputs.notebooks }}
       machine_types: ${{ inputs.machine_types }}
       test_env: ${{ inputs.test_env || 'Local' }}
