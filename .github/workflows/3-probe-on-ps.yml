@@ -1,0 +1,29 @@
+name: 3. Probe on PS env
+
+on:
+  workflow_dispatch:
+    inputs:
+      docker_image:
+        type: string
+        description: "Docker image used in notebook testing"
+        required: false
+        default: "graphcore/pytorch-jupyter:3.2.0-ubuntu-20.04-20230331"
+  pull_request:
+  schedule:
+    # run at 7:30 PM GMT every night
+    - cron:  '30 19 * * *'
+
+
+jobs:
+  probe-in-ps:
+    name: Probe in PS env
+    uses: graphcore/paperspace-automation/.github/workflows/subwf-probe-in-ps.yml@main
+    with:
+      docker_image: ${{ inputs.docker_image || 'graphcore/pytorch-jupyter:3.2.0-ubuntu-20.04-20230331' }}
+    secrets:
+      gh_user: ${{ secrets.GH_TOKEN_USER }}
+      gh_token:  ${{ secrets.GH_TOKEN_SYNC_REPOS }}
+      paperspace_api_key: ${{ secrets.PAPERSPACE_API_KEY }}
+      gradient_ui_email: ${{ secrets.GRADIENT_UI_EMAIL }}
+      gradient_ui_password: ${{ secrets.GRADIENT_UI_PASSWORD }}
+      gradient_validation_key: ${{ secrets.GRADIENT_VALIDATION_KEY }}
