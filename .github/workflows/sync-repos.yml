@@ -23,9 +23,15 @@ jobs:
       env:
         DEST_REPO_URL: https://${{ secrets.GH_TOKEN_USER }}:${{ secrets.GH_TOKEN_SYNC_REPOS }}@github.com/graphcore/Gradient-HuggingFace
       run: |
-        git remote add target "${DEST_REPO_URL}"
+        # checkout all remote branches
+        git checkout main
+        for BRANCH in $(git branch -a | grep remotes | grep -v HEAD | grep -v main); do
+            git branch --force --track "${BRANCH#remotes/origin/}" "${BRANCH}"
+        done
 
         # remove pull refs that are for Pull Requests, GitHub does not accept them
         git for-each-ref --format 'delete %(refname)' refs/pull | git update-ref --stdin
+
+        git remote add target "${DEST_REPO_URL}"
 
         git push --mirror target
