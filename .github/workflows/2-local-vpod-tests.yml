@@ -40,10 +40,7 @@ jobs:
       notebooks: ${{ inputs.notebooks }}
       machine_types: ${{ inputs.machine_types }}
       test_env: ${{ inputs.test_env || 'Local' }}
-      test_mode: 
-        early-access-tests:
-          test_names: 
-            - whisper-EA
+      test_mode: "early-access"
     secrets:
       gh_token:  ${{ secrets.GH_TOKEN_SYNC_REPOS }}
       hugging_face_hub_token: ${{ secrets.HUGGING_FACE_HUB_TOKEN }}
