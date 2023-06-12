@@ -11,11 +11,11 @@ on:
         options:
         - Local
         - Paperspace
-      docker_image:
+      test_mode:
         type: string
-        description: "Docker image used in notebook testing"
+        description: "Docker image used in notebook testing for specific EA tests"
         required: false
-        default: .github/test_configs/test-images.yaml
+        default: None
       notebooks:
         type: string
         description: "List of notebooks to test in JSON format"
@@ -33,6 +33,25 @@ on:
 
 
 jobs:
+  tests-early-access:
+    uses: graphcore/paperspace-automation/.github/workflows/subwf-vpod-tests-for-nb-repo.yml@ci-test-image
+    with:
+      docker_image: ${{ inputs.docker_image || graphcore/pytorch-paperspace-early-access:3.3.0-EA.1-ubuntu-20.04-20230504 }}
+      notebooks: ${{ inputs.notebooks }}
+      machine_types: ${{ inputs.machine_types }}
+      test_env: ${{ inputs.test_env || 'Local' }}
+      test_mode: 
+        early-access-tests:
+          test_names: 
+            - whisper-EA
+    secrets:
+      gh_token:  ${{ secrets.GH_TOKEN_SYNC_REPOS }}
+      hugging_face_hub_token: ${{ secrets.HUGGING_FACE_HUB_TOKEN }}
+      slack_bot_token: ${{ secrets.SLACK_BOT_TOKEN }}
+      ci_slack_channel_id: ${{ secrets.CI_SLACK_CHANNEL_ID }}
+      aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
   tests:
     uses: graphcore/paperspace-automation/.github/workflows/subwf-vpod-tests-for-nb-repo.yml@ci-test-image
     with:
@@ -42,7 +61,6 @@ jobs:
       test_env: ${{ inputs.test_env || 'Local' }}
     secrets:
       gh_token:  ${{ secrets.GH_TOKEN_SYNC_REPOS }}
-#      paperspace_api_key: ${{ secrets.paperspace_api_key }}
       hugging_face_hub_token: ${{ secrets.HUGGING_FACE_HUB_TOKEN }}
       slack_bot_token: ${{ secrets.SLACK_BOT_TOKEN }}
       ci_slack_channel_id: ${{ secrets.CI_SLACK_CHANNEL_ID }}
