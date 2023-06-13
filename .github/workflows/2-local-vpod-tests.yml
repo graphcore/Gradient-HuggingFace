@@ -26,6 +26,11 @@ on:
         description: "List of machines types"
         required: false
         default: '["IPU-POD4"]'
+      test_mode:
+        type: string
+        description: "Docker image used in notebook testing for specific EA tests"
+        required: false
+        default: None
   pull_request:
   schedule:
     # run at 7:00 PM GMT every night
