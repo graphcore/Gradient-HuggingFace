@@ -16,11 +16,6 @@ on:
         description: "Docker image used in notebook testing"
         required: false
         default: "graphcore/pytorch-jupyter:3.2.0-ubuntu-20.04-20230331"
-      test_mode:
-        type: string
-        description: "Docker image used in notebook testing for specific EA tests"
-        required: false
-        default: None
       notebooks:
         type: string
         description: "List of notebooks to test in JSON format"
@@ -45,7 +40,7 @@ jobs:
       notebooks: ${{ inputs.notebooks }}
       machine_types: ${{ inputs.machine_types }}
       test_env: ${{ inputs.test_env || 'Local' }}
-      test_mode: ../test-images.yaml
+      test_mode: .github/test_configs/test-images.yaml
     secrets:
       gh_token:  ${{ secrets.GH_TOKEN_SYNC_REPOS }}
       hugging_face_hub_token: ${{ secrets.HUGGING_FACE_HUB_TOKEN }}
