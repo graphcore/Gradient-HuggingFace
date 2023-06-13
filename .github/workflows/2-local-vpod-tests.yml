@@ -41,7 +41,7 @@ jobs:
   tests-early-access:
     uses: graphcore/paperspace-automation/.github/workflows/subwf-vpod-tests-for-nb-repo.yml@ci-test-image
     with:
-      docker_image: ${{ inputs.docker_image || "graphcore/pytorch-paperspace-early-access:3.3.0-EA.1-ubuntu-20.04-20230504" }}
+      docker_image: ${{ inputs.docker_image || 'graphcore/pytorch-paperspace-early-access:3.3.0-EA.1-ubuntu-20.04-20230504' }}
       notebooks: ${{ inputs.notebooks }}
       machine_types: ${{ inputs.machine_types }}
       test_env: ${{ inputs.test_env || 'Local' }}
@@ -62,7 +62,7 @@ jobs:
     uses: graphcore/paperspace-automation/.github/workflows/subwf-vpod-tests-for-nb-repo.yml@ci-test-image
     with:
       docker_image: ${{ inputs.docker_image }}
-      notebooks: ${{ inputs.notebooks || "graphcore/pytorch-jupyter:3.2.0-ubuntu-20.04-20230331" }}
+      notebooks: ${{ inputs.notebooks || 'graphcore/pytorch-jupyter:3.2.0-ubuntu-20.04-20230331' }}
       machine_types: ${{ inputs.machine_types }}
       test_env: ${{ inputs.test_env || 'Local' }}
     secrets:
