@@ -16,11 +16,6 @@ on:
         description: "Docker image used in notebook testing"
         required: false
         default: "graphcore/pytorch-jupyter:3.2.0-ubuntu-20.04-20230331"
-      test_mode:
-        type: string
-        description: "Docker image used in notebook testing for specific EA tests"
-        required: false
-        default: None
       notebooks:
         type: string
         description: "List of notebooks to test in JSON format"
