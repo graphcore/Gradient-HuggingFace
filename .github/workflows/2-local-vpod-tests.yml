@@ -47,7 +47,8 @@ jobs:
       test_env: ${{ inputs.test_env || 'Local' }}
       test_mode: 
         early-access-tests:
-          test_names: [whisper-EA]
+          test_names: 
+            - whisper-EA
           docker_image: "graphcore/pytorch-paperspace-early-access:3.3.0-EA.1-ubuntu-20.04-20230504"
     secrets:
       gh_token:  ${{ secrets.GH_TOKEN_SYNC_REPOS }}
