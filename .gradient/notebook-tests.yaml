@@ -127,6 +127,7 @@ nlp-deberta-blog:
 stable-diffusion-image_to_image:
   location: ../stable-diffusion
   generated: true
+  timeout: 2700
   notebook:
     file: image_to_image.ipynb
     timeout: 3000
@@ -135,6 +136,7 @@ stable-diffusion-image_to_image:
 stable-diffusion-inpainting:
   location: ../stable-diffusion
   generated: true
+  timeout: 2700
   notebook:
     file: inpainting.ipynb
     timeout: 3000
@@ -143,6 +145,7 @@ stable-diffusion-inpainting:
 stable-diffusion-text_to_image:
   location: ../stable-diffusion
   generated: true
+  timeout: 2700
   notebook:
     file: text_to_image.ipynb
     timeout: 3000
@@ -151,6 +154,7 @@ stable-diffusion-text_to_image:
 stable-diffusion-text_to_image_sd2:
   location: ../stable-diffusion
   generated: true
+  timeout: 2700
   notebook:
     file: text_to_image_sd2.ipynb
     timeout: 3000
@@ -161,6 +165,7 @@ stable-diffusion-text_to_image_sd2:
 audio-processing-wav2vec2-fine-tuning-checkpoint:
   location: ../audio-processing
   generated: true
+  timeout: 5400
   notebook:
     file: wav2vec2-fine-tuning-checkpoint.ipynb
     timeout: 10000
