@@ -1,7 +1,7 @@
 #! /usr/bin/env bash
 set -euxo pipefail
 run-tests() {
-    echo "Start testing"
+    echo "PAPERSPACE-AUTOMATED-TESTING: Started testing"
     python -m pip install gradient
 
     # set variable matching the standard Paperspace entry point
@@ -13,6 +13,7 @@ run-tests() {
     TEST_CONFIG_FILE="${6}"
 
     cd /notebooks/
+    echo "PAPERSPACE-AUTOMATED-TESTING: starting platform_assessment testing"
     python -m examples_utils platform_assessment --spec ${TEST_CONFIG_FILE} "${@:9}" \
         --log-dir $LOG_FOLDER \
         --gc-monitor \
@@ -27,7 +28,7 @@ run-tests() {
     sleep 5
     gradient apiKey ${1}
     gradient notebooks stop --id ${PAPERSPACE_METRIC_WORKLOAD_ID}
-
+    echo "Notebook Stopped"
 }
 
 if [ ! "$(command -v fuse-overlayfs)" ]; then
@@ -52,8 +53,8 @@ mkdir -p ${PERSISTENT_CHECKPOINT_DIR}
 echo "Starting preparation of datasets"
 python -m examples_utils paperspace symlinks --path "$( dirname -- "${BASH_SOURCE[0]}" )"/symlink_config.json
 
-echo "Finished running setup.sh."
-
+echo "Finished running prepare-datasets.sh"
 # Run automated test if specified
 [ -n "${ARGS+x}" ] && run-tests $ARGS
 
+echo "Finished running setup.sh."
