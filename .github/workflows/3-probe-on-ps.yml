@@ -17,7 +17,7 @@ on:
 jobs:
   probe-in-ps:
     name: Probe in PS env
-    uses: graphcore/paperspace-automation/.github/workflows/subwf-probe-in-ps.yml@main
+    uses: graphcore/paperspace-automation/.github/workflows/subwf-probe-in-ps.yml@make-probe-wait-for-mount
     with:
       docker_image: ${{ inputs.docker_image || 'graphcore/pytorch-jupyter:3.2.1-ubuntu-20.04-20230531' }}
     secrets:

@@ -46,6 +46,7 @@ else
     echo "[WARNING] IPU Partition in an unrecognised state - Notebook will start normally but"
     echo "[WARNING] you may encounter hardware related errors. Get in touch with Paperspace and/or"
     echo "[WARNING] Graphcore support if you encounter unexpected behaviours or errors."
+    echo "[WARNING] ${GC_INFO_OUTPUT}"
     EXIT_CODE=253
 fi
 
