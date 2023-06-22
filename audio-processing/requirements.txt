@@ -1,4 +1,4 @@
-optimum-graphcore>=0.6.0, <0.7.0
+optimum-graphcore==0.6.1
 --find-links https://download.pytorch.org/whl/torch_stable.html
 torchaudio == 0.13.1+cpu
 librosa

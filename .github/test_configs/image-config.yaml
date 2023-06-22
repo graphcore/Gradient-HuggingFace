@@ -1,0 +1,11 @@
+# This config file allows you to specify whether notebooks need to be run with different configs in CI.
+# This is to allow us to test notebooks with different parameters - such as changing docker images
+# - `default` is related to the default CI testing infrastructure, with the currently released SDK, fill this if you would like to test on both the default and a specific config
+# - `early-access-tests` use an early release docker container and will run tests for these notebooks separately.
+
+default:
+  test_names: []
+  
+early-access-tests:
+  test_names: [whisper-EA]
+

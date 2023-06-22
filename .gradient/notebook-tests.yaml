@@ -7,3 +7,4 @@ direct-s3-access:
   parameters:
     conc_down: "8,10,15,20,40"
     max_concurrency: "1,4"
+
