@@ -39,11 +39,11 @@ release:
     execution:
       micro_batch_size: 12
       available_memory_proportion: [ 0.4 ]
-      tensor_parallel: 16
+      tensor_parallel: 4
 
   gpt-j-mnli:
     <<: *gpt-j
     execution:
       micro_batch_size: 16
       available_memory_proportion: [ 0.4 ]
-      tensor_parallel: 16
+      tensor_parallel: 4
