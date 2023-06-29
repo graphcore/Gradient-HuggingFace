@@ -53,7 +53,6 @@ run_tests(){
         --log-dir $LOG_FOLDER \
         --gc-monitor \
         --cloning-directory /tmp/clones \
-        --logging='ERROR' \
         --additional-metrics  
         
 
