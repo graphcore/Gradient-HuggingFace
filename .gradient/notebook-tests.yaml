@@ -1,10 +1,10 @@
 
-# Graphcore-HuggingFace-README_first:
-#   location: ../
-#   generated: true
-#   notebook:
-#     file: README_first.ipynb
-#     timeout: 10000
+Graphcore-HuggingFace-README_first:
+  location: ../
+  generated: true
+  notebook:
+    file: README_first.ipynb
+    timeout: 10000
 
 # Whisper
 whisper:
@@ -14,275 +14,275 @@ whisper:
     file: whisper-example.ipynb
     timeout: 1000
 
-# # Whisper-EA
-# whisper-EA:
-#   location: ../early-access/whisper
-#   generated: true
-#   notebook:
-#     file: whisper-example.ipynb
-#     timeout: 1000
+# Whisper-EA
+whisper-EA:
+  location: ../early-access/whisper
+  generated: true
+  notebook:
+    file: whisper-example.ipynb
+    timeout: 1000
 
-# nlp-ner-gradio:
+nlp-ner-gradio:
+  location: ../natural-language-processing
+  generated: true
+  notebook:
+    file: name-entity-extraction.ipynb
+    timeout: 2000
+
+# Natural language processing
+nlp-introduction_to_optimum_graphcore:
+  location: ../natural-language-processing
+  generated: true
+  notebook:
+    file: introduction_to_optimum_graphcore.ipynb
+    timeout: 10000
+
+nlp-sentiment-analysis:
+  location: ../natural-language-processing
+  generated: true
+  notebook:
+    file: sentiment_analysis.ipynb
+    timeout: 10000
+
+flan-t5-generative-inference:
+  location: ../natural-language-processing
+  generated: true
+  env:
+    EXAMPLE_PROMPTS: |
+      What is an IPU?
+      Who makes it?
+      Can I use them?
+      Where?
+  notebook:
+    file: Flan-T5-generative-inference.ipynb
+    timeout: 10000
+
+
+
+nlp-text_classification:
+  location: ../natural-language-processing/other-use-cases
+  generated: true
+  notebook:
+    file: text_classification.ipynb
+    timeout: 10000
+
+# Notebook was removed pending bug investigation on POD4
+# nlp-language_modeling:
 #   location: ../natural-language-processing
 #   generated: true
 #   notebook:
-#     file: name-entity-extraction.ipynb
-#     timeout: 2000
-
-# # Natural language processing
-# nlp-introduction_to_optimum_graphcore:
-#   location: ../natural-language-processing
-#   generated: true
-#   notebook:
-#     file: introduction_to_optimum_graphcore.ipynb
+#     file: language_modeling.ipynb
 #     timeout: 10000
 
-# nlp-sentiment-analysis:
-#   location: ../natural-language-processing
-#   generated: true
-#   notebook:
-#     file: sentiment_analysis.ipynb
-#     timeout: 10000
+nlp-language_modelling_from_scratch:
+  location: ../natural-language-processing/other-use-cases
+  generated: true
+  notebook:
+    file: language_modelling_from_scratch.ipynb
+    timeout: 10000
 
-# flan-t5-generative-inference:
-#   location: ../natural-language-processing
-#   generated: true
-#   env:
-#     EXAMPLE_PROMPTS: |
-#       What is an IPU?
-#       Who makes it?
-#       Can I use them?
-#       Where?
-#   notebook:
-#     file: Flan-T5-generative-inference.ipynb
-#     timeout: 10000
+nlp-multiple_choice:
+  location: ../natural-language-processing/other-use-cases
+  generated: true
+  notebook:
+    file: multiple_choice.ipynb
+    timeout: 10000
 
+nlp-question_answering:
+  location: ../natural-language-processing/other-use-cases
+  generated: true
+  notebook:
+    file: question_answering.ipynb
+    timeout: 10000
 
+nlp-summarization:
+  location: ../natural-language-processing/other-use-cases
+  generated: true
+  notebook:
+    file: summarization.ipynb
+    timeout: 10000
 
-# nlp-text_classification:
-#   location: ../natural-language-processing/other-use-cases
-#   generated: true
-#   notebook:
-#     file: text_classification.ipynb
-#     timeout: 10000
+nlp-token_classification:
+  location: ../natural-language-processing/other-use-cases
+  generated: true
+  notebook:
+    file: token_classification.ipynb
+    timeout: 10000
 
-# # Notebook was removed pending bug investigation on POD4
-# # nlp-language_modeling:
-# #   location: ../natural-language-processing
-# #   generated: true
-# #   notebook:
-# #     file: language_modeling.ipynb
-# #     timeout: 10000
+nlp-translation:
+  location: ../natural-language-processing
+  generated: true
+  notebook:
+    file: translation.ipynb
+    timeout: 10000
 
-# nlp-language_modelling_from_scratch:
-#   location: ../natural-language-processing/other-use-cases
-#   generated: true
-#   notebook:
-#     file: language_modelling_from_scratch.ipynb
-#     timeout: 10000
+nlp-external_model:
+  location: ../natural-language-processing/other-use-cases
+  generated: true
+  notebook:
+    file: external_model.ipynb
+    timeout: 10000
 
-# nlp-multiple_choice:
-#   location: ../natural-language-processing/other-use-cases
-#   generated: true
-#   notebook:
-#     file: multiple_choice.ipynb
-#     timeout: 10000
+nlp-deberta-blog:
+  location: ../natural-language-processing/other-use-cases
+  generated: true
+  notebook:
+    file: deberta-blog-notebook.ipynb
+    timeout: 1000
 
-# nlp-question_answering:
-#   location: ../natural-language-processing/other-use-cases
-#   generated: true
-#   notebook:
-#     file: question_answering.ipynb
-#     timeout: 10000
+# Stable diffusion
+stable-diffusion-image_to_image:
+  location: ../stable-diffusion
+  generated: true
+  timeout: 2700
+  notebook:
+    file: image_to_image.ipynb
+    timeout: 3000
 
-# nlp-summarization:
-#   location: ../natural-language-processing/other-use-cases
-#   generated: true
-#   notebook:
-#     file: summarization.ipynb
-#     timeout: 10000
+stable-diffusion-inpainting:
+  location: ../stable-diffusion
+  generated: true
+  timeout: 2700
+  notebook:
+    file: inpainting.ipynb
+    timeout: 3000
 
-# nlp-token_classification:
-#   location: ../natural-language-processing/other-use-cases
-#   generated: true
-#   notebook:
-#     file: token_classification.ipynb
-#     timeout: 10000
+stable-diffusion-text_to_image:
+  location: ../stable-diffusion
+  generated: true
+  timeout: 2700
+  notebook:
+    file: text_to_image.ipynb
+    timeout: 3000
 
-# nlp-translation:
-#   location: ../natural-language-processing
-#   generated: true
-#   notebook:
-#     file: translation.ipynb
-#     timeout: 10000
-
-# nlp-external_model:
-#   location: ../natural-language-processing/other-use-cases
-#   generated: true
-#   notebook:
-#     file: external_model.ipynb
-#     timeout: 10000
-
-# nlp-deberta-blog:
-#   location: ../natural-language-processing/other-use-cases
-#   generated: true
-#   notebook:
-#     file: deberta-blog-notebook.ipynb
-#     timeout: 1000
-
-# # Stable diffusion
-# stable-diffusion-image_to_image:
-#   location: ../stable-diffusion
-#   generated: true
-#   timeout: 2700
-#   notebook:
-#     file: image_to_image.ipynb
-#     timeout: 3000
-
-# stable-diffusion-inpainting:
-#   location: ../stable-diffusion
-#   generated: true
-#   timeout: 2700
-#   notebook:
-#     file: inpainting.ipynb
-#     timeout: 3000
-
-# stable-diffusion-text_to_image:
-#   location: ../stable-diffusion
-#   generated: true
-#   timeout: 2700
-#   notebook:
-#     file: text_to_image.ipynb
-#     timeout: 3000
-
-# stable-diffusion-text_to_image_sd2:
-#   location: ../stable-diffusion
-#   generated: true
-#   timeout: 2700
-#   notebook:
-#     file: text_to_image_sd2.ipynb
-#     timeout: 3000
+stable-diffusion-text_to_image_sd2:
+  location: ../stable-diffusion
+  generated: true
+  timeout: 2700
+  notebook:
+    file: text_to_image_sd2.ipynb
+    timeout: 3000
 
 
-# # Audio processing
-# audio-processing-wav2vec2-fine-tuning-checkpoint:
+# Audio processing
+audio-processing-wav2vec2-fine-tuning-checkpoint:
+  location: ../audio-processing
+  generated: true
+  timeout: 5400
+  notebook:
+    file: wav2vec2-fine-tuning-checkpoint.ipynb
+    timeout: 10000
+
+audio-processing-wav2vec2-inference-checkpoint:
+  location: ../audio-processing
+  generated: true
+  notebook:
+    file: wav2vec2-inference-checkpoint.ipynb
+    timeout: 10000
+
+# Removed due to silent failure
+# audio-processing-audio_classification:
 #   location: ../audio-processing
 #   generated: true
-#   timeout: 5400
 #   notebook:
-#     file: wav2vec2-fine-tuning-checkpoint.ipynb
-#     timeout: 10000
-
-# audio-processing-wav2vec2-inference-checkpoint:
-#   location: ../audio-processing
-#   generated: true
-#   notebook:
-#     file: wav2vec2-inference-checkpoint.ipynb
-#     timeout: 10000
-
-# # Removed due to silent failure
-# # audio-processing-audio_classification:
-# #   location: ../audio-processing
-# #   generated: true
-# #   notebook:
-# #     file: audio_classification.ipynb
-# #     timeout: 10000
-
-
-# # Image classification
-# image_classification:
-#   location: ../image-classification
-#   generated: true
-#   notebook:
-#     file: image_classification.ipynb
-#     timeout: 10000
-
-# # Useful references
-# useful-managing-ipu-resources:
-#   location: ../useful-tips
-#   generated: true
-#   notebook:
-#     file: managing_ipu_resources.ipynb
-#     timeout: 1000
-
-# #GPTJ - fine-tuning
-# gptj-finetuning:
-#   location: ../gptj-text-generation
-#   generated: true
-#   notebook:
-#     file: finetuning.ipynb
-#     timeout: 15000
-
-# #GPTJ - inference
-# gptj-generative-inference:
-#   location: ../gptj-text-generation
-#   generated: true
-#   notebook:
-#     file: GPTJ-generative-inference.ipynb
-#     timeout: 3600
-
-# # Dolly 2.0 - inference
-# dolly2-inference:
-#   location: ../dolly2-instruction-following
-#   generated: true
-#   notebook:
-#     file: Dolly2-an-OSS-instruction-LLM.ipynb
-#     timeout: 10000
-
-# openassistant-chatbot-inference:
-#   location: ../dolly2-instruction-following
-#   generated: true
-#   env:
-#     EXAMPLE_PROMPTS: |
-#       ["What is an IPU?",
-#       "Who makes it?",
-#       "Can I use them?",
-#       "Where?"]
-#   notebook:
-#     file: OpenAssistant-Pythia-12B-Chatbot.ipynb
-#     timeout: 10000
-
-# packed-bert-multi-label-classification:
-#   location: ../packed-bert
-#   generated: true
-#   notebook:
-#     file: packedBERT_multi_label_text_classification.ipynb
+#     file: audio_classification.ipynb
 #     timeout: 10000
 
 
-# packed-bert-question-answering:
-#   location: ../packed-bert
-#   generated: true
-#   notebook:
-#     file: packedBERT_question_answering.ipynb
-#     timeout: 10000
+# Image classification
+image_classification:
+  location: ../image-classification
+  generated: true
+  notebook:
+    file: image_classification.ipynb
+    timeout: 10000
+
+# Useful references
+useful-managing-ipu-resources:
+  location: ../useful-tips
+  generated: true
+  notebook:
+    file: managing_ipu_resources.ipynb
+    timeout: 1000
+
+#GPTJ - fine-tuning
+gptj-finetuning:
+  location: ../gptj-text-generation
+  generated: true
+  notebook:
+    file: finetuning.ipynb
+    timeout: 15000
+
+#GPTJ - inference
+gptj-generative-inference:
+  location: ../gptj-text-generation
+  generated: true
+  notebook:
+    file: GPTJ-generative-inference.ipynb
+    timeout: 3600
+
+# Dolly 2.0 - inference
+dolly2-inference:
+  location: ../dolly2-instruction-following
+  generated: true
+  notebook:
+    file: Dolly2-an-OSS-instruction-LLM.ipynb
+    timeout: 10000
+
+openassistant-chatbot-inference:
+  location: ../dolly2-instruction-following
+  generated: true
+  env:
+    EXAMPLE_PROMPTS: |
+      ["What is an IPU?",
+      "Who makes it?",
+      "Can I use them?",
+      "Where?"]
+  notebook:
+    file: OpenAssistant-Pythia-12B-Chatbot.ipynb
+    timeout: 10000
+
+packed-bert-multi-label-classification:
+  location: ../packed-bert
+  generated: true
+  notebook:
+    file: packedBERT_multi_label_text_classification.ipynb
+    timeout: 10000
 
 
-# packed-bert-single-label-classification:
-#   location: ../packed-bert
-#   generated: true
-#   notebook:
-#     file: packedBERT_single_label_text_classification.ipynb
-#     timeout: 10000
+packed-bert-question-answering:
+  location: ../packed-bert
+  generated: true
+  notebook:
+    file: packedBERT_question_answering.ipynb
+    timeout: 10000
 
-# #MolFeat Transformer
-# molfeat:
-#   location: ../molfeat
-#   generated: true
-#   notebook:
-#     file: transformers_molfeat_finetune.ipynb
-#     timeout: 1000
 
-# mt5-translation:
-#   location: ../natural-language-processing/other-use-cases
-#   generated: true
-#   notebook:
-#     file: mt5_translation.ipynb
-#     timeout: 10000
+packed-bert-single-label-classification:
+  location: ../packed-bert
+  generated: true
+  notebook:
+    file: packedBERT_single_label_text_classification.ipynb
+    timeout: 10000
 
-# mt5-xnli:
-#    location: ../natural-language-processing/other-use-cases
-#    generated: true
-#    notebook:
-#       file: mt5_xnli.ipynb
-#       timeout: 10000
+#MolFeat Transformer
+molfeat:
+  location: ../molfeat
+  generated: true
+  notebook:
+    file: transformers_molfeat_finetune.ipynb
+    timeout: 1000
+
+mt5-translation:
+  location: ../natural-language-processing/other-use-cases
+  generated: true
+  notebook:
+    file: mt5_translation.ipynb
+    timeout: 10000
+
+mt5-xnli:
+   location: ../natural-language-processing/other-use-cases
+   generated: true
+   notebook:
+      file: mt5_xnli.ipynb
+      timeout: 10000
