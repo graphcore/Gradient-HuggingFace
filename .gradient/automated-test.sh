@@ -53,7 +53,8 @@ run_tests(){
         --log-dir $LOG_FOLDER \
         --gc-monitor \
         --cloning-directory /tmp/clones \
-        --additional-metrics
+        --additional-metrics  \ 
+        --logging ERROR
 
     tar -czvf "${LOG_FOLDER}.tar.gz" ${LOG_FOLDER}
     echo "PAPERSPACE-AUTOMATED-TESTING: Testing complete"
