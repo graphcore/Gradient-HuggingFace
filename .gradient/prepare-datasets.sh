@@ -6,7 +6,7 @@ run-tests() {
 
     # set variable matching the standard Paperspace entry point
     export PIP_DISABLE_PIP_VERSION_CHECK=1
-
+    export HUGGING_FACE_HUB_TOKEN=${7}
     export VIRTUAL_ENV="/some/fake/venv/GC-automated-paperspace-test-${4}"
     LOG_FOLDER="${5}/log_${4}_$(date +'%Y-%m-%d-%H_%M_%S')"
     mkdir -p ${LOG_FOLDER}
