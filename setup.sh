@@ -78,6 +78,23 @@ export FIREHOSE_STREAM_NAME="paperspacenotebook_production"
 export GCLOGGER_CONFIG="${PUBLIC_DATASETS_DIR}/gcl"
 export REPO_FRAMEWORK="Hugging Face"
 
+
+echo "RRR downgrading jupyter and ipython" 
+pip install --upgrade pip
+pip install ipykernel==5.5.6
+pip install ipython==7.16.3
+pip install ipython-genutils==0.2.0
+pip install ipywidgets==8.0.6
+pip install jupyter==1.0.0
+pip install jupyter_client==8.2.0
+pip install jupyter-console==6.4.4
+pip install jupyter_core==5.3.0
+pip install jupyter-server==1.24.0
+pip install jupyterlab==3.2.7
+pip install jupyterlab-pygments==0.2.2
+pip install jupyterlab_server==2.22.1
+pip install jupyterlab-widgets==3.0.7
+
 echo "Graphcore setup - Spawning dataset preparation process"
 nohup /notebooks/.gradient/prepare-datasets.sh ${@} & tail -f nohup.out &
 
