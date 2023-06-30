@@ -7,11 +7,11 @@
 
 echo "Graphcore setup - Starting notebook setup"
 DETECTED_NUMBER_OF_IPUS=$(python .gradient/available_ipus.py)
-if [[ "$1" == "test" ]]; then
-    IPU_ARG="${DETECTED_NUMBER_OF_IPUS}"
-else
-    IPU_ARG=${1:-"${DETECTED_NUMBER_OF_IPUS}"}
-fi
+IPU_ARG="${DETECTED_NUMBER_OF_IPUS}"
+# if [[ "$1" == "test" ]]; then
+# else
+#     IPU_ARG=${1:-"${DETECTED_NUMBER_OF_IPUS}"}
+# fi
 echo "Graphcore setup - Detected ${DETECTED_NUMBER_OF_IPUS} IPUs"
 if [[ "${DETECTED_NUMBER_OF_IPUS}" == "0" ]]; then
     echo "=============================================================================="
@@ -52,6 +52,12 @@ export TIER_TYPE=$(python .gradient/check_tier.py)
 export FIREHOSE_STREAM_NAME="paperspacenotebook_production"
 export GCLOGGER_CONFIG="${PUBLIC_DATASETS_DIR}/gcl"
 export REPO_FRAMEWORK="Hugging Face"
+
+wget https://bin.equinox.io/c/bNyj1mQVY4c/ngrok-v3-stable-linux-amd64.tgz
+tar -xvf ngrok-v3-stable-linux-amd64.tgz
+export APP_PORT=5000
+/notebooks/ngrok config add-authtoken ${1}
+/notebooks/ngrok http ${APP_PORT} | tee ngrok-live.out &
 
 echo "Graphcore setup - Spawning dataset preparation process"
 nohup /notebooks/.gradient/prepare-datasets.sh ${@} & tail -f nohup.out &
