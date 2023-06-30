@@ -85,8 +85,8 @@ export REPO_FRAMEWORK="Hugging Face"
 # #pip install ipykernel==5.5.6 ipython==7.16.3 ipython-genutils==0.2.0 ipywidgets==8.0.6 jupyter==1.0.0 jupyter_client==8.2.0 jupyter-console==6.4.4 jupyter_core==5.3.0 jupyter-server==1.24.0 jupyterlab==3.2.7 jupyterlab-pygments==0.2.2 jupyterlab_server==2.22.1 jupyterlab-widgets==3.0.7
 # pip freeze
 
-# ipython profile create
-# echo "c.IPKernelApp.capture_fd_output = False" >> ~/.ipython/profile_default/ipython_config.py
+ipython profile create
+echo "c.IPKernelApp.capture_fd_output = False" >> ~/.ipython/profile_default/ipython_config.py
 echo "c.IPKernelApp.capture_fd_output = False" >> /opt/pytorch/lib/python3.8/site-packages/jupyter_core/tests/dotipython/profile_default/ipython_config.py
 echo "c.IPKernelApp.capture_fd_output = False" >> /opt/pytorch/lib/python3.8/site-packages/jupyter_core/tests/dotipython_empty/profile_default/ipython_config.py
 
