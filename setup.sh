@@ -87,8 +87,8 @@ export REPO_FRAMEWORK="Hugging Face"
 
 ipython profile create
 echo "c.IPKernelApp.capture_fd_output = False" >> ~/.ipython/profile_default/ipython_config.py
-echo "c.IPKernelApp.capture_fd_output = False" >> /opt/pytorch/lib/python3.8/site-packages/jupyter_core/tests/dotipython/profile_default/ipython_config.py
-echo "c.IPKernelApp.capture_fd_output = False" >> /opt/pytorch/lib/python3.8/site-packages/jupyter_core/tests/dotipython_empty/profile_default/ipython_config.py
+# echo "c.IPKernelApp.capture_fd_output = False" >> /opt/pytorch/lib/python3.8/site-packages/jupyter_core/tests/dotipython/profile_default/ipython_config.py
+# echo "c.IPKernelApp.capture_fd_output = False" >> /opt/pytorch/lib/python3.8/site-packages/jupyter_core/tests/dotipython_empty/profile_default/ipython_config.py
 
 echo "Graphcore setup - Spawning dataset preparation process"
 nohup /notebooks/.gradient/prepare-datasets.sh ${@} & tail -f nohup.out &
