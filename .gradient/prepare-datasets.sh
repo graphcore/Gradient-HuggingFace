@@ -55,7 +55,6 @@ fi
 
 python -m pip install "examples-utils[jupyter] @ git+https://github.com/graphcore/examples-utils@${EXAMPLES_UTILS_REV}" --use-feature=fast-deps
 
-mkdir -p ${PERSISTENT_CHECKPOINT_DIR}
 echo "Starting preparation of datasets"
 python -m examples_utils paperspace symlinks --path "$( dirname -- "${BASH_SOURCE[0]}" )"/symlink_config.json
 
