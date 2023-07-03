@@ -78,6 +78,10 @@ export FIREHOSE_STREAM_NAME="paperspacenotebook_production"
 export GCLOGGER_CONFIG="${PUBLIC_DATASETS_DIR}/gcl"
 export REPO_FRAMEWORK="Hugging Face"
 
+# 3.3 container hang issue workaround
+ipython profile create
+echo "c.IPKernelApp.capture_fd_output = False" >> ~/.ipython/profile_default/ipython_config.py
+
 echo "Graphcore setup - Spawning dataset preparation process"
 nohup /notebooks/.gradient/prepare-datasets.sh ${@} & tail -f nohup.out &
 
