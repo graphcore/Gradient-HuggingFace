@@ -3,6 +3,7 @@ set -euxo pipefail
 run-tests() {
     echo "PAPERSPACE-AUTOMATED-TESTING: Started testing"
     python -m pip install gradient
+    python -m pip install "examples-utils[jupyter] @ git+https://github.com/graphcore/examples-utils@${EXAMPLES_UTILS_REV}"
 
     # set variable matching the standard Paperspace entry point
     export PIP_DISABLE_PIP_VERSION_CHECK=1
@@ -53,7 +54,7 @@ elif [[ "${2:-}" == 'test' ]]; then
     [ "${10}" == "unset" ] && EXAMPLES_UTILS_REV=latest_stable || EXAMPLES_UTILS_REV=${10}
 fi
 
-python -m pip install "examples-utils[jupyter] @ git+https://github.com/graphcore/examples-utils@${EXAMPLES_UTILS_REV}" --use-feature=fast-deps
+python -m pip install "examples-utils[common] @ git+https://github.com/graphcore/examples-utils@${EXAMPLES_UTILS_REV}"
 
 echo "Starting preparation of datasets"
 python -m examples_utils paperspace symlinks --path "$( dirname -- "${BASH_SOURCE[0]}" )"/symlink_config.json
