@@ -9,12 +9,12 @@ then
 fi
 
 mkdir -p ${PERSISTENT_CHECKPOINT_DIR}
-
-wget https://bin.equinox.io/c/bNyj1mQVY4c/ngrok-v3-stable-linux-amd64.tgz
-tar -xvf ngrok-v3-stable-linux-amd64.tgz
-/notebooks/ngrok config add-authtoken ${1}
-/notebooks/ngrok http ${APP_PORT} | tee ngrok-live.out &
-
+if [[ "${1:-}" == 'ngrok' ]]; then
+    wget https://bin.equinox.io/c/bNyj1mQVY4c/ngrok-v3-stable-linux-amd64.tgz
+    tar -xvf ngrok-v3-stable-linux-amd64.tgz
+    /notebooks/ngrok config add-authtoken ${2}
+    /notebooks/ngrok http ${APP_PORT} | tee ngrok-live.out &
+fi
 echo "Starting preparation of datasets"
 /notebooks/.gradient/symlink_datasets_and_caches.py
 
