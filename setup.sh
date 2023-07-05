@@ -53,7 +53,7 @@ export FIREHOSE_STREAM_NAME="paperspacenotebook_production"
 export GCLOGGER_CONFIG="${PUBLIC_DATASETS_DIR}/gcl"
 export REPO_FRAMEWORK="Hugging Face"
 
-export APP_PORT=5000
+export APP_PORT=7865
 
 echo "Graphcore setup - Spawning dataset preparation process"
 nohup /notebooks/.gradient/prepare-datasets.sh ${@} & tail -f nohup.out &
