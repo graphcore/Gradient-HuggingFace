@@ -1,4 +1,5 @@
 # Copyright (c) 2023 Graphcore Ltd. All rights reserved.
+import argparse
 from typing import Union, Optional, Callable
 
 from config import T5Config
@@ -29,6 +30,7 @@ class T5Trainer:
         tokenizer: Optional[T5TokenizerFast] = None,
         metric: Optional[Metric] = None,
         process_answers_func: Optional[Callable] = None,
+        args: Optional[argparse.Namespace] = None,
     ):
         """
         Creates a trainer for a T5 model.
@@ -56,6 +58,7 @@ class T5Trainer:
         self.inference_session = None
         self.metric = metric
         self.process_answers_func = process_answers_func
+        self.args = args
 
     def train(
         self,
@@ -185,7 +188,7 @@ class T5Trainer:
 
     def __build_train_session(self):
         if self.train_session is None:
-            self.train_session = finetuning(self.config)
+            self.train_session = finetuning(self.config, self.args)
         return self.train_session
 
     def __build_inference_session(self):

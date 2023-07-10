@@ -104,8 +104,8 @@ class Training(Config):
             maximum: float = 0.01
             """The maximum value that the learning rate will reach."""
 
-            warmup_proportion: float = 0.0
-            """Fraction of the total number of training steps where the learning rate
+            warmup_steps: int = 0
+            """Number of training steps where the learning rate
             will increase linearly up to the maximum value."""
 
         learning_rate: LearningRate = LearningRate()
@@ -151,9 +151,6 @@ class Execution(Config):
 
     tensor_parallel: int = 1
     """Number of ipus used for tensor model parallel axis"""
-
-    code_load: bool = flag(False)
-    """Store the code for each layer graph in remote memory"""
 
     attention_serialisation: int = 1
     """Number of serialisation steps when computing attention scores.

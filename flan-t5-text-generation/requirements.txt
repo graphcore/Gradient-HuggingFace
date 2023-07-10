@@ -7,13 +7,13 @@ transformers==4.25.1
 datasets==2.1.0
 evaluate==0.4.0
 tfrecord==1.14.1
-torch==2.0.0+cpu
+torch==2.0.1+cpu
 numpy==1.19.5
 scipy>=1.5.4
 more-itertools==8.13.0
 wandb==0.12.8
 scikit-learn==1.2.2
 
-git+ssh://git@github.com/graphcore/popxl-addons-internal.git@0eb83e0a801b6fafad8113f96e9c0cbd216c6ce4#egg=popxl-addons
+git+ssh://git@github.com/graphcore/popxl-addons-internal.git@sdk-release-3.3.0
 
 protobuf==3.20.*; python_version > '3.6'
