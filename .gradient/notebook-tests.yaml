@@ -296,11 +296,11 @@ mt5-xnli:
       file: mt5_xnli.ipynb
       timeout: 10000
 
-# FLAN-T5 - fine-tuning
+# Flan-T5 - fine-tuning
 flan-t5-finetuning:
   location: ../flan-t5-text-generation
   generated: true
   notebook:
-    file: FLAN-T5-textual-entailment-fine-tuning.ipynb
+    file: Flan-T5-textual-entailment-fine-tuning.ipynb
     timeout: 30000
   requirements_file: requirements.txt

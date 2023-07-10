@@ -19,8 +19,7 @@ flan-t5:
     - path: nlp/t5/popxl/.ci
     - path: nlp/t5/popxl/README.md
     - path: nlp/t5/popxl/.gitignore
-    - path: nlp/t5/popxl/run_finetuning.py
-    - path: nlp/t5/popxl/run_validation.py
+    - path: nlp/t5/popxl/tests
     repository:
       <<: *_examples_internal_repository
       prefix: nlp/t5/popxl
