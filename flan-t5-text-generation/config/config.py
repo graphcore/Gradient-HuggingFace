@@ -50,6 +50,10 @@ class ModelConfig(Config):
     eps: float = 1e-5
     """Epsilon for the layer normalisation layers."""
 
+    scale_ff: int = 1
+    """Scale factor to apply in the feed forward modules and undo after,
+    in order to prevent overflows when using float16."""
+
     @dataclass
     class Embedding(Config):
         """Configuration of T5 Embedding layers"""

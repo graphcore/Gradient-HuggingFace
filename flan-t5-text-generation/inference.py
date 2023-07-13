@@ -160,7 +160,7 @@ def inference(config: T5Config) -> TaskSession:
                 load_graph, names = load_remote_graph(dec_embeddings_buffers)
                 embedding_vars = NamedTensors.pack(names, load_graph.call(0))
                 embedding_weight_t = embedding_vars.pop("weight")
-                (x_dec,) = embeddings_graph.bind(embedding_vars).call(decoder_word, embedding_weight_t)
+                (x_dec,) = dec_embeddings_graph.bind(embedding_vars).call(decoder_word, embedding_weight_t)
                 rel_pos_weight = embedding_vars.rel_pos_weight
 
                 # Decoder

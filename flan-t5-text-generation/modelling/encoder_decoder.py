@@ -44,6 +44,7 @@ class T5BlockTP(addons.Module):
         # feed forward is sharded
         # identical computation for bias, dropout and skip connection
         self.feed_forward = T5FeedForwardTP(self.config)
+        self.scale_ff = config.model.scale_ff
 
     def build(
         self,
@@ -65,9 +66,13 @@ class T5BlockTP(addons.Module):
         hidden_states = self.attention(
             hidden_states, mask, 1 - cross_attention_scale, rel_pos_weight, seed=attention_seed
         )
+        if x.dtype == popxl.float32 and self.scale_ff > 1:
+            x = ops.cast(x, popxl.float16)
         x = hidden_states + x
 
         hidden_states = self.ln_2(x)
+        if enc_output.dtype == popxl.float32 and self.scale_ff > 1:
+            enc_output = ops.cast(enc_output, popxl.float16)
         hidden_states = self.cross_attention(hidden_states, enc_mask, enc_output, seed=cross_attention_seed)
         # The encoder will mask out the cross-attention part
         hidden_states = cross_attention_scale * hidden_states
@@ -75,6 +80,10 @@ class T5BlockTP(addons.Module):
 
         hidden_states = self.ln_3(x)
         hidden_states = self.feed_forward(hidden_states, seed=seed)
+        if self.scale_ff > 1:
+            x = ops.cast(x, popxl.float32)
+            # Undo the scale down done in the feed forward block, but now safely in fp32
+            hidden_states = ops.cast(hidden_states, popxl.float32) * self.scale_ff
         x = hidden_states + x
         return x
 
@@ -179,12 +188,16 @@ class T5EncoderHead(addons.Module):
         self.config = config
         # layer norm at the end of the encoder stack
         self.ln_f = T5LayerNorm(self.config)
+        self.should_upcast = config.model.scale_ff > 1
 
     def build(self, x: popxl.Tensor, seed: Optional[popxl.Tensor] = None) -> popxl.Tensor:
         x = self.ln_f(x)
         if not self.config.model.eval and self.config.model.dropout_prob != 0.0:
             assert seed is not None, "A seed Tensor must be provided when creating a non-eval model."
             x = ops.dropout(x, seed, p=self.config.model.dropout_prob)
+
+        if self.should_upcast:
+            x = ops.cast(x, popxl.float32)
         return x
 
     @staticmethod

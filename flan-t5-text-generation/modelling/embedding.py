@@ -43,6 +43,7 @@ class T5EmbeddingsTP(addons.Module):
         n_heads_groups = self.replica_grouping.num_groups
         self.n_heads = self.config.model.attention.heads // n_heads_groups
         self.relative_attention_num_buckets = self.config.model.attention.relative_attention_num_buckets
+        self.should_upcast = config.model.scale_ff > 1
 
     def build(self, input_ids: popxl.Tensor, seed: Optional[popxl.Tensor] = None) -> popxl.Tensor:
         """`input_ids` are offsetted. Identical outputs across shards"""
@@ -65,6 +66,8 @@ class T5EmbeddingsTP(addons.Module):
             replica_grouping=self.replica_grouping,
         )
 
+        if self.should_upcast:
+            x = ops.cast(x, popxl.float32)
         return x
 
     @staticmethod
@@ -153,6 +156,7 @@ class T5DecoderEmbeddingsTP(addons.Module):
         n_heads_groups = self.replica_grouping.num_groups
         self.n_heads = self.config.model.attention.heads // n_heads_groups
         self.relative_attention_num_buckets = self.config.model.attention.relative_attention_num_buckets
+        self.should_upcast = config.model.scale_ff > 1
 
     def build(
         self, input_ids: popxl.Tensor, word_embedding: popxl.Tensor, seed: Optional[popxl.Tensor] = None
@@ -179,6 +183,8 @@ class T5DecoderEmbeddingsTP(addons.Module):
             replica_grouping=self.replica_grouping,
         )
 
+        if self.should_upcast:
+            x = ops.cast(x, popxl.float32)
         return x
 
     @staticmethod

@@ -2,6 +2,7 @@
 from typing import Dict
 
 import numpy as np
+import time
 
 
 def _linear_schedule(start: int, end: int, interval: int, low: float, high: float) -> Dict[int, float]:
@@ -24,3 +25,22 @@ def warmup_schedule(total_steps: int, minimum: float, maximum: float, warmup_ste
 
     schedule.update(_linear_schedule(warmup_steps, total_steps, 1, maximum, maximum))  # maximum to maximum so constant
     return schedule
+
+
+class SimpleTimer:
+    def __init__(self):
+        self._start = None
+
+    def start(self):
+        self._start = time.perf_counter()
+
+    def stop(self):
+        self.elapsed = time.perf_counter() - self._start
+        self._start = None
+
+    def __enter__(self):
+        self.start()
+        return self
+
+    def __exit__(self, *exc_args):
+        self.stop()
