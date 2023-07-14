@@ -37,6 +37,8 @@ on:
         required: false
       
   pull_request:
+    branches-ignore:    
+      - 'gh-action-branches/**'
   schedule:
     # run at 7:00 PM GMT every night
     - cron:  '0 19 * * *'
