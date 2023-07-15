@@ -6,17 +6,8 @@ Graphcore-HuggingFace-README_first:
     file: README_first.ipynb
     timeout: 10000
 
-# Whisper
 whisper:
   location: ../whisper
-  generated: true
-  notebook:
-    file: whisper-example.ipynb
-    timeout: 1000
-
-# Whisper-EA
-whisper-EA:
-  location: ../early-access/whisper
   generated: true
   notebook:
     file: whisper-example.ipynb
@@ -220,6 +211,13 @@ gptj-generative-inference:
   notebook:
     file: GPTJ-generative-inference.ipynb
     timeout: 3600
+
+gptj-group-quantized:
+  location: ../gptj-text-generation
+  generated: true
+  notebook:
+    file: GPTJ-group-quantized.ipynb
+    timeout: 10000
 
 # Dolly 2.0 - inference
 dolly2-inference:
