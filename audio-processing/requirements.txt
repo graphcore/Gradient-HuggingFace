@@ -1,6 +1,6 @@
 optimum-graphcore==0.7
 --find-links https://download.pytorch.org/whl/torch_stable.html
-torchaudio == 0.13.1+cpu
+torchaudio == 2.0.2+cpu
 librosa
 jiwer
 soundfile
