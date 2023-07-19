@@ -10,14 +10,14 @@ on:
         default: "graphcore/pytorch-jupyter:3.2.1-ubuntu-20.04-20230531"
   pull_request:
   schedule:
-    # run at 7:30 PM GMT every night
-    - cron:  '30 19 * * *'
+    # run every 6h and at 9am
+    - cron:  '05 0,6,9,12,18 * * *'
 
 
 jobs:
   probe-in-ps:
     name: Probe in PS env
-    uses: graphcore/paperspace-automation/.github/workflows/subwf-probe-in-ps.yml@main
+    uses: graphcore/paperspace-automation/.github/workflows/subwf-probe-in-ps.yml@report-probe-to-slack
     with:
       docker_image: ${{ inputs.docker_image || 'graphcore/pytorch-jupyter:3.2.1-ubuntu-20.04-20230531' }}
     secrets:
@@ -27,3 +27,5 @@ jobs:
       gradient_ui_email: ${{ secrets.GRADIENT_UI_EMAIL }}
       gradient_ui_password: ${{ secrets.GRADIENT_UI_PASSWORD }}
       gradient_validation_key: ${{ secrets.GRADIENT_VALIDATION_KEY }}
+      slack_bot_token: ${{ secrets.SLACK_BOT_TOKEN }}
+      ci_slack_channel_id: ${{ secrets.CI_SLACK_CHANNEL_ID }}
