@@ -1,0 +1,95 @@
+
+_optimum_graphcore_repository: &_optimum_graphcore_repository
+  origin: https://github.com/huggingface/optimum-graphcore.git
+  ref: main
+
+_examples_internal_repository: &_examples_internal_repository
+  origin: examples-internal/
+  ref: null
+
+
+_common_target_repository: &_common_target_repository
+    origin: notebooks/
+    ref: null
+
+_copy_apache_license: &_copy_apache_license
+  paths:
+  - expression: '*'
+    path: LICENSE
+    recursive: true
+  repository:
+    <<: *_optimum_graphcore_repository
+    prefix: ''
+
+license-audio-classification:
+  source:
+    <<: *_copy_apache_license
+  target:
+    renames: {}
+    repository:
+      <<: *_common_target_repository
+      prefix: 'audio-classification'
+
+license-audio-classification:
+  source:
+    <<: *_copy_apache_license
+  target:
+    renames: {}
+    repository:
+      <<: *_common_target_repository
+      prefix: 'audio-classification'
+
+
+license-audio-classification:
+  source:
+    <<: *_copy_apache_license
+  target:
+    renames: {}
+    repository:
+      <<: *_common_target_repository
+      prefix: 'audio-classification'
+
+license-natural-language-processing:
+  source:
+    <<: *_copy_apache_license
+  target:
+    renames: {}
+    repository:
+      <<: *_common_target_repository
+      prefix: 'natural-language-processing'
+
+license-image-classification:
+  source:
+    <<: *_copy_apache_license
+  target:
+    renames: {}
+    repository:
+      <<: *_common_target_repository
+      prefix: 'image-classification'
+
+license-packed-bert:
+  source:
+    <<: *_copy_apache_license
+  target:
+    renames: {}
+    repository:
+      <<: *_common_target_repository
+      prefix: 'packed-bert'
+
+license-stable-diffusion:
+  source:
+    <<: *_copy_apache_license
+  target:
+    renames: {}
+    repository:
+      <<: *_common_target_repository
+      prefix: 'stable-diffusion'
+
+license-whisper:
+  source:
+    <<: *_copy_apache_license
+  target:
+    renames: {}
+    repository:
+      <<: *_common_target_repository
+      prefix: 'whisper'
