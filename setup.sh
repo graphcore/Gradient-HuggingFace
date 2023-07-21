@@ -58,6 +58,7 @@ export PERSISTENT_CHECKPOINT_DIR="/storage/ipu-checkpoints/"
 export PIP_DISABLE_PIP_VERSION_CHECK=1
 export CACHE_DIR="/tmp"
 
+
 # mounted public dataset directory (path in the container)
 # in the Paperspace environment this would be ="/datasets"
 export PUBLIC_DATASETS_DIR="/datasets"

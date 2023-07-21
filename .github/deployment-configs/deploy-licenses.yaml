@@ -93,3 +93,13 @@ license-whisper:
     repository:
       <<: *_common_target_repository
       prefix: 'whisper'
+
+license-whisper-2:
+  source:
+    <<: *_copy_apache_license
+  target:
+    renames: {}
+    repository:
+      <<: *_common_target_repository
+      prefix: 'early-access/whisper'
+
