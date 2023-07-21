@@ -46,7 +46,7 @@ on:
 
 jobs:
   tests:
-    uses: graphcore/paperspace-automation/.github/workflows/subwf-vpod-tests-for-nb-repo.yml@main
+    uses: graphcore/paperspace-automation/.github/workflows/subwf-vpod-tests-for-nb-repo.yml@checkout-action_ref
     with:
       docker_image: ${{ inputs.docker_image || 'graphcore/pytorch-jupyter:3.2.1-ubuntu-20.04-20230531' }}
       notebooks: ${{ inputs.notebooks }}
@@ -63,7 +63,7 @@ jobs:
       aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
   
   tests-early-access:
-    uses: graphcore/paperspace-automation/.github/workflows/subwf-vpod-tests-for-nb-repo.yml@main
+    uses: graphcore/paperspace-automation/.github/workflows/subwf-vpod-tests-for-nb-repo.yml@checkout-action_ref
     with:
       docker_image: ${{ inputs.docker_image || 'graphcore/pytorch-paperspace-early-access:3.3.0-EA.1-ubuntu-20.04-20230504' }}
       notebooks: ${{ inputs.notebooks }}

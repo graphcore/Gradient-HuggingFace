@@ -13,7 +13,7 @@ on:
 
 jobs:
   tests:
-    uses: graphcore/paperspace-automation/.github/workflows/copy-to-nb-repo.yml@main
+    uses: graphcore/paperspace-automation/.github/workflows/copy-to-nb-repo.yml@checkout-action_ref
     with:
       deployment_spec: ${{ inputs.deployment_spec }}
     secrets:
