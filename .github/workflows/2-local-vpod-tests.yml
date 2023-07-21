@@ -35,13 +35,13 @@ on:
         description: "Config which can be used to define special parameters such as docker image."
         default: ".github/test_configs/image-config.yaml"
         required: false
-      
+
   pull_request:
-    branches-ignore:    
+    branches-ignore:
       - 'gh-action-branches/**'
   schedule:
     # run at 7:00 PM GMT every night
-    - cron:  '0 19 * * *'
+    - cron:  '0 19 * * TUE,FRI'
 
 
 jobs:
@@ -54,14 +54,14 @@ jobs:
       test_env: ${{ inputs.test_env || 'Local' }}
       test_mode: "default"
       test_config: ${{ inputs.test_config || '.github/test_configs/image-config.yaml' }}
-    secrets: 
+    secrets:
       gh_token:  ${{ secrets.GH_TOKEN_SYNC_REPOS }}
       hugging_face_hub_token: ${{ secrets.HUGGING_FACE_HUB_TOKEN }}
       slack_bot_token: ${{ secrets.SLACK_BOT_TOKEN }}
       ci_slack_channel_id: ${{ secrets.CI_SLACK_CHANNEL_ID }}
       aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
       aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-  
+
   tests-early-access:
     uses: graphcore/paperspace-automation/.github/workflows/subwf-vpod-tests-for-nb-repo.yml@main
     with:
@@ -71,7 +71,7 @@ jobs:
       test_env: ${{ inputs.test_env || 'Local' }}
       test_mode: "early-access-tests"
       test_config: ${{ inputs.test_config || '.github/test_configs/image-config.yaml' }}
-    secrets: 
+    secrets:
       gh_token:  ${{ secrets.GH_TOKEN_SYNC_REPOS }}
       hugging_face_hub_token: ${{ secrets.HUGGING_FACE_HUB_TOKEN }}
       slack_bot_token: ${{ secrets.SLACK_BOT_TOKEN }}
