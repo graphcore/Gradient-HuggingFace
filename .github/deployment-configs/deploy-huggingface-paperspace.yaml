@@ -21,11 +21,12 @@ natural-language-processing-main:
     - path: notebooks/translation.ipynb
     - path: notebooks/sentiment_analysis.ipynb
     - path: notebooks/squad_preprocessing.py
+    - path: notebooks/flan_t5_inference.ipynb
     repository:
       <<: *_optimum_graphcore_repository
       prefix: notebooks/
   target:
-    renames: {}
+    renames: {natural-language-processing/flan_t5_inference.ipynb: natural-language-processing/Flan-T5-generative-inference.ipynb}
     repository:
       <<: *_common_target_repository
       prefix:  natural-language-processing/
@@ -33,8 +34,11 @@ natural-language-processing-main:
 natural-language-processing-extra:
   source:
     paths:
+    - path: notebooks/deberta-blog-notebook.ipynb
     - path: notebooks/external_model.ipynb
     - path: notebooks/language_modelling_from_scratch.ipynb
+    - path: notebooks/mt5_translation.ipynb
+    - path: notebooks/mt5_xnli.ipynb
     - path: notebooks/multiple_choice.ipynb
     - path: notebooks/question_answering.ipynb
     - path: notebooks/summarization.ipynb
@@ -136,9 +140,12 @@ gptj:
     excludes:
     - path: nlp/gpt_j/popxl/README.md
     - path: nlp/gpt_j/popxl/.gitignore
+    - expression: '*'
+      path: nlp/gpt_j/popxl/.ci
+      recursive: true
     repository:
-      origin: https://github.com/graphcore/examples.git
-      ref: sdk-release-3.2
+      origin: git@github.com:graphcore/examples-internal.git
+      ref: sdk-release-3.3.0
       prefix: nlp/gpt_j/popxl
   target:
     renames: {}

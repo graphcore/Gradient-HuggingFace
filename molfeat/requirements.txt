@@ -1,8 +1,9 @@
 ipywidgets==8.0.6
 awscli==1.27.76
 matplotlib==3.7.1
+pydantic<2 # Molfeat 0.8.8 breaks with newer versions
 molfeat==0.8.8
-transformers==4.28.1
+transformers
 tabulate==0.9.0
 seaborn==0.12.2
 stmol

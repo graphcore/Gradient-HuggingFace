@@ -1,8 +1,9 @@
-numpy==1.24.2
+numpy
 scipy==1.10.1
 
-git+https://github.com/graphcore/popxl-addons.git@sdk-release-3.2
-transformers==4.25.1
+
+git+https://github.com/graphcore/popxl-addons.git@sdk-release-3.3.0
+transformers
 tokenizers==0.13.3
 accelerate==0.18.0
 
@@ -10,7 +11,7 @@ pytest==6.2.5
 pytest-pythonpath==0.7.4
 
 graphcore-cloud-tools[logger] @ git+https://github.com/graphcore/graphcore-cloud-tools
-examples-utils[common] @ git+https://github.com/graphcore/examples-utils@latest_stable
+examples-utils[common] @ git+https://github.com/graphcore/examples-utils@v3.2
 
 -f https://download.pytorch.org/whl/torch_stable.html
-torch==1.13.1+cpu
+torch==2.0.1+cpu

@@ -6,21 +6,12 @@ Graphcore-HuggingFace-README_first:
     file: README_first.ipynb
     timeout: 10000
 
-# Whisper
 whisper:
   location: ../whisper
   generated: true
   notebook:
     file: whisper-example.ipynb
-    timeout: 1000
-
-# Whisper-EA
-whisper-EA:
-  location: ../early-access/whisper
-  generated: true
-  notebook:
-    file: whisper-example.ipynb
-    timeout: 1000
+    timeout: 3600
 
 nlp-ner-gradio:
   location: ../natural-language-processing
@@ -138,7 +129,6 @@ stable-diffusion-image_to_image:
   notebook:
     file: image_to_image.ipynb
     timeout: 3000
-  requirements_file: requirements.txt
 
 stable-diffusion-inpainting:
   location: ../stable-diffusion
@@ -147,7 +137,6 @@ stable-diffusion-inpainting:
   notebook:
     file: inpainting.ipynb
     timeout: 3000
-  requirements_file: requirements.txt
 
 stable-diffusion-text_to_image:
   location: ../stable-diffusion
@@ -156,7 +145,6 @@ stable-diffusion-text_to_image:
   notebook:
     file: text_to_image.ipynb
     timeout: 3000
-  requirements_file: requirements.txt
 
 stable-diffusion-text_to_image_sd2:
   location: ../stable-diffusion
@@ -165,7 +153,6 @@ stable-diffusion-text_to_image_sd2:
   notebook:
     file: text_to_image_sd2.ipynb
     timeout: 3000
-  requirements_file: requirements.txt
 
 
 # Audio processing
@@ -176,7 +163,6 @@ audio-processing-wav2vec2-fine-tuning-checkpoint:
   notebook:
     file: wav2vec2-fine-tuning-checkpoint.ipynb
     timeout: 10000
-  requirements_file: requirements.txt
 
 audio-processing-wav2vec2-inference-checkpoint:
   location: ../audio-processing
@@ -184,7 +170,6 @@ audio-processing-wav2vec2-inference-checkpoint:
   notebook:
     file: wav2vec2-inference-checkpoint.ipynb
     timeout: 10000
-  requirements_file: requirements.txt
 
 # Removed due to silent failure
 # audio-processing-audio_classification:
@@ -218,7 +203,6 @@ gptj-finetuning:
   notebook:
     file: finetuning.ipynb
     timeout: 15000
-  requirements_file: requirements.txt
 
 #GPTJ - inference
 gptj-generative-inference:
@@ -227,7 +211,13 @@ gptj-generative-inference:
   notebook:
     file: GPTJ-generative-inference.ipynb
     timeout: 3600
-  requirements_file: requirements.txt
+
+gptj-group-quantized:
+  location: ../gptj-text-generation
+  generated: true
+  notebook:
+    file: GPTJ-group-quantized.ipynb
+    timeout: 7200
 
 # Dolly 2.0 - inference
 dolly2-inference:
@@ -236,7 +226,6 @@ dolly2-inference:
   notebook:
     file: Dolly2-an-OSS-instruction-LLM.ipynb
     timeout: 10000
-  requirements_file: requirements.txt
 
 openassistant-chatbot-inference:
   location: ../dolly2-instruction-following
@@ -256,7 +245,7 @@ packed-bert-multi-label-classification:
   generated: true
   notebook:
     file: packedBERT_multi_label_text_classification.ipynb
-    timeout: 10000
+    timeout: 1800
 
 
 packed-bert-question-answering:
@@ -264,7 +253,7 @@ packed-bert-question-answering:
   generated: true
   notebook:
     file: packedBERT_question_answering.ipynb
-    timeout: 10000
+    timeout: 1800
 
 
 packed-bert-single-label-classification:
@@ -272,7 +261,7 @@ packed-bert-single-label-classification:
   generated: true
   notebook:
     file: packedBERT_single_label_text_classification.ipynb
-    timeout: 10000
+    timeout: 1800
 
 #MolFeat Transformer
 molfeat:
@@ -287,7 +276,7 @@ mt5-translation:
   generated: true
   notebook:
     file: mt5_translation.ipynb
-    timeout: 10000
+    timeout: 14400
 
 mt5-xnli:
    location: ../natural-language-processing/other-use-cases
