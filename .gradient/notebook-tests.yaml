@@ -284,3 +284,21 @@ mt5-xnli:
    notebook:
       file: mt5_xnli.ipynb
       timeout: 10000
+
+# Flan-T5 - fine-tuning
+flan-t5-xxl-finetuning:
+  location: ../natural-language-processing/doing-more-with-flan-t5
+  generated: true
+  notebook:
+    file: Flan-T5-textual-entailment-fine-tuning.ipynb
+    timeout: 10000
+  requirements_file: requirements.txt
+
+# Flan-T5 - inference
+flan-t5-xxl-generative-inference:
+  location: ../natural-language-processing/doing-more-with-flan-t5
+  generated: true
+  notebook:
+    file: Flan-T5-generative-inference.ipynb
+    timeout: 3600
+  requirements_file: requirements.txt
