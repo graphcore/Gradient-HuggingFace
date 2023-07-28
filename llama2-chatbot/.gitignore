@@ -1,0 +1,5 @@
+.graphcore/
+.ipynb_checkpoints/
+.exe_cache/
+.__pycache__/
+*.pyc
