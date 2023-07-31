@@ -53,4 +53,4 @@ text_embeddings_models:
     renames: {}
     repository:
       <<: *_common_target_repository
-      prefix: natural-language-processing/text_embeddings_models/
+      prefix: natural-language-processing/
