@@ -53,5 +53,4 @@ text_embeddings_models:
     renames: {}
     repository:
       <<: *_common_target_repository
-      prefix: text_embeddings_models
-/
+      prefix: text_embeddings_models/
