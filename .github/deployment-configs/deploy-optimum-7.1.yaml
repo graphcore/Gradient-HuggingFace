@@ -48,9 +48,9 @@ text_embeddings_models:
       recursive: true
     repository:
       <<: *_optimum_graphcore_repository
-      prefix: notebooks/text_embeddings_models
+      prefix: notebooks/
   target:
     renames: {}
     repository:
       <<: *_common_target_repository
-      prefix: text_embeddings_models/
+      prefix: natural-language-processing/text_embeddings_models/
