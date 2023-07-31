@@ -13,6 +13,13 @@ whisper:
     file: whisper-example.ipynb
     timeout: 3600
 
+whisper-finetuning:
+  location: ../whisper
+  generated: true
+  notebook:
+    file: whisper_finetuning.ipynb
+    timeout: 3600
+
 nlp-ner-gradio:
   location: ../natural-language-processing
   generated: true
