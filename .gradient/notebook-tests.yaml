@@ -20,6 +20,13 @@ whisper-finetuning:
     file: whisper_finetuning.ipynb
     timeout: 3600
 
+whisper-quantized:
+  location: ../whisper
+  generated: true
+  notebook:
+    file: whisper-quantized-example.ipynb
+    timeout: 3600
+
 nlp-ner-gradio:
   location: ../natural-language-processing
   generated: true
@@ -40,6 +47,13 @@ nlp-sentiment-analysis:
   generated: true
   notebook:
     file: sentiment_analysis.ipynb
+    timeout: 10000
+
+nlp-text-summarization-inference:
+  location: ../natural-language-processing
+  generated: true
+  notebook:
+    file: text_summarization_inference.ipynb
     timeout: 10000
 
 flan-t5-generative-inference:
@@ -126,6 +140,13 @@ nlp-deberta-blog:
   generated: true
   notebook:
     file: deberta-blog-notebook.ipynb
+    timeout: 1000
+
+nlp-text-embeddings:
+  location: ../natural-language-processing/text-embeddings-models
+  generated: true
+  notebook:
+    file: text-embeddings-on-ipu.ipynb
     timeout: 1000
 
 # Stable diffusion
