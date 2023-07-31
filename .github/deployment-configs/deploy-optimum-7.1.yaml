@@ -35,7 +35,7 @@ natural-language-processing-main:
       <<: *_optimum_graphcore_repository
       prefix: notebooks/
   target:
-    renames: {natural-language-processing/text_summarization.ipynb: natural-language-processing/text_summarization-inference.ipynb}
+    renames: {natural-language-processing/text_summarization.ipynb: natural-language-processing/text_summarization_inference.ipynb}
     repository:
       <<: *_common_target_repository
       prefix:  natural-language-processing/
