@@ -78,7 +78,7 @@ def get_ipu_config(model_config, n_ipu, ipus_per_replica, device_iterations, rep
     executable_cache_dir = os.getenv("POPLAR_EXECUTABLE_CACHE_DIR", "./exe_cache/")
     ipu_config['executable_cache_dir'] = executable_cache_dir
 
-    ipu_config['inference_replication_factor'] *= n_ipu // ipu_config['inference_replication_factor']
+    ipu_config['inference_replication_factor'] *= int(n_ipu) // ipu_config['inference_replication_factor']
 
     if replication_factor:
         if replication_factor * ipus_per_replica <= n_ipu:
