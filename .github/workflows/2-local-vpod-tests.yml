@@ -46,7 +46,7 @@ on:
 
 jobs:
   tests:
-    uses: graphcore/paperspace-automation/.github/workflows/subwf-vpod-tests-for-nb-repo.yml@main
+    uses: graphcore/paperspace-automation/.github/workflows/subwf-vpod-tests-for-nb-repo.yml@fix-hf-login-ci
     with:
       docker_image: ${{ inputs.docker_image || 'graphcore/pytorch-paperspace:3.3.0-ubuntu-20.04-20230703' }}
       notebooks: ${{ inputs.notebooks }}
