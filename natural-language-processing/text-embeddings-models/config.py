@@ -81,7 +81,7 @@ def get_ipu_config(model_config, n_ipu, ipus_per_replica, device_iterations, rep
     ipu_config['inference_replication_factor'] *= int(n_ipu) // ipu_config['inference_replication_factor']
 
     if replication_factor:
-        if replication_factor * ipus_per_replica <= n_ipu:
+        if replication_factor * ipus_per_replica <= int(n_ipu):
             ipu_config['inference_replication_factor'] = replication_factor
         else:
             logger.error(f"Defined replication_factor ({replication_factor}) * ipus_per_replica ({ipus_per_replica}) not <= available_ipus(4)")
