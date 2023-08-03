@@ -147,7 +147,7 @@ nlp-text-embeddings:
   generated: true
   notebook:
     file: text-embeddings-on-ipu.ipynb
-    timeout: 10000
+    timeout: 50000
 
 # Stable diffusion
 stable-diffusion-image_to_image:
