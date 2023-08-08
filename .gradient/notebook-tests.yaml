@@ -53,7 +53,7 @@ nlp-text-summarization-inference:
   location: ../natural-language-processing
   generated: true
   notebook:
-    file: text_summarization_inference.ipynb
+    file: text_summarization_BART_L_inference.ipynb
     timeout: 10000
 
 flan-t5-generative-inference:
