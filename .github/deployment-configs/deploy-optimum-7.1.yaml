@@ -44,13 +44,12 @@ text_embeddings_models:
   source:
     paths:
     - expression: '*'
-      path: notebooks/text_embeddings_models
+      path: notebooks/text_embeddings_models/*
       recursive: true
     repository:
       <<: *_optimum_graphcore_repository
       prefix: notebooks/
   target:
-    renames: {natural-language-processing/text_embeddings_models: natural-language-processing/text-embeddings-models}
     repository:
       <<: *_common_target_repository
-      prefix: natural-language-processing/
+      prefix: natural-language-processing/text_embeddings_models/
