@@ -35,7 +35,7 @@ natural-language-processing-main:
       <<: *_optimum_graphcore_repository
       prefix: notebooks/
   target:
-    renames: {natural-language-processing/text_summarization.ipynb: natural-language-processing/text_summarization_inference.ipynb}
+    renames: {natural-language-processing/text_summarization.ipynb: natural-language-processing/text_summarization_BART_L_inference.ipynb}
     repository:
       <<: *_common_target_repository
       prefix:  natural-language-processing/
@@ -44,13 +44,13 @@ text_embeddings_models:
   source:
     paths:
     - expression: '*'
-      path: notebooks/text_embeddings_models
+      path: notebooks/text_embeddings_models/config.py
+      path: notebooks/text_embeddings_models/text-embeddings-on-ipu.ipynb
       recursive: true
     repository:
       <<: *_optimum_graphcore_repository
-      prefix: notebooks/
+      prefix: notebooks/text_embeddings_models/
   target:
-    renames: {natural-language-processing/text_embeddings_models: natural-language-processing/text-embeddings-models}
     repository:
       <<: *_common_target_repository
-      prefix: natural-language-processing/
+      prefix: natural-language-processing/text-embeddings-models/
