@@ -44,7 +44,8 @@ text_embeddings_models:
   source:
     paths:
     - expression: '*'
-      path: notebooks/text_embeddings_models/*
+      path: notebooks/text_embeddings_models/confg.py
+      path:notebooks/text_embeddings_models/text-embeddings-on-ipu.ipynb
       recursive: true
     repository:
       <<: *_optimum_graphcore_repository
@@ -52,4 +53,4 @@ text_embeddings_models:
   target:
     repository:
       <<: *_common_target_repository
-      prefix: natural-language-processing/text_embeddings_models/
+      prefix: natural-language-processing/text-embeddings-models/
