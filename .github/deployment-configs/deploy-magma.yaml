@@ -1,0 +1,30 @@
+_examples_internal_repository: &_examples_internal_repository
+  origin: examples-internal/
+  ref: null
+
+
+_common_target_repository: &_common_target_repository
+    origin: notebooks/
+    ref: null
+
+
+flan-t5:
+  source:
+    paths:
+    - expression: '*'
+      path: multimodal/magma/popxl
+      recursive: true
+    excludes:
+    - path: multimodal/magma/popxl/pytest.ini
+    - path: multimodal/magma/popxl/.ci
+    - path: multimodal/magma/popxlREADME.md
+    - path: multimodal/magma/popxl/.gitignore
+    - path: nlp/t5/popxl/tests
+    repository:
+      <<: *_examples_internal_repository
+      prefix: nlp/t5/popxl
+  target:
+    renames: {}
+    repository:
+      <<: *_common_target_repository
+      prefix: multimodal/magma/
