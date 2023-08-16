@@ -19,10 +19,10 @@ flan-t5:
     - path: multimodal/magma/popxl/.ci
     - path: multimodal/magma/popxl/README.md
     - path: multimodal/magma/popxl/.gitignore
-    - path: nlp/t5/popxl/tests
+    - path: multimodal/magma/popxl/tests
     repository:
       <<: *_examples_internal_repository
-      prefix: nlp/t5/popxl
+      prefix: multimodal/magma/popxl/
   target:
     renames: {}
     repository:
