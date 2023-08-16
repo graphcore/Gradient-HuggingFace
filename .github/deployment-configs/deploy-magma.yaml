@@ -27,4 +27,4 @@ flan-t5:
     renames: {}
     repository:
       <<: *_common_target_repository
-      prefix: multimodal/magma/
+      prefix: multimodal/magma/popxl
