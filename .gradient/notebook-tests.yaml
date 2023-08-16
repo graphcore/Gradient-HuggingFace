@@ -336,3 +336,11 @@ llama2-inference:
   notebook:
     file: llama2-inference.ipynb
     timeout: 8000
+
+# Magma - inference
+magma-inference:
+  location: ../multimodal/magma/popxl
+  generated: true
+  notebook:
+    file: magma_interactive.ipynb
+    timeout: 8000
