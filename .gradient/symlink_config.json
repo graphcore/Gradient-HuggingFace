@@ -1,6 +1,6 @@
 {
     "${POPLAR_EXECUTABLE_CACHE_DIR}":["${PUBLIC_DATASETS_DIR}/poplar-executables-hf-3-3/${SDK_VERSION}"],
     "${HF_DATASETS_CACHE}/librispeech_asr":["${PUBLIC_DATASETS_DIR}/librispeech_asr"],
-    "${DATASETS_DIR}/dfki-sentinel-eurosat":["${PUBLIC_DATASETS_DIR}/dfki-sentinel-eurosat"],
-    "${DATASETS_DIR}/magma":["${PUBLIC_DATASETS_DIR}/magma"]
+    "${HF_DATASETS_CACHE}/magma":["${PUBLIC_DATASETS_DIR}/magma"],
+    "${DATASETS_DIR}/dfki-sentinel-eurosat":["${PUBLIC_DATASETS_DIR}/dfki-sentinel-eurosat"]
 }
