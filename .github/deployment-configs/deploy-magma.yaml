@@ -17,7 +17,7 @@ flan-t5:
     excludes:
     - path: multimodal/magma/popxl/pytest.ini
     - path: multimodal/magma/popxl/.ci
-    - path: multimodal/magma/popxlREADME.md
+    - path: multimodal/magma/popxl/README.md
     - path: multimodal/magma/popxl/.gitignore
     - path: nlp/t5/popxl/tests
     repository:
