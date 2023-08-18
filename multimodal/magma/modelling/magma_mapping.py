@@ -24,7 +24,7 @@ def load_magma(path, config: MagmaConfig, check_config: bool = True) -> nn.Modul
     """
     model = Magma.from_checkpoint(
         config_path=os.path.join(CONFIG_DIR, "MAGMA_v1.yml"),
-        checkpoint_path="./mp_rank_00_model_states.pt",
+        checkpoint_path=path,
         device="cpu",
     )
     if config.visual.precision == "float16":
