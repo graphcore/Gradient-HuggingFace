@@ -93,6 +93,19 @@ nlp-language_modelling_from_scratch:
     file: language_modelling_from_scratch.ipynb
     timeout: 10000
 
+nlp-lm-py:
+  location: ../natural-language-processing/other-use-cases
+  requirements_file: lm_pip_reqs.txt
+  required_apt_packages: lm_apt_reqs.txt 
+  env:
+    POPTORCH_LOG_LEVEL: "DEBUG"
+    POPART_LOG_LEVEL: "DEBUG"
+    POPLAR_LOG_LEVEL: "DEBUG"
+  cmd: >-
+    python3 language_modelling_from_scratch.py
+  
+
+
 nlp-multiple_choice:
   location: ../natural-language-processing/other-use-cases
   generated: true
