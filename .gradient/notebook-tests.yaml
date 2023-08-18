@@ -96,7 +96,8 @@ nlp-language_modelling_from_scratch:
 nlp-lm-py:
   location: ../natural-language-processing/other-use-cases
   requirements_file: lm_pip_reqs.txt
-  required_apt_packages: lm_apt_reqs.txt 
+  required_apt_packages:
+    - git-lfs
   env:
     POPTORCH_LOG_LEVEL: "DEBUG"
     POPART_LOG_LEVEL: "DEBUG"
