@@ -103,7 +103,7 @@ nlp-lm-py:
     POPART_LOG_LEVEL: "DEBUG"
     POPLAR_LOG_LEVEL: "DEBUG"
   cmd: >-
-    pip install optimum-graphcore==0.7.0 && python3 language_modelling_from_scratch.py
+    python3 language_modelling_from_scratch.py
   
 
 
