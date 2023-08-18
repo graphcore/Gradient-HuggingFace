@@ -19,3 +19,6 @@ integrations:
   dfki-sentinel-eurosat:
     type: dataset
     ref: paperspace/ds8p6sv96fl1att:k5j4cob
+  magma:
+    type: dataset
+    ref: dummy-dataset-because-upload-is-broken
