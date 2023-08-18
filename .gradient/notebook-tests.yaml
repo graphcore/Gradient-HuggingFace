@@ -95,7 +95,7 @@ nlp-language_modelling_from_scratch:
 
 nlp-lm-py:
   location: ../natural-language-processing/other-use-cases
-  requirements_path: lm_pip_reqs.txt
+  requirements_file: lm_pip_reqs.txt
   required_apt_packages:
     - git-lfs
   env:
@@ -103,7 +103,7 @@ nlp-lm-py:
     POPART_LOG_LEVEL: "DEBUG"
     POPLAR_LOG_LEVEL: "DEBUG"
   cmd: >-
-    python3 language_modelling_from_scratch.py
+    pip install optimum-graphcore==0.7.0 && python3 language_modelling_from_scratch.py
   
 
 
