@@ -339,7 +339,7 @@ llama2-inference:
 
 # Magma - inference
 magma-inference:
-  location: ../multimodal/magma/popxl
+  location: ../multimodal/magma
   generated: true
   notebook:
     file: Image-description-using-MAGMA.ipynb
