@@ -58,14 +58,11 @@ run-tests() {
 
     cd /notebooks/
     echo "PAPERSPACE-AUTOMATED-TESTING: starting platform_assessment testing"
-    # python -m examples_utils platform_assessment --spec ${TEST_CONFIG_FILE} "${@:9}" \
-    #     --log-dir $LOG_FOLDER \
-    #     --gc-monitor \
-    #     --cloning-directory /tmp/clones \
-    #     --additional-metrics
-    echo "running dummy program"
-    sleep 60
-    echo "ending dummy program"
+    python -m examples_utils platform_assessment --spec ${TEST_CONFIG_FILE} "${@:9}" \
+        --log-dir $LOG_FOLDER \
+        --gc-monitor \
+        --cloning-directory /tmp/clones \
+        --additional-metrics
 
     exit_code=$?
 
