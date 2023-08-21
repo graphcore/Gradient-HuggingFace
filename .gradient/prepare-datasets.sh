@@ -44,8 +44,6 @@ run-tests() {
     
     # Start the monitoring function in the background
     monitor_system &
-
-    # Get the monitoring pid
     monitor_pid=$!
     echo "monitor_pid is ${monitor_pid}"
 
@@ -64,7 +62,7 @@ run-tests() {
 
     # Kill the background monitoring proc
     echo "Killing background monitoring process"
-    pkill -P $monitor_pid
+    kill $monitor_pid
     mv /notebooks/system_logs $LOG_FOLDER
 
 
