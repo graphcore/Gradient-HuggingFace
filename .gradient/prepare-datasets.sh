@@ -1,5 +1,21 @@
 #! /usr/bin/env bash
 set -euxo pipefail
+
+monitor_system() {
+    mkdir /notebooks/system_logs
+    disk_space_log="/notebooks/system_logs/disk_space.log"
+    dataset_contents_log="/notebooks/system_logs/dataset_contents.log"
+    while true; do
+        echo "\nDisk Space Status:" >> "$disk_space_log"
+        df -h >> "$disk_space_log"
+        
+        echo "\nContents of /tmp/huggingface_caches/datasets/wikitext:" >> "$dataset_contents_log"
+        find /tmp/huggingface_caches/datasets/wikitext >> "$dataset_contents_log"
+        
+        sleep 120
+    done
+}
+
 run-tests() {
     echo "PAPERSPACE-AUTOMATED-TESTING: Started testing"
     if [ "${8}" == "unset" ]; then
@@ -25,6 +41,13 @@ run-tests() {
     HEALTH_CHECK_LOG_FILE=$(find ${HEALTH_CHECK_LOG_FOLDER} -type f | sort -n | tail -1)
     cp ${HEALTH_CHECK_LOG_FILE} ${LOG_FOLDER}
 
+    
+    # Start the monitoring function in the background
+    monitor_system &
+
+    # Get the monitoring pid
+    monitor_pid=$!
+
     cd /notebooks/
     echo "PAPERSPACE-AUTOMATED-TESTING: starting platform_assessment testing"
     python -m examples_utils platform_assessment --spec ${TEST_CONFIG_FILE} "${@:9}" \
@@ -34,6 +57,12 @@ run-tests() {
         --additional-metrics
 
     exit_code=$?
+
+    # Kill the background monitoring proc
+    pkill -P $monitor_pid
+    mv /notebooks/system_logs $LOG_FOLDER
+
+
     tar -czvf "${LOG_FOLDER}.tar.gz" ${LOG_FOLDER}
     echo "PAPERSPACE-AUTOMATED-TESTING: Testing complete with exit code ${exit_code}"
     echo "Shutting down notebook"
