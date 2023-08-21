@@ -4,7 +4,7 @@ numpy
 torch==2.0.1+cpu
 #examples-utils[common] @ git+https://github.com/graphcore/examples-utils.git@7cd37a8eccabe88e3741eef2c31bafd4fcd30c4c
 examples-utils[common] @ git+https://github.com/graphcore/examples-utils.git@v3.3
-graphcore-cloud-tools[logger]@git+https://github.com/graphcore/graphcore-cloud-tools
+graphcore-cloud-tools[logger] @ git+https://github.com/graphcore/graphcore-cloud-tools@v0.1
 pyyaml==5.4.1
 dataclasses
 typeguard==2.13.3
