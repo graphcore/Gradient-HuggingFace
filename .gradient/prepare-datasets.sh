@@ -5,12 +5,18 @@ monitor_system() {
     mkdir /notebooks/system_logs
     disk_space_log="/notebooks/system_logs/disk_space.log"
     dataset_contents_log="/notebooks/system_logs/dataset_contents.log"
+    
+    wikitext_dir="/tmp/huggingface_caches/datasets/wikitext"
     while true; do
         echo "\nDisk Space Status:" >> "$disk_space_log"
         df -h >> "$disk_space_log"
         
         echo "\nContents of /tmp/huggingface_caches/datasets/wikitext:" >> "$dataset_contents_log"
-        find /tmp/huggingface_caches/datasets/wikitext >> "$dataset_contents_log"
+        if [ -d "$wikitext_dir" ]; then
+            find "$wikitext_dir" >> "$dataset_contents_log"
+        else
+            echo "wikitext doesn't exist" >> "$dataset_contents_log"
+        fi
         
         sleep 10
     done
