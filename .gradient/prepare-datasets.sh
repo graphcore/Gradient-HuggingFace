@@ -8,15 +8,18 @@ monitor_system() {
     
     wikitext_dir="/tmp/huggingface_caches/datasets/wikitext"
     while true; do
-        echo "\nDisk Space Status:" >> "$disk_space_log"
+        echo "Disk Space Status:" >> "$disk_space_log"
         df -h >> "$disk_space_log"
+        echo " " >> "$disk_space_log"
+
         
-        echo "\nContents of /tmp/huggingface_caches/datasets/wikitext:" >> "$dataset_contents_log"
+        echo "Contents of ${wikitext_dir}:" >> "$dataset_contents_log"
         if [ -d "$wikitext_dir" ]; then
             find "$wikitext_dir" >> "$dataset_contents_log"
         else
             echo "wikitext doesn't exist" >> "$dataset_contents_log"
         fi
+        echo " " >> "$dataset_contents_log"
         
         sleep 10
     done
