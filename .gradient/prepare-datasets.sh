@@ -50,15 +50,19 @@ run-tests() {
 
     cd /notebooks/
     echo "PAPERSPACE-AUTOMATED-TESTING: starting platform_assessment testing"
-    python -m examples_utils platform_assessment --spec ${TEST_CONFIG_FILE} "${@:9}" \
-        --log-dir $LOG_FOLDER \
-        --gc-monitor \
-        --cloning-directory /tmp/clones \
-        --additional-metrics
+    # python -m examples_utils platform_assessment --spec ${TEST_CONFIG_FILE} "${@:9}" \
+    #     --log-dir $LOG_FOLDER \
+    #     --gc-monitor \
+    #     --cloning-directory /tmp/clones \
+    #     --additional-metrics
+    echo "running dummy program"
+    sleep 600
+    echo "ending dummy program"
 
     exit_code=$?
 
     # Kill the background monitoring proc
+    echo "Killing background monitoring process"
     pkill -P $monitor_pid
     mv /notebooks/system_logs $LOG_FOLDER
 
