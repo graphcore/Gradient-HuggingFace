@@ -21,7 +21,7 @@ monitor_system() {
         fi
         echo " " >> "$dataset_contents_log"
         
-        sleep 10
+        sleep 120
     done
 }
 
