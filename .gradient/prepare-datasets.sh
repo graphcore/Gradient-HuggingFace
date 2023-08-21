@@ -12,7 +12,7 @@ monitor_system() {
         echo "\nContents of /tmp/huggingface_caches/datasets/wikitext:" >> "$dataset_contents_log"
         find /tmp/huggingface_caches/datasets/wikitext >> "$dataset_contents_log"
         
-        sleep 120
+        sleep 10
     done
 }
 
@@ -47,6 +47,7 @@ run-tests() {
 
     # Get the monitoring pid
     monitor_pid=$!
+    echo "monitor_pid is ${monitor_pid}"
 
     cd /notebooks/
     echo "PAPERSPACE-AUTOMATED-TESTING: starting platform_assessment testing"
@@ -56,7 +57,7 @@ run-tests() {
     #     --cloning-directory /tmp/clones \
     #     --additional-metrics
     echo "running dummy program"
-    sleep 600
+    sleep 60
     echo "ending dummy program"
 
     exit_code=$?
