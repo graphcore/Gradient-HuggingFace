@@ -50,7 +50,7 @@ if [ ! "$(command -v fuse-overlayfs)" ]; then
     apt install -o DPkg::Lock::Timeout=120 -y psmisc libfuse3-dev fuse-overlayfs
 fi
 
-python -m pip install "graphcore-cloud-tools[logger] @ git+https://github.com/graphcore/graphcore-cloud-tools@v0.1"
+python -m pip install "graphcore-cloud-tools[logger] @ git+https://github.com/graphcore/graphcore-cloud-tools@v0.2"
 
 echo "Starting preparation of datasets"
 python -m graphcore_cloud_tools paperspace symlinks --path "$( dirname -- "${BASH_SOURCE[0]}" )"/symlink_config.json

@@ -4,4 +4,4 @@ torchaudio == 2.0.2+cpu
 librosa
 jiwer
 soundfile
-graphcore-cloud-tools[logger] @ git+https://github.com/graphcore/graphcore-cloud-tools
+graphcore-cloud-tools[logger] @ git+https://github.com/graphcore/graphcore-cloud-tools@v0.2

@@ -11,7 +11,7 @@ pytest-pythonpath==0.7.4
 
 git+https://github.com/graphcore/popxl-addons.git@sdk-release-3.3.0
 
-graphcore-cloud-tools[logger] @ git+https://github.com/graphcore/graphcore-cloud-tools
+graphcore-cloud-tools[logger] @ git+https://github.com/graphcore/graphcore-cloud-tools@v0.2
 examples-utils[common] @ git+https://github.com/graphcore/examples-utils.git@v3.3
 
 -f https://download.pytorch.org/whl/torch_stable.html
