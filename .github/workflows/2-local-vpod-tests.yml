@@ -55,9 +55,14 @@ jobs:
       test_mode: "default"
       test_config: ${{ inputs.test_config || '.github/test_configs/image-config.yaml' }}
     secrets:
+      gh_user: ${{ secrets.GH_TOKEN_USER }}
       gh_token:  ${{ secrets.GH_TOKEN_SYNC_REPOS }}
       hugging_face_hub_token: ${{ secrets.HUGGING_FACE_HUB_TOKEN }}
       slack_bot_token: ${{ secrets.SLACK_BOT_TOKEN }}
       ci_slack_channel_id: ${{ secrets.CI_SLACK_CHANNEL_ID }}
       aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
       aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      paperspace_api_key: ${{ secrets.PAPERSPACE_API_KEY }}
+      gradient_ui_email: ${{ secrets.GRADIENT_UI_EMAIL }}
+      gradient_ui_password: ${{ secrets.GRADIENT_UI_PASSWORD }}
+      gradient_validation_key: ${{ secrets.GRADIENT_VALIDATION_KEY }}
