@@ -102,4 +102,3 @@ license-whisper-2:
     repository:
       <<: *_common_target_repository
       prefix: 'early-access/whisper'
-
