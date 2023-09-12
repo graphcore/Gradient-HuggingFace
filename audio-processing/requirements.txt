@@ -1,7 +1,7 @@
-optimum-graphcore==0.6.1
+optimum-graphcore==0.7
 --find-links https://download.pytorch.org/whl/torch_stable.html
-torchaudio == 0.13.1+cpu
+torchaudio == 2.0.2+cpu
 librosa
 jiwer
 soundfile
-graphcore-cloud-tools[logger] @ git+https://github.com/graphcore/graphcore-cloud-tools
+graphcore-cloud-tools[logger] @ git+https://github.com/graphcore/graphcore-cloud-tools@v0.3

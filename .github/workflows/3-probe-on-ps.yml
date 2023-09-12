@@ -7,7 +7,7 @@ on:
         type: string
         description: "Docker image used in notebook testing"
         required: false
-        default: "graphcore/pytorch-jupyter:3.2.1-ubuntu-20.04-20230531"
+        default: "graphcore/pytorch-paperspace:3.3.0-ubuntu-20.04-20230703"
   pull_request:
   schedule:
     # run every 6h and at 9am
@@ -19,7 +19,7 @@ jobs:
     name: Probe in PS env
     uses: graphcore/paperspace-automation/.github/workflows/subwf-probe-in-ps.yml@checkout-action_ref
     with:
-      docker_image: ${{ inputs.docker_image || 'graphcore/pytorch-jupyter:3.2.1-ubuntu-20.04-20230531' }}
+      docker_image: ${{ inputs.docker_image || 'graphcore/pytorch-paperspace:3.3.0-ubuntu-20.04-20230703' }}
     secrets:
       gh_user: ${{ secrets.GH_TOKEN_USER }}
       gh_token:  ${{ secrets.GH_TOKEN_SYNC_REPOS }}

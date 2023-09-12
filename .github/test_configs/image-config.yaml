@@ -6,6 +6,4 @@
 default:
   test_names: []
   
-early-access-tests:
-  test_names: [whisper-EA]
 
