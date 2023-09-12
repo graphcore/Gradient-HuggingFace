@@ -1,6 +1,8 @@
 #! /usr/bin/env bash
-set -euxo pipefail
+set -uxo pipefail
 run-tests() {
+    # we do not exit on errors to make sure Paperspace notebooks get terminated
+    set +e
     echo "PAPERSPACE-AUTOMATED-TESTING: Started testing"
     if [ "${8}" == "unset" ]; then
         EXAMPLES_UTILS_REV=latest_stable
@@ -38,9 +40,12 @@ run-tests() {
     echo "PAPERSPACE-AUTOMATED-TESTING: Testing complete with exit code ${exit_code}"
     echo "Shutting down notebook"
 
-    sleep 5
-    gradient apiKey ${1}
-    gradient notebooks stop --id ${PAPERSPACE_METRIC_WORKLOAD_ID}
+    if [ "${PAPERSPACE_METRIC_WORKLOAD_ID:-}" ]
+    then
+        sleep 5
+        gradient apiKey ${1}
+        gradient notebooks stop --id ${PAPERSPACE_METRIC_WORKLOAD_ID}
+    fi
     echo "Notebook Stopped"
 }
 
@@ -50,11 +55,20 @@ if [ ! "$(command -v fuse-overlayfs)" ]; then
     apt install -o DPkg::Lock::Timeout=120 -y psmisc libfuse3-dev fuse-overlayfs
 fi
 
-python -m pip install "graphcore-cloud-tools[logger] @ git+https://github.com/graphcore/graphcore-cloud-tools@v0.1"
+python -m pip install "graphcore-cloud-tools[logger] @ git+https://github.com/graphcore/graphcore-cloud-tools@v0.3"
 
 echo "Starting preparation of datasets"
-python -m graphcore_cloud_tools paperspace symlinks --path "$( dirname -- "${BASH_SOURCE[0]}" )"/symlink_config.json
+SCRIPT_DIR="$( dirname -- "${BASH_SOURCE[0]}" )"
+# Support passive credential cycling despite pinned dependency
+if [ -z "${DATASET_S3_DOWNLOAD_B64_CREDENTIAL:-}" ]; then
+    curl https://raw.githubusercontent.com/graphcore/graphcore-cloud-tools/main/graphcore_cloud_tools/paperspace_utils/auth.py > tmp_auth.py
+    DATASET_S3_DOWNLOAD_B64_CREDENTIAL=$(python3 tmp_auth.py)
+    rm tmp_auth.py
+fi
 
+python -m graphcore_cloud_tools paperspace symlinks --s3-dataset \
+       --config-file ${SCRIPT_DIR}/symlink_config.json \
+       --gradient-settings-file ${SCRIPT_DIR}/settings.yaml --num-concurrent-downloads 20 --max-concurrency 1
 echo "Finished running prepare-datasets.sh"
 # Run automated test if specified
 if [[ "${1:-}" == 'test' ]]; then

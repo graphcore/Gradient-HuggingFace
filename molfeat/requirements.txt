@@ -11,4 +11,4 @@ rdkit==2023.3.1
 py3Dmol==2.0.1.post1
 torchinfo==1.7.2
 numpy
-graphcore-cloud-tools[logger] @ git+https://github.com/graphcore/graphcore-cloud-tools
+graphcore-cloud-tools[logger] @ git+https://github.com/graphcore/graphcore-cloud-tools@v0.3
