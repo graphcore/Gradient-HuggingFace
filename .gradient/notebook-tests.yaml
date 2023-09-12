@@ -1,4 +1,15 @@
 
+direct-s3-access:
+  location: ./
+  generated: true
+  description: Run the symlinking
+  cmd: python -m graphcore_cloud_tools paperspace symlinks --s3-dataset --disable-legacy-mode --config-file /notebooks/.gradient/symlink_config.json --gradient-settings-file /notebooks/.gradient/settings.yaml --num-concurrent-downloads {conc_down} --max-concurrency {max_concurrency} {cli}
+  parameters:
+    conc_down: "10,20"
+    max_concurrency: "1"
+    cli: "--use-cli,"
+
+
 Graphcore-HuggingFace-README_first:
   location: ../
   generated: true

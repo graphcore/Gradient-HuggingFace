@@ -61,6 +61,7 @@ export CACHE_DIR="/tmp"
 # mounted public dataset directory (path in the container)
 # in the Paperspace environment this would be ="/datasets"
 export PUBLIC_DATASETS_DIR="/datasets"
+export S3_DATASETS_DIR="/graphcore-gradient-datasets"
 
 export HUGGINGFACE_HUB_CACHE="/tmp/huggingface_caches"
 export TRANSFORMERS_CACHE="/tmp/huggingface_caches/checkpoints"
