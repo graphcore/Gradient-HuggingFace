@@ -48,6 +48,8 @@ nlp-ner-gradio:
 # Natural language processing
 nlp-introduction_to_optimum_graphcore:
   location: ../natural-language-processing
+  paperspace-automation-ext:
+    watch-files: ["squad_preprocessing.py"]
   generated: true
   notebook:
     file: introduction_to_optimum_graphcore.ipynb
@@ -155,6 +157,8 @@ nlp-deberta-blog:
 
 nlp-text-embeddings:
   location: ../natural-language-processing/text-embeddings-models
+  paperspace-automation-ext:
+    watch-files: ["**/*.py"]
   generated: true
   notebook:
     file: text-embeddings-on-ipu.ipynb
@@ -163,6 +167,8 @@ nlp-text-embeddings:
 # Stable diffusion
 stable-diffusion-image_to_image:
   location: ../stable-diffusion
+  paperspace-automation-ext:
+    watch-files: [requirements.txt]
   generated: true
   timeout: 2700
   notebook:
@@ -171,6 +177,8 @@ stable-diffusion-image_to_image:
 
 stable-diffusion-inpainting:
   location: ../stable-diffusion
+  paperspace-automation-ext:
+    watch-files: [requirements.txt]
   generated: true
   timeout: 2700
   notebook:
@@ -179,6 +187,8 @@ stable-diffusion-inpainting:
 
 stable-diffusion-text_to_image:
   location: ../stable-diffusion
+  paperspace-automation-ext:
+    watch-files: [requirements.txt]
   generated: true
   timeout: 2700
   notebook:
@@ -187,6 +197,8 @@ stable-diffusion-text_to_image:
 
 stable-diffusion-text_to_image_sd2:
   location: ../stable-diffusion
+  paperspace-automation-ext:
+    watch-files: [requirements.txt]
   generated: true
   timeout: 2700
   notebook:
@@ -197,6 +209,8 @@ stable-diffusion-text_to_image_sd2:
 # Audio processing
 audio-processing-wav2vec2-fine-tuning-checkpoint:
   location: ../audio-processing
+  paperspace-automation-ext:
+    watch-files: [requirements.txt]
   generated: true
   timeout: 5400
   notebook:
@@ -205,6 +219,8 @@ audio-processing-wav2vec2-fine-tuning-checkpoint:
 
 audio-processing-wav2vec2-inference-checkpoint:
   location: ../audio-processing
+  paperspace-automation-ext:
+    watch-files: [requirements.txt]
   generated: true
   notebook:
     file: wav2vec2-inference-checkpoint.ipynb
@@ -238,6 +254,8 @@ useful-managing-ipu-resources:
 #GPTJ - fine-tuning
 gptj-finetuning:
   location: ../gptj-text-generation
+  paperspace-automation-ext:
+    watch-files: ["**/*.py", "**/*.txt", "**/*.yml"]
   generated: true
   notebook:
     file: finetuning.ipynb
@@ -246,6 +264,8 @@ gptj-finetuning:
 #GPTJ - inference
 gptj-generative-inference:
   location: ../gptj-text-generation
+  paperspace-automation-ext:
+    watch-files: ["**/*.py", "**/*.txt", "**/*.yml"]
   generated: true
   notebook:
     file: GPTJ-generative-inference.ipynb
@@ -253,6 +273,8 @@ gptj-generative-inference:
 
 gptj-group-quantized:
   location: ../gptj-text-generation
+  paperspace-automation-ext:
+    watch-files: ["**/*.py", "**/*.txt", "**/*.yml"]
   generated: true
   notebook:
     file: GPTJ-group-quantized.ipynb
@@ -261,6 +283,8 @@ gptj-group-quantized:
 # Dolly 2.0 - inference
 dolly2-inference:
   location: ../dolly2-instruction-following
+  paperspace-automation-ext:
+    watch-files: ["**/*.py", "**/*.txt", "**/*.yml"]
   generated: true
   notebook:
     file: Dolly2-an-OSS-instruction-LLM.ipynb
@@ -268,6 +292,8 @@ dolly2-inference:
 
 openassistant-chatbot-inference:
   location: ../dolly2-instruction-following
+  paperspace-automation-ext:
+    watch-files: ["**/*.py", "**/*.txt", "**/*.yml"]
   generated: true
   env:
     EXAMPLE_PROMPTS: |
@@ -281,6 +307,8 @@ openassistant-chatbot-inference:
 
 packed-bert-multi-label-classification:
   location: ../packed-bert
+  paperspace-automation-ext:
+    watch-files: ["**/*.py", "**/*.txt", "**/*.yml"]
   generated: true
   notebook:
     file: packedBERT_multi_label_text_classification.ipynb
@@ -289,6 +317,8 @@ packed-bert-multi-label-classification:
 
 packed-bert-question-answering:
   location: ../packed-bert
+  paperspace-automation-ext:
+    watch-files: ["**/*.py", "**/*.txt", "**/*.yml"]
   generated: true
   notebook:
     file: packedBERT_question_answering.ipynb
@@ -297,6 +327,8 @@ packed-bert-question-answering:
 
 packed-bert-single-label-classification:
   location: ../packed-bert
+  paperspace-automation-ext:
+    watch-files: ["**/*.py", "**/*.txt", "**/*.yml"]
   generated: true
   notebook:
     file: packedBERT_single_label_text_classification.ipynb
@@ -305,6 +337,8 @@ packed-bert-single-label-classification:
 #MolFeat Transformer
 molfeat:
   location: ../molfeat
+  paperspace-automation-ext:
+    watch-files: ["**/*.py", "**/*.txt"]
   generated: true
   notebook:
     file: transformers_molfeat_finetune.ipynb
@@ -327,6 +361,8 @@ mt5-xnli:
 # Flan-T5 - fine-tuning
 flan-t5-xxl-finetuning:
   location: ../natural-language-processing/doing-more-with-flan-t5
+  paperspace-automation-ext:
+    watch-files: ["**/*.py", "**/*.txt", "**/*.yml"]
   generated: true
   notebook:
     file: Flan-T5-textual-entailment-fine-tuning.ipynb
@@ -335,6 +371,8 @@ flan-t5-xxl-finetuning:
 # Flan-T5 - inference
 flan-t5-xxl-generative-inference:
   location: ../natural-language-processing/doing-more-with-flan-t5
+  paperspace-automation-ext:
+    watch-files: ["**/*.py", "**/*.txt", "**/*.yml"]
   generated: true
   notebook:
     file: Flan-T5-generative-inference.ipynb
@@ -343,6 +381,8 @@ flan-t5-xxl-generative-inference:
 # Llama - inference
 llama2-inference:
   location: ../llama2-chatbot
+  paperspace-automation-ext:
+    watch-files: ["**/*.py", "**/*.txt", "**/*.yml"]
   generated: true
   notebook:
     file: llama2-inference.ipynb
