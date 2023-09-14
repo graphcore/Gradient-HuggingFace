@@ -28,15 +28,9 @@ import time
 # Licensed under Llama 2 Community License for distribution: https://huggingface.co/meta-llama/Llama-2-7b/blob/main/LICENSE.txt 
 
 def default_llama_prompt():
-    prompt_template="""
-    <s>[INST] <<SYS>>\n
-    You are a helpful, respectful and honest assistant. Always answer as helpfully as possible, while being safe.  Your answers should not include any harmful, unethical, racist, sexist, toxic, dangerous, or illegal content. Please ensure that your responses are socially unbiased and positive in nature.\nIf a question does not make any sense, or is not factually coherent, explain why instead of answering something not correct. If you don't know the answer to a question, please don't share false information.\n
-    <</SYS>>\n\n
-    {prompt} [/INST]
-    """.format(
-        prompt="{prompt}"
-    )
-        
+    prompt_template = """<s>[INST] <<SYS>>\nYou are a helpful, respectful and honest assistant. Always answer as helpfully as possible, while being safe.  Your answers should not include any harmful, unethical, racist, sexist, toxic, dangerous, or illegal content. Please ensure that your responses are socially unbiased and positive in nature.\nIf a question does not make any sense, or is not factually coherent, explain why instead of answering something not correct. If you don't know the answer to a question, please don't share false information.\n<</SYS>>\n\n{prompt} [/INST]""".format(
+    prompt="{prompt}"
+)
     return prompt_template
 
 
@@ -102,7 +96,7 @@ class LlamaPipeline:
             
             if tokenizer is None:
                 logging.info(f"Downloading '{hf_llama_checkpoint}' tokenizer")
-                tokenizer = AutoTokenizer.from_pretrained(hf_llama_checkpoint, use_fast=False, add_eos_token=True)
+                tokenizer = AutoTokenizer.from_pretrained(hf_llama_checkpoint, use_fast=True, add_eos_token=True)
                 logging.info("Completed tokenizer download.")
         
         else:
