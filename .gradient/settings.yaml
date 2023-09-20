@@ -2,6 +2,9 @@ integrations:
   gcl:
     type: dataset
     ref: paperspace/ds7me5hgjbfht6q:8ngwr2a
+  magma:
+    type: dataset
+    ref: graphcore-managed-s3
   poplar-executables-hf-3-3:
     type: dataset
     ref: paperspace/ds367opyfl97110:be9cyhp

@@ -376,6 +376,15 @@ llama2-inference:
     file: llama2-inference.ipynb
     timeout: 8000
 
+# Magma - inference
+magma-inference:
+  location: ../multimodal/magma
+  generated: true
+  notebook:
+    file: Image-description-using-MAGMA.ipynb
+    timeout: 8000
+
+
 direct-s3-access:
   location: ./
   paperspace-automation-ext:
