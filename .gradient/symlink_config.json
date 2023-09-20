@@ -1,5 +1,6 @@
 {
     "${POPLAR_EXECUTABLE_CACHE_DIR}":["${S3_DATASETS_DIR}/poplar-executables-hf-3-3/${SDK_VERSION}"],
     "${HF_DATASETS_CACHE}/librispeech_asr":["${S3_DATASETS_DIR}/librispeech_asr"],
-    "${DATASETS_DIR}/dfki-sentinel-eurosat":["${S3_DATASETS_DIR}/dfki-sentinel-eurosat"]
+    "${DATASETS_DIR}/dfki-sentinel-eurosat":["${S3_DATASETS_DIR}/dfki-sentinel-eurosat"],
+    “${DATASETS_DIR}/magma”:[“${S3_DATASETS_DIR}/magma”]
 }
