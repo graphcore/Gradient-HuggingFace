@@ -17,7 +17,3 @@ Unless otherwise specified by a LICENSE file in a subdirectory, the LICENSE refe
 
 “Jupyter” and the Jupyter logos are trademarks or registered trademarks of NumFOCUS, used by Graphcore with permission.
 
-
-
-
-
