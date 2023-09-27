@@ -7,7 +7,7 @@ on:
         type: choice
         description: "Testing environment"
         required: false
-        default: 'Local'
+        default: "Local"
         options:
         - Local
         - Paperspace
