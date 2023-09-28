@@ -7,7 +7,7 @@ on:
         type: choice
         description: "Testing environment"
         required: false
-        default: "Local"
+        default: "Paperspace"
         options:
         - Local
         - Paperspace
@@ -58,7 +58,7 @@ jobs:
       docker_image: ${{ inputs.docker_image || 'graphcore/pytorch-paperspace:3.3.0-ubuntu-20.04-20230703' }}
       notebooks: ${{ inputs.notebooks }}
       machine_types: ${{ inputs.machine_types }}
-      test_env: ${{ inputs.test_env || 'Local' }}
+      test_env: ${{ inputs.test_env || 'Paperspace' }}
       test_mode: "default"
       test_config: ${{ inputs.test_config || '.github/test_configs/image-config.yaml' }}
       # Use mounts on PRs as they are faster and s3 in nightlies as they are more representative
