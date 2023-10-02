@@ -55,7 +55,7 @@ if [ ! "$(command -v fuse-overlayfs)" ]; then
     apt install -o DPkg::Lock::Timeout=120 -y psmisc libfuse3-dev fuse-overlayfs
 fi
 
-python -m pip install "numpy>=1.22" "graphcore-cloud-tools[logger] @ git+https://github.com/graphcore/graphcore-cloud-tools@v0.3" 
+python -m pip install "numpy==1.24.2" "graphcore-cloud-tools[logger] @ git+https://github.com/graphcore/graphcore-cloud-tools@v0.3" 
 
 echo "Starting preparation of datasets"
 SCRIPT_DIR="$( dirname -- "${BASH_SOURCE[0]}" )"
