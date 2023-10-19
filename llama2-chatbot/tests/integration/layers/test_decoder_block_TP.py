@@ -22,22 +22,28 @@ def test_decoder_block_TP_cmp_huggingface(test_config: LlamaConfig):
     batch_size = test_config.execution.micro_batch_size
     seq_len = test_config.model.sequence_length
     hidden_size = test_config.model.hidden_size
-    intermediate_size = hidden_size * 4
+    intermediate_size = test_config.model.intermediate_size
+    kv_heads = test_config.model.attention.kv_heads
+    heads = test_config.model.attention.heads
+    layers = test_config.model.layers
 
     # HuggingFace
     config = HFConfig(
         hidden_size=hidden_size,
         max_position_embeddings=seq_len,
         intermediate_size=intermediate_size,
-        num_attention_heads=test_config.model.attention.heads,
-        rotary_dim=test_config.model.attention.rotary_dim,
-        use_parallel_residual=True,
+        num_attention_heads=heads,
+        num_key_value_heads=kv_heads,
+        num_hidden_layers=layers,
+        rms_norm_eps=test_config.model.eps,
     )
+
     hf_model = LlamaDecoderLayer(config).eval()
 
     # HF forward
     input_t = torch.rand((batch_size, seq_len, hidden_size), requires_grad=True)
-    (output_,) = hf_model(input_t)
+    mask_t = torch.tensor(1e4 * (np.tril(np.ones((seq_len, seq_len))) - 1))[None, None, ...]
+    (output_,) = hf_model(input_t, mask_t)
 
     output_HF = output_.detach().numpy()
 
@@ -49,14 +55,14 @@ def test_decoder_block_TP_cmp_huggingface(test_config: LlamaConfig):
     ir = popxl.Ir()
     ir.replication_factor = n_shards
 
-    replica_grouping = ir.replica_grouping(stride=1, group_size=1)
-
     main = ir.main_graph
 
     with main:
         inputs_data, inputs_host_steam, inputs_tensors = zip(
             *[
-                addons.host_load(input_t.reshape(-1, test_config.model.hidden_size), popxl.float32, name="input"),
+                addons.host_load(
+                    input_t.reshape(-1, test_config.model.hidden_size), test_config.model.dtype, name="input"
+                ),
             ]
         )
         (x,) = inputs_tensors
@@ -89,4 +95,5 @@ def test_decoder_block_TP_cmp_huggingface(test_config: LlamaConfig):
     for i in range(1, n_shards):
         np.testing.assert_equal(fwd_data[0], fwd_data[i])
     # Assert nearly equal to HF
-    np.testing.assert_almost_equal(output_HF, fwd_data[0].reshape(output_HF.shape), 3)
+    dps = 4 if test_config.model.dtype == popxl.float32 else 2
+    np.testing.assert_almost_equal(output_HF, fwd_data[0].reshape(output_HF.shape), dps)

@@ -19,18 +19,21 @@ from textwrap import dedent
 from transformers.models.llama import LlamaForCausalLM
 from transformers import AutoTokenizer
 
+from tqdm import tqdm
 import logging
 import popart
 import numpy as np
 import time
 
 # Prompt format code from https://huggingface.co/blog/llama2#how-to-prompt-llama-2
-# Licensed under Llama 2 Community License for distribution: https://huggingface.co/meta-llama/Llama-2-7b/blob/main/LICENSE.txt 
+# Licensed under Llama 2 Community License for distribution: https://huggingface.co/meta-llama/Llama-2-7b/blob/main/LICENSE.txt
+
 
 def default_llama_prompt():
     prompt_template = """<s>[INST] <<SYS>>\nYou are a helpful, respectful and honest assistant. Always answer as helpfully as possible, while being safe.  Your answers should not include any harmful, unethical, racist, sexist, toxic, dangerous, or illegal content. Please ensure that your responses are socially unbiased and positive in nature.\nIf a question does not make any sense, or is not factually coherent, explain why instead of answering something not correct. If you don't know the answer to a question, please don't share false information.\n<</SYS>>\n\n{prompt} [/INST]""".format(
-    prompt="{prompt}"
-)
+        prompt="{prompt}"
+    )
+
     return prompt_template
 
 
@@ -79,7 +82,7 @@ class LlamaPipeline:
         prompt_format: Optional[str] = None,
         **kwargs,
     ) -> None:
-        
+
         # Setup for model
         if sequence_length is not None:
             config.model.sequence_length = sequence_length
@@ -93,16 +96,16 @@ class LlamaPipeline:
             logging.info(f"Downloading '{hf_llama_checkpoint}' pretrained weights")
             hf_model = LlamaForCausalLM.from_pretrained(hf_llama_checkpoint)
             logging.info("Completed pretrained weights download.")
-            
+
             if tokenizer is None:
                 logging.info(f"Downloading '{hf_llama_checkpoint}' tokenizer")
-                tokenizer = AutoTokenizer.from_pretrained(hf_llama_checkpoint, use_fast=True, add_eos_token=True)
+                tokenizer = AutoTokenizer.from_pretrained(hf_llama_checkpoint, use_fast=False, add_eos_token=True)
                 logging.info("Completed tokenizer download.")
-        
+
         else:
             logging.info("hf_model already specified, skipping download.")
             hf_model = hf_llama_checkpoint
-        
+
         if tokenizer is None:
             raise ValueError(
                 "A tokenizer needs to be passed to the pipeline if a custom checkpoint is being provided."
@@ -114,7 +117,7 @@ class LlamaPipeline:
             session.write_variables_data(weights)
 
         logging.info("IPU pretrained weights loading complete.")
-        
+
         self.prompt_format = prompt_format
         if self.prompt_format is None:
             self.prompt_format = default_llama_prompt()
@@ -128,27 +131,42 @@ class LlamaPipeline:
         self.session = session
         self.decoded_result = None
         self.last_instruction_prompt = None
+        self.use_kv_cache = config.execution.use_cache
+
         logging.info("Finished initialising pipeline")
 
-    def next_token(self, inputs, lengths, temperature, k, N):
+    def next_token(self, inputs, lengths, temperature=None, k=None, N=None, prompt_mode=False):
         shards = self.config.execution.tensor_parallel * self.config.execution.data_parallel
-        
+
+        # (bs, tp, slen)
         parallel_inputs = tensor_parallel_input(
             inputs, shards, shards, lambda t, i: LlamaEmbeddingsTP.offset_input(t, i, self.config)
         )
 
-        # tensor_parallel_input will squeeze out the batch dim if len(inputs) == 1, so we must expand_dim again.
-        if inputs.shape[0] == 1:
-            parallel_inputs = np.expand_dims(parallel_inputs, axis=0)
-        parallel_inputs = parallel_inputs.transpose(1, 0, 2)
+        if self.use_kv_cache:
+            if len(parallel_inputs.shape) == 1:
+                parallel_inputs = np.expand_dims(parallel_inputs, axis=0)
+            parallel_inputs = parallel_inputs.transpose(1, 0)
+        else:
+            if inputs.shape[0] == 1:
+                parallel_inputs = np.expand_dims(parallel_inputs, axis=0)
+            parallel_inputs = parallel_inputs.transpose(1, 0, 2)
 
         next_token_logits = self.session.run(
             {
                 self.session.inputs.words: parallel_inputs,
                 self.session.inputs.last_token_indices: repeat(np.array(lengths - 1), shards, axis=0),
             }
-        )[self.session.outputs.next_token_logits][0] # extract 0th replica as all are identical
+        )
 
+        # Used when caching the KV values for the prompt - skip search for next token
+        if prompt_mode:
+            return
+
+        # Extract logits and perform topk search when generating new tokens
+        next_token_logits = next_token_logits[self.session.outputs.next_token_logits][
+            0
+        ]  # extract 0th replica as all are identical
         next_token_logits = next_token_logits[:N]
 
         if k:
@@ -160,6 +178,8 @@ class LlamaPipeline:
                 topk_logits[i] = next_token_logits[i, topk_idx[i]]
             next_token_logits = topk_logits
 
+        assert temperature is not None, "Temperature value not passed to pipeline."
+        assert k is not None, "top-k `k` value not passed to pipeline."
         assert temperature >= 0.0, "Temperature must be at least 0."
         if temperature > 0:
             next_token_prob = softmax(next_token_logits.astype(np.float32) / temperature, axis=-1)
@@ -169,7 +189,7 @@ class LlamaPipeline:
                     for i in range(next_token_prob.shape[0])
                 ]
             )
-        else:  
+        else:
             # mathematically equivalent to temperature = 0
             next_token_id = next_token_logits.argmax(axis=-1)
 
@@ -208,7 +228,6 @@ class LlamaPipeline:
         k: int = 5,
         output_length: Optional[int] = None,
         prompt_format: Optional[str] = None,
-        end_key: Optional[str] = None,
         print_live: Optional[bool] = None,
         print_final: bool = True,
     ):
@@ -227,6 +246,7 @@ class LlamaPipeline:
 
         # Preprocess the data including batching it
         micro_batch = self.config.execution.micro_batch_size
+
         assert (
             len(prompt) <= micro_batch
         ), f"Number of prompts greater than session batch size! Got {len(prompt)} but expected no more than {self.config.execution.micro_batch_size}"
@@ -242,7 +262,7 @@ class LlamaPipeline:
         self.session.__enter__()
         logging.info("Start inference")
 
-        padded_prompt, _, tokenized_length = tokenize_initial(prompt, self.tokenizer, self.config)
+        padded_prompt, tokenized_prompt, tokenized_length = tokenize_initial(prompt, self.tokenizer, self.config)
 
         self.last_instruction_prompt = prompt
         num_generated = 0
@@ -253,7 +273,7 @@ class LlamaPipeline:
 
         assert 1 <= output_length <= self.config.model.sequence_length - max(tokenized_length)
 
-        # Llama uses Sentencepiece based tokenizers which have whitespace decoding issues when doing a 
+        # Llama uses Sentencepiece based tokenizers which have whitespace decoding issues when doing a
         # word-by-word live print: https://github.com/huggingface/transformers/issues/22710
         # Decode full sequence and print difference in sequence using previous length.
         if print_live:
@@ -261,42 +281,55 @@ class LlamaPipeline:
             logging.info("Response:")
 
             # Store initial length of decoded sequence before new tokens are added
-            prev_decoded_len = len(self.tokenizer.decode(padded_prompt[0], skip_special_tokens=True))       
+            prev_decoded_len = len(self.tokenizer.decode(padded_prompt[0], skip_special_tokens=True))
 
         latencies = 0
-        start_time = time.perf_counter()
+        # Run the prompt tokens through to generate the cache - last prompt token generates next token
+        if self.use_kv_cache:
+            logging.info("Processing prompt...")
+            stopping_max = max(tokenized_length)
 
+            for n in tqdm(range(stopping_max)):
+                if n == stopping_max - 1:
+                    # The index of the last token is the length of the tokenized sequence - 1
+                    # This token is used to generate the first token in the generation phase
+                    next_tokens = padded_prompt[range(micro_batch), tokenized_length - 1]
+                else:
+                    self.next_token(padded_prompt[:, n], n + 1, prompt_mode=True)
+
+        start_time = time.perf_counter()
         for _ in range(output_length):
+            # For caching, only pass the last token that was generated
+            prev_tokens = next_tokens if self.use_kv_cache else padded_prompt
 
             lat_st = time.perf_counter()
+            next_tokens = self.next_token(prev_tokens, tokenized_length, temperature, k, N)
+            latencies += time.perf_counter() - lat_st
 
-            next_tokens = self.next_token(padded_prompt, tokenized_length, temperature, k, N)
-
-            latencies += (time.perf_counter() - lat_st)
-            
             # update mask based on whether EOS was sampled and whether maximum length was exceeded
             complete_mask = complete_mask | (next_tokens == self.tokenizer.eos_token_id)
             complete_mask = complete_mask | (tokenized_length >= self.config.model.sequence_length)
 
-            if complete_mask.all(): break
+            if complete_mask.all():
+                break
 
             for i, t in enumerate(next_tokens):
                 if complete_mask[i]:
                     continue
                 result[i].append(t)
-            
+
             # update final elements in each batch element with next token
             padded_prompt[range(len(prompt)), tokenized_length] = next_tokens
 
             tokenized_length[~complete_mask] += 1  # update length by one for elements that are not complete
-            num_generated += len(prompt)
+            num_generated += 1
 
             # Print change in decoded sequence instead of decoding single tokens
             if print_live and not complete_mask[0]:
                 # Decode full sequence with new token added
                 live_updated = self.tokenizer.decode(padded_prompt[0], skip_special_tokens=True)
-                # Get 'change' in decoded sequence           
-                live_new = live_updated[prev_decoded_len: ] 
+                # Get 'change' in decoded sequence
+                live_new = live_updated[prev_decoded_len:]
                 # Update length of current sequence for next iteration
                 prev_decoded_len = len(live_updated)
                 print(live_new, end="", flush=True)
@@ -308,12 +341,8 @@ class LlamaPipeline:
         print("")
         if print_final:
             logging.info(f"Output in {end_time - start_time:.2f} seconds")
-            logging.info(
-                f"Total throughput: {num_generated / (end_time - start_time):.2f} t/s"
-            )
-            logging.info(
-                f"Batch (size {micro_batch}) latency: {latencies / (num_generated // len(prompt))}s."  
-            )
+            logging.info(f"Total throughput: {num_generated / (end_time - start_time):.2f} t/s")
+            logging.info(f"Batch (size {micro_batch}) latency: {latencies / (num_generated // len(prompt))}s.")
 
         return self.decoded_result
 

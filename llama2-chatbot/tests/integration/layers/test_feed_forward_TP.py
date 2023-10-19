@@ -22,7 +22,7 @@ def test_feed_forward_TP_cmp_huggingface(test_config: LlamaConfig):
     batch_size = test_config.execution.micro_batch_size
     seq_len = test_config.model.sequence_length
     hidden_size = test_config.model.hidden_size
-    intermediate_size = hidden_size * 4
+    intermediate_size = test_config.model.intermediate_size
 
     # HuggingFace
     config = HFConfig(
@@ -51,7 +51,9 @@ def test_feed_forward_TP_cmp_huggingface(test_config: LlamaConfig):
     with main:
         inputs_data, inputs_host_steam, inputs_tensors = zip(
             *[
-                addons.host_load(input_t.reshape(-1, test_config.model.hidden_size), popxl.float32, name="input"),
+                addons.host_load(
+                    input_t.reshape(-1, test_config.model.hidden_size), test_config.model.dtype, name="input"
+                ),
             ]
         )
         (x,) = inputs_tensors
@@ -83,4 +85,5 @@ def test_feed_forward_TP_cmp_huggingface(test_config: LlamaConfig):
     for i in range(1, n_shards):
         np.testing.assert_equal(fwd_data[0], fwd_data[i])
     # Assert nearly equal to HF
-    np.testing.assert_almost_equal(output_HF, fwd_data[0].reshape(output_HF.shape), 3)
+    dps = 4 if test_config.model.dtype == popxl.float32 else 3
+    np.testing.assert_almost_equal(output_HF, fwd_data[0].reshape(output_HF.shape), dps)

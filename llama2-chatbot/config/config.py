@@ -59,6 +59,9 @@ class ModelConfig(Config):
         heads: int = 32
         """Number of Attention Heads"""
 
+        kv_heads: int = 32
+        """Number of KV heads separate to Q heads for Grouped Query Attention."""
+
     attention: Attention = Attention()
 
 
@@ -88,6 +91,9 @@ class Execution(Config):
 
     code_load: bool = flag(False)
     """Store the code for each layer graph in remote memory"""
+
+    use_cache: bool = flag(False)
+    """Use partial implementation of KV caching (single token inference only)"""
 
 
 @dataclass

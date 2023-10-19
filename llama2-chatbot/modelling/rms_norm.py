@@ -29,7 +29,7 @@ class LlamaRMSNorm(addons.Module):
         # Perform the computation in float32
         if x.dtype == popxl.float16:
             x = ops.cast(x, popxl.float32)
-        
+
         variance = ops.mean(x * x, -1, keepdims=True)
 
         x = x / ops.sqrt(variance + self.eps)

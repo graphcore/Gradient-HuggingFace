@@ -43,7 +43,7 @@ class LlamaModelTP(addons.Module):
         config: LlamaConfig, variables: NamedTensors, hf_model: HFModel, layer_norm=True
     ) -> Dict[popxl.Tensor, np.ndarray]:
         dtype = config.model.dtype
-        
+
         weights = {}
         if layer_norm:
             weights = {

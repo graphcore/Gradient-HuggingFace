@@ -6,6 +6,7 @@ tiny: &tiny
     sequence_length: 64
     attention:
       heads: 4
+      kv_heads: 4
       rotary_dim: 4
     embedding:
       vocab_size: 150
@@ -14,10 +15,11 @@ llama2_7b: &llama2_7b
   model:
     layers: 32
     hidden_size: 4096
-    intermediate_size: 11008    
+    intermediate_size: 11008
     sequence_length: 2048
     attention:
       heads: 32
+      kv_heads: 32
     embedding:
       vocab_size: 32000
     eps: 1.0e-6
@@ -30,6 +32,20 @@ llama2_13b: &llama2_13b
     sequence_length: 2048
     attention:
       heads: 40
+      kv_heads: 40
+    embedding:
+      vocab_size: 32000
+    eps: 1.0e-5
+
+llama2_70b: &llama2_70b
+  model:
+    layers: 80
+    hidden_size: 8192
+    intermediate_size: 28672
+    sequence_length: 1024
+    attention:
+      heads: 64
+      kv_heads: 8
     embedding:
       vocab_size: 32000
     eps: 1.0e-5
@@ -51,7 +67,7 @@ release:
       micro_batch_size: 1
       available_memory_proportion: [ 0.1 ]
       tensor_parallel: 2
-    
+
   llama2_7b_pod4:
     <<: *llama2_7b
     execution:
@@ -72,13 +88,28 @@ release:
       micro_batch_size: 1
       available_memory_proportion: [ 0.4 ]
       tensor_parallel: 4
-  
-  # TODO: Add attention padding to support attention tensor-parallel up to 16
+
   llama2_13b_pod16:
     <<: *llama2_13b
     execution:
       micro_batch_size: 1
       available_memory_proportion: [ 0.4 ]
       tensor_parallel: 16
-      attention_tensor_parallel: 4
-    
+
+  llama2_70b_pod16:
+    <<: *llama2_70b
+    execution:
+      micro_batch_size: 1
+      available_memory_proportion: [ 0.4 ]
+      tensor_parallel: 16
+      attention_tensor_parallel: 8
+      # use_cache: True
+
+  llama2_70b_pod64:
+    <<: *llama2_70b
+    execution:
+      micro_batch_size: 1
+      available_memory_proportion: [ 0.4 ]
+      tensor_parallel: 64
+      attention_tensor_parallel: 8
+      # use_cache: True

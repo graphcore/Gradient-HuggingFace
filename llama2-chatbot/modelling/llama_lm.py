@@ -24,12 +24,16 @@ from math import ceil
 
 def gather_logits_tp(config: LlamaConfig, logits: popxl.Tensor, last_token_index: popxl.Tensor):
     tp = config.execution.tensor_parallel
-    offset_last_token_index = last_token_index + popxl.constant(
-        np.asarray([i * config.model.sequence_length for i in range(config.execution.micro_batch_size)]),
-        dtype=popxl.int32,
-    )
 
-    next_token_logits = logits[offset_last_token_index]  # (tp, mb_size, vocab_shard_size)
+    if not config.execution.use_cache:
+        offset_last_token_index = last_token_index + popxl.constant(
+            np.asarray([i * config.model.sequence_length for i in range(config.execution.micro_batch_size)]),
+            dtype=popxl.int32,
+        )
+
+        next_token_logits = logits[offset_last_token_index]  # (tp, mb_size, vocab_shard_size)
+    else:
+        next_token_logits = logits
 
     next_token_logits = ops.collectives.replicated_all_gather(
         next_token_logits, group=popxl.gcg().ir.replica_grouping(group_size=tp), output_shape="new_axis"
@@ -58,7 +62,6 @@ class LlamaLMHeadTP(addons.Module):
 
         self.ln_f = LlamaRMSNorm(self.config)
         self.head = Linear(shard_size, replica_grouping=self.replica_grouping, bias=False)
-
 
     def build(self, x: popxl.Tensor) -> popxl.Tensor:
         x = self.ln_f(x)
@@ -103,7 +106,6 @@ class LlamaLMHeadModelTP(addons.Module):
 
     @staticmethod
     def hf_mapping(config: LlamaConfig, variables: NamedTensors, hf_model: HFModel) -> Dict[popxl.Tensor, np.ndarray]:
-
         weights = LlamaModelTP.hf_mapping(config, variables.transformer, hf_model.model, layer_norm=False)
         weights.update(LlamaLMHeadTP.hf_mapping(config, variables.lm_head, hf_model))
 

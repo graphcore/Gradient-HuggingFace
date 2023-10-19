@@ -22,24 +22,29 @@ from popxl_addons.array_munging import shard
 def test_lm_TP_cmp_huggingface(test_config: LlamaConfig):
     torch.manual_seed(42)
     batch_size = test_config.execution.micro_batch_size
-    hidden_size = test_config.model.hidden_size
-    intermediate_size = hidden_size * 4
     seq_len = test_config.model.sequence_length
+    hidden_size = test_config.model.hidden_size
+    intermediate_size = test_config.model.intermediate_size
+    kv_heads = test_config.model.attention.kv_heads
+    heads = test_config.model.attention.heads
+    layers = test_config.model.layers
+
     # HuggingFace
     config = HFConfig(
-        num_hidden_layers=test_config.model.layers,
-        vocab_size=test_config.model.embedding.vocab_size,
         hidden_size=hidden_size,
         max_position_embeddings=seq_len,
         intermediate_size=intermediate_size,
-        num_attention_heads=test_config.model.attention.heads,
-        rotary_dim=test_config.model.attention.rotary_dim,
+        num_attention_heads=heads,
+        num_key_value_heads=kv_heads,
+        num_hidden_layers=layers,
+        rms_norm_eps=test_config.model.eps,
     )
     hf_model = LlamaForCausalLM(config).eval()
 
     # HF forward
     input_t = torch.randint(0, test_config.model.embedding.vocab_size, (batch_size, test_config.model.sequence_length))
-    output_HF = hf_model(input_ids=input_t)[0]
+    mask_t = torch.tensor(1e4 * (np.tril(np.ones((seq_len, seq_len))) - 1))[None, None, ...]
+    output_HF = hf_model(input_ids=input_t, attention_mask=mask_t)[0]
     output_HF = output_HF.detach().numpy()
 
     # n_shards
@@ -50,7 +55,6 @@ def test_lm_TP_cmp_huggingface(test_config: LlamaConfig):
     # popxl
     ir = popxl.Ir()
     ir.replication_factor = n_shards
-    replica_grouping = ir.replica_grouping(stride=1, group_size=1)
     main = ir.main_graph
 
     with main:

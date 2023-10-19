@@ -12,6 +12,8 @@ import torch
 import numpy as np
 
 from transformers import LlamaForCausalLM, LlamaConfig as HFConfig
+
+import popxl
 from popxl_addons.utils import timer
 
 from config import LlamaConfig
@@ -19,14 +21,16 @@ from utils.simple_parsing_tools import parse_args_with_presets
 import sys
 
 supported_ckpts = {
-    'llama2_7b_pod4': 'meta-llama/Llama-2-7b-chat-hf',
-    'llama2_13b_pod4': 'meta-llama/Llama-2-13b-chat-hf',
-    'llama2_70b_pod16': 'meta-llama/Llama-2-70b-chat-hf'
+    "llama2_7b_pod4": "meta-llama/Llama-2-7b-chat-hf",
+    "llama2_13b_pod4": "meta-llama/Llama-2-13b-chat-hf",
+    "llama2_70b_pod16": "meta-llama/Llama-2-70b-chat-hf",
 }
 
-supported_ckpts['llama2_7b_pod2'] = supported_ckpts['llama2_7b_pod4']
-supported_ckpts['llama2_7b_pod16'] = supported_ckpts['llama2_7b_pod4']
-supported_ckpts['llama2_13b_pod16'] = supported_ckpts['llama2_13b_pod4']
+supported_ckpts["llama2_7b_pod2"] = supported_ckpts["llama2_7b_pod4"]
+supported_ckpts["llama2_7b_pod16"] = supported_ckpts["llama2_7b_pod4"]
+supported_ckpts["llama2_13b_pod16"] = supported_ckpts["llama2_13b_pod4"]
+supported_ckpts["llama2_70b_pod64"] = supported_ckpts["llama2_70b_pod16"]
+
 
 def llama_config_setup(
     config_file: Union[str, Path],
@@ -76,6 +80,9 @@ def llama_config_setup(
     config: LlamaConfig  # type: ignore
     config.validate()
 
+    if config.execution.use_cache:
+        assert config.execution.micro_batch_size == 1, "`micro_batch_size` > 1 not supported when using caching."
+
     np.random.seed(config.model.seed)
     torch.manual_seed(config.model.seed)
     random.seed(config.model.seed)
@@ -100,9 +107,20 @@ def llama_config_setup(
                 hf_model = supported_ckpts[default]
             except Exception as e:
                 raise e
-            
+
             with timer("Loading HF model to host"):
-                pretrained = LlamaForCausalLM.from_pretrained(hf_model)
+                if default in ["llama2_70b_pod16"]:
+                    if config.model.dtype != popxl.float16:
+                        logging.warn(
+                            "Model dtype specified does not match 70b model weights which must be loaded in FP16."
+                        )
+
+                    pretrained = LlamaForCausalLM.from_pretrained(
+                        hf_model, low_cpu_mem_usage=True, torch_dtype=torch.float16
+                    )
+                else:
+                    pretrained = LlamaForCausalLM.from_pretrained(hf_model)
+
             xl_hf_config_check(config, pretrained.config)
     else:
         pretrained = None

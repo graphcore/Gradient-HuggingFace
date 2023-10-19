@@ -13,6 +13,7 @@ from popxl_addons.patterns import apply_pre_alias_patterns
 from config import LlamaConfig
 from modelling.attention import LlamaSelfAttentionTP
 from popxl_addons.array_munging import repeat
+from utils.setup import llama_config_setup
 
 
 def test_attention_TP_cmp_huggingface(test_config: LlamaConfig):
@@ -21,21 +22,26 @@ def test_attention_TP_cmp_huggingface(test_config: LlamaConfig):
     batch_size = test_config.execution.micro_batch_size
     seq_len = test_config.model.sequence_length
     hidden_size = test_config.model.hidden_size
-    intermediate_size = hidden_size * 4
+    intermediate_size = test_config.model.intermediate_size
+    kv_heads = test_config.model.attention.kv_heads
+    heads = test_config.model.attention.heads
 
     # HuggingFace
     config = HFConfig(
         hidden_size=hidden_size,
         max_position_embeddings=seq_len,
         intermediate_size=intermediate_size,
-        num_attention_heads=test_config.model.attention.heads,
-        rotary_dim=test_config.model.attention.rotary_dim,
+        num_attention_heads=heads,
+        num_key_value_heads=kv_heads,
+        num_hidden_layers=test_config.model.layers,
     )
     hf_model = LlamaAttention(config).eval()
 
     # HF forward
     input_t = torch.rand((batch_size, seq_len, hidden_size), requires_grad=True)
-    output_, *_ = hf_model(input_t, None)
+    mask_t = torch.tensor(1e4 * (np.tril(np.ones((seq_len, seq_len))) - 1))[None, None, ...]
+
+    output_, *_ = hf_model(input_t, mask_t)
     output_HF = output_.detach().numpy()
 
     # TP
@@ -85,4 +91,5 @@ def test_attention_TP_cmp_huggingface(test_config: LlamaConfig):
         fwd_data = np.expand_dims(fwd_data, axis=0)
 
     # Assert nearly equal to HF
-    np.testing.assert_almost_equal(output_HF, fwd_data[0].reshape(output_HF.shape), 4)
+    dps = 4 if test_config.model.dtype == popxl.float32 else 3
+    np.testing.assert_almost_equal(output_HF, fwd_data[0].reshape(output_HF.shape), dps)

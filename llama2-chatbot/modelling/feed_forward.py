@@ -29,13 +29,14 @@ class LlamaFeedForwardTP(addons.Module):
         # ----- Layers -----
         # Sharded across devices - column wise
         self.gate_proj = Linear(
-            self.intermediate_size // self.n_shards, bias=False, replica_grouping=self.replica_grouping)
+            self.intermediate_size // self.n_shards, bias=False, replica_grouping=self.replica_grouping
+        )
         self.up_proj = Linear(
-            self.intermediate_size // self.n_shards, bias=False, replica_grouping=self.replica_grouping)
+            self.intermediate_size // self.n_shards, bias=False, replica_grouping=self.replica_grouping
+        )
 
         # Sharded across devices - row wise (no bias)
-        self.down_proj = Linear(
-            self.hidden_size, bias=False, replica_grouping=self.replica_grouping)
+        self.down_proj = Linear(self.hidden_size, bias=False, replica_grouping=self.replica_grouping)
 
     def build(self, x: popxl.Tensor) -> List[popxl.Tensor]:
         """Identical input (x, seed) and identical output across shards."""
@@ -63,13 +64,7 @@ class LlamaFeedForwardTP(addons.Module):
         n_shards = config.execution.tensor_parallel
 
         return {
-            variables.gate_proj.weight: shard(
-                to_numpy(hf_model.gate_proj.weight.data.T, dtype), n_shards, axis=-1
-            ),
-            variables.up_proj.weight: shard(
-                to_numpy(hf_model.up_proj.weight.data.T, dtype), n_shards, axis=-1
-            ),
-            variables.down_proj.weight: shard(
-                to_numpy(hf_model.down_proj.weight.data.T, dtype), n_shards, axis=0
-            ),
+            variables.gate_proj.weight: shard(to_numpy(hf_model.gate_proj.weight.data.T, dtype), n_shards, axis=-1),
+            variables.up_proj.weight: shard(to_numpy(hf_model.up_proj.weight.data.T, dtype), n_shards, axis=-1),
+            variables.down_proj.weight: shard(to_numpy(hf_model.down_proj.weight.data.T, dtype), n_shards, axis=0),
         }
