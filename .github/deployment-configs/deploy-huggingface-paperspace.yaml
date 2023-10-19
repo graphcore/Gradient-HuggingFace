@@ -9,8 +9,8 @@ _examples_internal_repository: &_examples_internal_repository
 
 
 _common_target_repository: &_common_target_repository
-    origin: notebooks/
-    ref: null
+  origin: notebooks/
+  ref: null
 
 
 natural-language-processing-main:
