@@ -22,11 +22,13 @@ natural-language-processing-main:
     - path: notebooks/sentiment_analysis.ipynb
     - path: notebooks/squad_preprocessing.py
     - path: notebooks/flan_t5_inference.ipynb
+    - path: notebooks/text_summarization.ipynb
     repository:
       <<: *_optimum_graphcore_repository
       prefix: notebooks/
   target:
-    renames: {natural-language-processing/flan_t5_inference.ipynb: natural-language-processing/Flan-T5-generative-inference.ipynb}
+    renames: {natural-language-processing/flan_t5_inference.ipynb: natural-language-processing/Flan-T5-generative-inference.ipynb,
+              natural-language-processing/text_summarization.ipynb: natural-language-processing/text_summarization_BART_L_inference.ipynb}
     repository:
       <<: *_common_target_repository
       prefix:  natural-language-processing/
@@ -52,6 +54,21 @@ natural-language-processing-extra:
     repository:
       <<: *_common_target_repository
       prefix:  natural-language-processing/other-use-cases/
+
+text_embeddings_models:
+  source:
+    paths:
+    - expression: '*'
+      path: notebooks/text_embeddings_models/config.py
+      path: notebooks/text_embeddings_models/text-embeddings-on-ipu.ipynb
+      recursive: true
+    repository:
+      <<: *_optimum_graphcore_repository
+      prefix: notebooks/text_embeddings_models/
+  target:
+    repository:
+      <<: *_common_target_repository
+      prefix: natural-language-processing/text-embeddings-models/
 
 managing_ipu_resources:
   source:
@@ -144,8 +161,7 @@ gptj:
       path: nlp/gpt_j/popxl/.ci
       recursive: true
     repository:
-      origin: git@github.com:graphcore/examples-internal.git
-      ref: sdk-release-3.3.0
+      <<: *_examples_internal_repository
       prefix: nlp/gpt_j/popxl
   target:
     renames: {}
@@ -171,9 +187,9 @@ packed-bert:
 whisper:
   source:
     paths:
-    - expression: '*'
-      path: notebooks/whisper-example.ipynb
-      recursive: true
+    - path: notebooks/whisper-example.ipynb
+    - path: notebooks/whisper-quantized-example.ipynb
+    - path: notebooks/whisper_finetuning.ipynb
     repository:
       <<: *_optimum_graphcore_repository
       prefix: notebooks/
@@ -201,3 +217,66 @@ dolly2:
     repository:
       <<: *_common_target_repository
       prefix: dolly2-instruction-following/
+
+llama2:
+  source:
+    paths:
+    - expression: '*'
+      path: nlp/llama/popxl
+      recursive: true
+    excludes:
+    - path: nlp/llama/popxl/pytest.ini
+    - path: nlp/llama/popxl/run-inference.py
+    - path: nlp/llama/popxl/.gitignore
+    repository:
+      <<: *_examples_internal_repository
+      prefix: nlp/llama/popxl
+  target:
+    renames: {}
+    repository:
+      <<: *_common_target_repository
+      prefix: llama2-chabtot/
+
+
+magma:
+  source:
+    paths:
+    - expression: '*'
+      path: multimodal/magma/popxl
+      recursive: true
+    excludes:
+    - path: multimodal/magma/popxl/pytest.ini
+    - path: multimodal/magma/popxl/.ci
+    - path: multimodal/magma/popxl/README.md
+    - path: multimodal/magma/popxl/.gitignore
+    - path: multimodal/magma/popxl/tests
+    repository:
+      <<: *_examples_internal_repository
+      prefix: multimodal/magma/popxl/
+  target:
+    renames: {}
+    repository:
+      <<: *_common_target_repository
+      prefix: multimodal/magma
+
+
+flan-t5:
+  source:
+    paths:
+    - expression: '*'
+      path: nlp/t5/popxl
+      recursive: true
+    excludes:
+    - path: nlp/t5/popxl/pytest.ini
+    - path: nlp/t5/popxl/.ci
+    - path: nlp/t5/popxl/README.md
+    - path: nlp/t5/popxl/.gitignore
+    - path: nlp/t5/popxl/tests
+    repository:
+      <<: *_examples_internal_repository
+      prefix: nlp/t5/popxl
+  target:
+    renames: {}
+    repository:
+      <<: *_common_target_repository
+      prefix: natural-language-processing/doing-more-with-flan-t5/
