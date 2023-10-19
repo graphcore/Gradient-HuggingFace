@@ -16,13 +16,13 @@ _common_target_repository: &_common_target_repository
 natural-language-processing-main:
   source:
     paths:
+    - path: notebooks/flan_t5_inference.ipynb
     - path: notebooks/introduction_to_optimum_graphcore.ipynb
     - path: notebooks/name-entity-extraction.ipynb
-    - path: notebooks/translation.ipynb
     - path: notebooks/sentiment_analysis.ipynb
     - path: notebooks/squad_preprocessing.py
-    - path: notebooks/flan_t5_inference.ipynb
     - path: notebooks/text_summarization.ipynb
+    - path: notebooks/translation.ipynb
     repository:
       <<: *_optimum_graphcore_repository
       prefix: notebooks/
