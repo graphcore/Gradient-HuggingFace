@@ -206,6 +206,7 @@ dolly2:
       path: nlp/dolly/popxl
       recursive: true
     excludes:
+    - path: nlp/dolly/popxl/.ci
     - path: nlp/dolly/popxl/pytest.ini
     - path: nlp/dolly/popxl/run-inference.py
     - path: nlp/dolly/popxl/.gitignore
