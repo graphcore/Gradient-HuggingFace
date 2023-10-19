@@ -236,7 +236,7 @@ llama2:
     renames: {}
     repository:
       <<: *_common_target_repository
-      prefix: llama2-chabtot/
+      prefix: llama2-chatbot/
 
 
 magma:
