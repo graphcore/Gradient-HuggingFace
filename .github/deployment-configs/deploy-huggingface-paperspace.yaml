@@ -206,6 +206,7 @@ dolly2:
       path: nlp/dolly/popxl
       recursive: true
     excludes:
+    - path: nlp/dolly/popxl/README.md
     - path: nlp/dolly/popxl/.ci
     - path: nlp/dolly/popxl/pytest.ini
     - path: nlp/dolly/popxl/run-inference.py
@@ -255,7 +256,7 @@ magma:
       <<: *_examples_internal_repository
       prefix: multimodal/magma/popxl/
   target:
-    renames: {}
+    renames: {multimodal/magma/magma_interactive.ipynb: multimodal/magma/Image-description-using-MAGMA.ipynb}
     repository:
       <<: *_common_target_repository
       prefix: multimodal/magma
