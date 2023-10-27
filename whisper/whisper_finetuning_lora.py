@@ -33,7 +33,8 @@ params_to_wandb = {"lora": (True, bool),
                    "learning_rate": (1e-4, float),
                    "whisper_size": ("small", str),
                    "fp16": (True, bool),
-                   "gpu": (False, bool)}
+                   "gpu": (False, bool),
+                   "consecutive_run": (1, int)}
 
 parser = argparse.ArgumentParser()
 for param in params_to_wandb:
