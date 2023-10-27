@@ -205,13 +205,32 @@ if args.lora:
 
     # layers_per_ipu depending on q k v out
 
-    layers_per_ipu = [5, 7, 5, 7] # [6, 6, 6, 6]
-    matmul_proportion = [0.2, 0.2, 0.6, 0.6] #[.25, .25, .25, .25]
-    gradient_accumulation_steps = 16 #2 * len(layers_per_ipu) + 2
+    if args.whisper_size == "tiny":
+        layers_per_ipu = [8] # [6, 6, 6, 6]
+        matmul_proportion = [1] #[.25, .25, .25, .25]
+        gradient_accumulation_steps = 1 #2 * len(layers_per_ipu) + 2
+        inference_layers_per_ipu = [4, 4]
+    elif args.whisper_size == "base":
+        layers_per_ipu = [12] # [6, 6, 6, 6]
+        matmul_proportion = [1] #[.25, .25, .25, .25]
+        gradient_accumulation_steps = 1 #2 * len(layers_per_ipu) + 2
+        inference_layers_per_ipu = [6, 6]
+    else:
+        layers_per_ipu = [5, 7, 5, 7] # [6, 6, 6, 6]
+        matmul_proportion = [0.2, 0.2, 0.6, 0.6] #[.25, .25, .25, .25]
+        gradient_accumulation_steps = 16 #2 * len(layers_per_ipu) + 2
+        inference_layers_per_ipu = [12, 12]
 else:
-    layers_per_ipu = [5, 7, 5, 7]
-    matmul_proportion = [0.2, 0.2, 0.6, 0.6]
-    gradient_accumulation_steps = 16
+    if args.whisper_size == "tiny":
+        layers_per_ipu = [8]
+        matmul_proportion = [1]
+        gradient_accumulation_steps = 1
+        inference_layers_per_ipu = [4, 4]
+    else:
+        layers_per_ipu = [5, 7, 5, 7]
+        matmul_proportion = [0.2, 0.2, 0.6, 0.6]
+        gradient_accumulation_steps = 16
+        inference_layers_per_ipu = [12, 12]
 
 
 model.config.forced_decoder_ids = processor.tokenizer.get_decoder_prompt_ids(
@@ -255,7 +274,7 @@ if not args.gpu:
             "matmul_proportion": matmul_proportion,
             "projection_serialization_factor": 5,
             "inference_replication_factor": 1,
-            "inference_layers_per_ipu": [12, 12],
+            "inference_layers_per_ipu": inference_layers_per_ipu,
             "inference_parallelize_kwargs": {
                 "use_cache": True,
                 "use_encoder_output_buffer": True,
