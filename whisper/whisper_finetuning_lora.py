@@ -343,3 +343,6 @@ else:
     )
 
 trainer.train()
+
+metrics = trainer.evaluate()
+wandb.log(metrics)
