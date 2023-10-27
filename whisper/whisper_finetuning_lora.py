@@ -167,6 +167,8 @@ def compute_metrics(pred, tokenizer):
 model = WhisperForConditionalGeneration.from_pretrained(MODEL_PATH)
 if args.gpu:
     model = model.to("cuda")
+    if args.fp16:
+        model = model.half()
 print(model)
 
 model.config.max_length = MAX_LENGTH
