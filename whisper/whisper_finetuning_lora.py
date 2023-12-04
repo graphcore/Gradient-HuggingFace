@@ -151,6 +151,11 @@ def compute_metrics(pred, tokenizer):
     pred_ids = pred.predictions
     label_ids = pred.label_ids
 
+    print(pred_ids)
+    print(label_ids)
+    print(pred_ids.shape)
+    print(label_ids.shape)
+
     # replace -100 with the pad_token_id
     pred_ids = np.where(pred_ids != -100, pred_ids, tokenizer.pad_token_id)
     label_ids = np.where(label_ids != -100, label_ids, tokenizer.pad_token_id)
@@ -158,11 +163,16 @@ def compute_metrics(pred, tokenizer):
     pred_str = tokenizer.batch_decode(pred_ids, skip_special_tokens=True)
     label_str = tokenizer.batch_decode(label_ids, skip_special_tokens=True)
 
+    for i in range(len(pred_str)):
+        print(f'{pred_str[i]} - {label_str[i]}')
+
     normalized_pred_str = [tokenizer._normalize(pred).strip() for pred in pred_str]
     normalized_label_str = [tokenizer._normalize(label).strip() for label in label_str]
 
     wer = 100 * metric.compute(predictions=pred_str, references=label_str)
     normalized_wer = 100 * metric.compute(predictions=normalized_pred_str, references=normalized_label_str)
+
+    print(f'wer {wer} normalized {normalized_wer}')
 
     return {"wer": wer, "normalized_wer": normalized_wer}
 
