@@ -61,7 +61,7 @@ if not args.gpu:
     from optimum.graphcore.models.whisper import WhisperProcessorTorch
 
     n_ipu = int(os.getenv("NUM_AVAILABLE_IPU", 4))
-    executable_cache_dir = os.getenv("POPLAR_EXECUTABLE_CACHE_DIR", "/tmp/exe_cache/") + "/whisper"
+    executable_cache_dir = os.getenv("POPLAR_EXECUTABLE_CACHE_DIR", "./exe_cache/") + "/whisper"
 else:
     from transformers import Seq2SeqTrainer, Seq2SeqTrainingArguments, WhisperProcessor
 
