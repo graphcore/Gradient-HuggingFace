@@ -252,8 +252,8 @@ if args.wandb:
 total_steps = args.steps
 output_dir = f"./{MODEL_NAME}-ipu-checkpoints"
 do_train = True
-do_eval = True
-warmup_steps = 0 #total_steps // 4
+do_eval = False # True
+warmup_steps = 2000
 evaluation_strategy = "steps"
 eval_steps = 1000
 save_strategy = "steps"
