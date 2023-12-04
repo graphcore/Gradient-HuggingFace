@@ -14,11 +14,11 @@ from datasets import load_dataset, Audio, Dataset, DatasetDict
 
 import evaluate
 from transformers import WhisperForConditionalGeneration
+from transformers import EarlyStoppingCallback
 from transformers.integrations import WandbCallback
 from dataclasses import dataclass
 from typing import Any, Dict, List, Union
 from peft import get_peft_model, LoraConfig
-
 
 params_to_wandb = {"lora": (True, bool),
                    "lora_attention_dimension": (16, int),
@@ -242,7 +242,7 @@ model.generation_config.forced_decoder_ids = processor.tokenizer.get_decoder_pro
 )
 model.generation_config.suppress_tokens = []
 
-callbacks = []
+callbacks = [EarlyStoppingCallback(early_stopping_patience=100)]
 if args.wandb:
     callbacks.append(WandbCallback())
 
