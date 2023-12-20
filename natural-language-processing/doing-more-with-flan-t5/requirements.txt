@@ -4,7 +4,7 @@ graphcore-cloud-tools[logger] @ git+https://github.com/graphcore/graphcore-cloud
 examples-utils[common] @ git+https://github.com/graphcore/examples-utils.git@latest_stable
 pyyaml==5.4.1
 dataclasses==0.8; python_version < '3.7'
-transformers==4.25.1
+transformers==4.36.0
 datasets
 evaluate==0.4.0
 tfrecord==1.14.1
