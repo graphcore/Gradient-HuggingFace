@@ -68,7 +68,7 @@ fi
 
 python -m graphcore_cloud_tools paperspace symlinks --s3-dataset \
        --config-file ${SCRIPT_DIR}/symlink_config.json \
-       --gradient-settings-file ${SCRIPT_DIR}/settings.yaml --num-concurrent-downloads 20 --max-concurrency 1
+       --gradient-settings-file ${SCRIPT_DIR}/graphcore-settings.yaml --num-concurrent-downloads 20 --max-concurrency 1
 echo "Finished running prepare-datasets.sh"
 # Run automated test if specified
 if [[ "${1:-}" == 'test' ]]; then
